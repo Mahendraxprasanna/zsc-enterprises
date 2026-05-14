@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cream: #FAF7F2;
+    --cream2: #F3EDE3;
+    --cream3: #EDE5D8;
+    --orange: #E8650A;
+    --orange2: #FF7A20;
+    --pink: #D4186C;
+    --dark: #1A1208;
+    --dark2: #2C1F0E;
+    --txt: #2A1E10;
+    --grad: linear-gradient(135deg, #E8650A, #D4186C);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+  font-family: 'Jost', sans-serif;
+  background: #F3EDE3;
+  color: #2A1E10;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream2); }
+  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* GPU acceleration for animated elements */
+.intro-stage,
+.intro-logo-stage,
+.intro-shake {
+  will-change: transform;
+}
+
+/* Prevent layout shift during animations */
+section, .about, .store-section {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@layer utilities {
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grad-bg {
+    background: var(--grad);
+  }
+
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-jost {
+    font-family: 'Jost', sans-serif;
+  }
+}
