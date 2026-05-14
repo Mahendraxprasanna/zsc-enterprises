@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import SectionReveal from '../components/SectionReveal'
 import heroBg from '../assets/images/dunkinbackground.webp'
-import donutsImg from '../assets/images/donuts.webp'
+import donutsImg from '../assets/images/donuts.jpeg'
 import snacksImg from '../assets/images/snacks.webp'
 import stallImg from '../assets/images/stall.webp'
 import govKempImg from '../assets/images/govkemp.png'
@@ -128,13 +128,13 @@ function FieldGallery({ photos }) {
 }
 const tickerItems = [
   "ZSC Enterprises","Dunkin'","Baskin Robbins","Smoothie King",
-  "NDCP Chairman","Coffee Cafe Bakery","Atlanta, Georgia","Est. 2016","45+ Locations"
+  "Atlanta, Georgia","Est. 2016","45+ Locations","Jimmy Johns","Multi Brand","Multi State"
 ]
 
 const stats = [
   { n: '45', sup: '+', label: "Dunkin' Locations Operated" },
-  { n: '3',  sup: '',  label: 'World-Class Brands' },
-  { n: '$10',sup: 'M', label: 'CCB Capital Investment' },
+  { n: '4',  sup: '',  label: 'World-Class Brands' },
+  { n: '3',sup: 'M', label: 'Georgia, Alabama & Florida-Multi State Operated' },
   { n: '25', sup: '+', label: 'Years of QSR Excellence' },
 ]
 
@@ -213,7 +213,7 @@ export default function Home() {
             variants={fadeUp} initial="hidden" animate="show" custom={1}
           >
             Building Brands.<br />
-            <em className="grad-text not-italic">Inspiring People.</em>
+            <em className="grad-text italic">Inspiring People.</em>
           </motion.h1>
 
           <motion.p
@@ -365,7 +365,8 @@ export default function Home() {
           </div>
           <h2 className="font-playfair font-black leading-[1.1] text-[#1A1208] mb-5"
             style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}>
-            A Different Kind of<br />Franchise Group.
+            A Different Kind of<br />
+<em className="grad-text not-italic">Franchise Group.</em>
           </h2>
           <p className="text-[0.86rem] leading-[1.9] font-light mb-8"
             style={{ color: 'rgba(42,30,16,0.6)' }}>
@@ -511,7 +512,8 @@ export default function Home() {
         <div>
           <h2 className="font-playfair font-black text-[#1A1208] leading-[1.05] mb-5"
             style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
-            We Build Careers,<br />Not Just Shifts.
+            We Build Careers,<br />
+<em className="grad-text not-italic">Not Just Shifts.</em>
           </h2>
           <p className="text-[0.86rem] leading-[1.85] font-light"
             style={{ color: 'rgba(42,30,16,0.52)', maxWidth: 440 }}>
@@ -541,12 +543,25 @@ export default function Home() {
   }}
 >
   <div className="text-center mb-10">
-    <div
-      className="text-[0.58rem] uppercase font-bold tracking-[0.28em]"
-      style={{ color: 'rgba(255,255,255,0.9)' }}
-    >
-      BRANDS
-    </div>
+    <div style={{ textAlign: 'center', marginBottom: 8 }}>
+  <h2 className="font-playfair font-black" style={{
+    fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+    background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    lineHeight: 1.0,
+    marginBottom: 8,
+  }}>
+    Our Brands
+  </h2>
+  <div style={{
+    fontSize: '0.52rem', letterSpacing: '0.3em', textTransform: 'uppercase',
+    color: 'rgba(255,255,255,0.55)', fontWeight: 500,
+  }}>
+    Four Brands. One Standard of Excellence.
+  </div>
+</div>
   </div>
 
   <div

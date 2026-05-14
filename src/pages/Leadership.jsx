@@ -24,9 +24,9 @@ import shamsImg from '../assets/images/headshot.jpg'
 // ─────────────────────────────────────────────────────────
 const STATS = [
   { n: '25+',  l: 'Years QSR' },
-  { n: '45+',  l: 'Locations' },
+  { n: '50+',  l: 'Locations' },
   { n: '$10M', l: 'CCB Led' },
-  { n: '70+',  l: 'Jobs Created' },
+  { n: '100+',  l: 'Jobs Created' },
 ]
 
 const TIMELINE = [
@@ -40,9 +40,9 @@ const TIMELINE = [
 
 const NDCP_STATS = [
   { n: '9,600+', l: "Dunkin' Locations Powered" },
-  { n: '#1',     l: "Elected Position in Dunkin'" },
   { n: 'All 50', l: 'States Covered' },
   { n: 'Elected',l: 'By Fellow Franchisees' },
+  {n: '$3 Billion', l: 'Supply chain management company'}
 ]
 
 const CCB_STATS = [
@@ -492,19 +492,28 @@ export default function Leadership() {
               </div>
 
               {/* Name */}
-              <div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20 }}>
-                <motion.span
-                  style={{ fontSize: 'clamp(2.8rem,4.5vw,4.5rem)', color: '#1A1208', display: 'block' }}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-                >Shams</motion.span>
-                <motion.span
-                  style={{ fontSize: 'clamp(2.8rem,4.5vw,4.5rem)', fontStyle: 'italic', display: 'block', ...gradStyle }}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-                >Charania</motion.span>
-              </div>
-
+              {/* Name */}
+<div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20, WebkitTextFillColor: 'initial' }}>
+  <motion.span
+    style={{ fontSize: 'clamp(2.8rem,4.5vw,4.5rem)', color: '#1A1208', display: 'block' }}
+    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
+  >Shams</motion.span>
+  <motion.span
+  style={{
+  fontSize: 'clamp(2.8rem,4.5vw,4.5rem)',
+  fontStyle: 'italic',
+  display: 'inline-block',
+  background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  color: 'transparent',
+}}
+  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
+>Charania</motion.span>
+</div>
               {/* Divider */}
               <motion.div
                 style={{ width: 40, height: '0.5px', background: 'rgba(42,30,16,0.15)', marginBottom: 22 }}
@@ -589,7 +598,7 @@ export default function Leadership() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
           >
-            From Popeyes Crew<br />
+            From Crew Member<br />
             <em style={{ fontStyle: 'italic', ...gradStyle }}>to National Chairman.</em>
           </motion.h2>
 
@@ -800,16 +809,10 @@ export default function Leadership() {
     {/* Header */}
     <Reveal>
       <div style={{ padding: '5rem 4rem 3rem', textAlign: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 14 }}>
-          <div style={{ width: 6, height: 6, background: '#E8650A', borderRadius: '50%', boxShadow: '0 0 12px rgba(232,101,10,0.8)' }} />
-          <span style={{ fontSize: '0.48rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>
-            Highest Elected Office in Dunkin' Franchising
-          </span>
-        </div>
         <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.5rem,5vw,4.5rem)', color: '#FAF7F2', lineHeight: 1.0, marginBottom: 8 }}>
           Chairman of the Board
         </h2>
-        <div className="font-playfair italic" style={{ fontSize: 'clamp(1.2rem,2.5vw,2rem)', ...gradStyle }}>
+        <div className="font-playfair italic" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', ...gradStyle }}>
           National DCP
         </div>
       </div>

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import Lenis from '@studio-freight/lenis'
 import IntroAnimation from './components/IntroAnimation'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -27,31 +26,6 @@ function AnimatedRoutes() {
   )
 }
 
-function LenisProvider({ children }) {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-      smoothTouch: false,
-      touchMultiplier: 2,
-    })
-
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    const rafId = requestAnimationFrame(raf)
-    return () => {
-      cancelAnimationFrame(rafId)
-      lenis.destroy()
-    }
-  }, [])
-
-  return children
-}
-
 export default function App() {
   const [introDone, setIntroDone] = useState(false)
 
@@ -61,17 +35,13 @@ export default function App() {
         <IntroAnimation onComplete={() => setIntroDone(true)} />
       )}
       <div style={{
-  opacity: introDone ? 1 : 0,
-  transition: 'opacity 0.8s ease',
-  filter: introDone ? 'blur(0px)' : 'blur(8px)',
-  margin: 0,
-  padding: 0,
-}}>
+        opacity: introDone ? 1 : 0,
+        transition: 'opacity 0.8s ease',
+        filter: introDone ? 'blur(0px)' : 'blur(8px)',
+      }}>
         <BrowserRouter>
-          <LenisProvider>
-            <Navbar />
-            <AnimatedRoutes />
-          </LenisProvider>
+          <Navbar />
+          <AnimatedRoutes />
         </BrowserRouter>
       </div>
     </>

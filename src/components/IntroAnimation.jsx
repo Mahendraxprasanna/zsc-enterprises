@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import './IntroAnimation.css'
 
 const BOKEH_ORBS = [
-  { color: 'rgba(232,130,80,0.55)',  size: 280, x: 12, y: 18 },
-  { color: 'rgba(218,72,120,0.45)',  size: 220, x: 78, y: 30 },
-  { color: 'rgba(88,120,181,0.45)',  size: 320, x: 18, y: 78 },
-  { color: 'rgba(232,213,190,0.30)', size: 180, x: 65, y: 82 },
-  { color: 'rgba(218,72,120,0.30)',  size: 240, x: 88, y: 60 },
-  { color: 'rgba(120,90,140,0.40)',  size: 360, x: 50, y: 10 },
+  { color: 'rgba(228,217,200,0.45)', size: 320, x: 14, y: 22 },
+  { color: 'rgba(237,229,216,0.55)', size: 260, x: 80, y: 28 },
+  { color: 'rgba(228,217,200,0.40)', size: 360, x: 20, y: 78 },
+  { color: 'rgba(237,229,216,0.45)', size: 220, x: 70, y: 82 },
+  { color: 'rgba(243,237,227,0.65)', size: 380, x: 50, y: 12 },
+  { color: 'rgba(228,217,200,0.40)', size: 280, x: 88, y: 60 },
 ]
+const PARTICLE_COLORS = ['#E8650A', '#FF7A20', '#D4186C', '#E8267E', '#ffffff']
+const SPARK_COLORS    = ['#E8650A', '#FF7A20', '#D4186C', '#E8267E', '#7A2F03']
 
-const PARTICLE_COLORS = ['#DC5A2D', '#5878B5', '#DA4878', '#ffffff', '#ffffff']
-const SPARK_COLORS    = ['#fff', '#fff', '#FFC9A8', '#F77AAA', '#9FB6E0']
 
 function generateParticles(count = 70) {
   return Array.from({ length: count }, (_, i) => {
@@ -134,26 +134,26 @@ export default function IntroAnimation({ onComplete }) {
                 <svg className="intro-logo-svg" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="iOrangeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%"   stopColor="#FFC9A8"/>
-                      <stop offset="25%"  stopColor="#F08555"/>
-                      <stop offset="55%"  stopColor="#DC5A2D"/>
-                      <stop offset="90%"  stopColor="#B83E14"/>
-                      <stop offset="100%" stopColor="#7A2808"/>
-                    </linearGradient>
+  <stop offset="0%"   stopColor="#FFD088"/>
+  <stop offset="18%"  stopColor="#FF9530"/>
+  <stop offset="45%"  stopColor="#FF6B0E"/>
+  <stop offset="75%"  stopColor="#D14808"/>
+  <stop offset="100%" stopColor="#5C1E02"/>
+</linearGradient>
                     <linearGradient id="iBlueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%"   stopColor="#9FB6E0"/>
-                      <stop offset="20%"  stopColor="#7593C9"/>
-                      <stop offset="50%"  stopColor="#5878B5"/>
-                      <stop offset="85%"  stopColor="#2D4A8C"/>
-                      <stop offset="100%" stopColor="#15264F"/>
-                    </linearGradient>
+  <stop offset="0%"   stopColor="#A8C6F5"/>
+  <stop offset="18%"  stopColor="#6E94E0"/>
+  <stop offset="48%"  stopColor="#3D67C8"/>
+  <stop offset="80%"  stopColor="#1E3D8C"/>
+  <stop offset="100%" stopColor="#0A1B4A"/>
+</linearGradient>
                     <linearGradient id="iPinkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%"   stopColor="#A82D5C"/>
-                      <stop offset="25%"  stopColor="#DA4878"/>
-                      <stop offset="50%"  stopColor="#F77AAA"/>
-                      <stop offset="75%"  stopColor="#DA4878"/>
-                      <stop offset="100%" stopColor="#A82D5C"/>
-                    </linearGradient>
+  <stop offset="0%"   stopColor="#8E0846"/>
+  <stop offset="22%"  stopColor="#D4186C"/>
+  <stop offset="50%"  stopColor="#FF4FA1"/>
+  <stop offset="78%"  stopColor="#D4186C"/>
+  <stop offset="100%" stopColor="#8E0846"/>
+</linearGradient>
                     <clipPath id="iTopClip">
                       <path d="M 0 0 L 900 0 L 900 240 Q 450 130 0 240 Z" />
                     </clipPath>
@@ -168,31 +168,29 @@ export default function IntroAnimation({ onComplete }) {
                     </filter>
                   </defs>
 
-                  {/* Orange top half */}
-                  <g className="intro-top-half" clipPath="url(#iTopClip)" filter="url(#iLetterDepth)">
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="#3a1604" opacity="0.6" transform="translate(4,6)">ZSC</text>
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="#5a230a" opacity="0.8" transform="translate(2,3)">ZSC</text>
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="url(#iOrangeGrad)">ZSC</text>
-                  </g>
+                  {/* Orange top half — 7 layer extrusion */}
+<g className="intro-top-half" clipPath="url(#iTopClip)" filter="url(#iLetterDepth)">
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#2a0f02" opacity="0.95" transform="translate(7,11)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#3a1604" opacity="0.95" transform="translate(6,9.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#4a1a04" opacity="0.95" transform="translate(5,8)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#5c2206" opacity="0.95" transform="translate(4,6.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#6d2606" opacity="0.95" transform="translate(3,5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#7e3008" opacity="0.95" transform="translate(2,3.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#8e3a0a" opacity="0.95" transform="translate(1,2)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="url(#iOrangeGrad)">ZSC</text>
+</g>
 
-                  {/* Blue bottom half */}
-                  <g className="intro-bottom-half" clipPath="url(#iBottomClip)" filter="url(#iLetterDepth)">
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="#0a1530" opacity="0.6" transform="translate(4,6)">ZSC</text>
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="#152448" opacity="0.8" transform="translate(2,3)">ZSC</text>
-                    <text x="450" y="285" textAnchor="middle"
-                      fontFamily="Georgia, serif" fontWeight="700" fontSize="300"
-                      fill="url(#iBlueGrad)">ZSC</text>
-                  </g>
+                  {/* Blue bottom half — 7 layer extrusion */}
+<g className="intro-bottom-half" clipPath="url(#iBottomClip)" filter="url(#iLetterDepth)">
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#040a1c" opacity="0.95" transform="translate(7,11)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#0a1530" opacity="0.95" transform="translate(6,9.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#0f1d3e" opacity="0.95" transform="translate(5,8)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#152448" opacity="0.95" transform="translate(4,6.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#1a2b56" opacity="0.95" transform="translate(3,5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#1f3265" opacity="0.95" transform="translate(2,3.5)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="#243a74" opacity="0.95" transform="translate(1,2)">ZSC</text>
+  <text x="450" y="285" textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif" fontWeight="900" fontSize="300" fill="url(#iBlueGrad)">ZSC</text>
+</g>
 
                   {/* Pink arc */}
                   <path className="intro-arc-fill"
