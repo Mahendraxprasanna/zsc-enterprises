@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import ZSCLogo from './ZSCLogo'
+
 const links = [
   { to: '/', label: 'Home' },
   { to: '/brands', label: 'Brands' },
@@ -21,10 +21,9 @@ export default function Footer() {
       }}
     >
       {/* Logo */}
-      
-
-// then in the JSX:
-      <ZSCLogo size={32} />
+      <div className="font-playfair text-[1rem] font-black tracking-[0.22em] uppercase text-[rgba(250,247,242,0.85)]">
+        ZSC <span className="grad-text">&amp;</span> Enterprises
+      </div>
 
       {/* Nav Links */}
       <div className="flex gap-8 justify-center flex-wrap">

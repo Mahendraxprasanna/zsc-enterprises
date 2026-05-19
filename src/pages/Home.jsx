@@ -504,36 +504,6 @@ export default function Home() {
   </p>
 </section>  
 </SectionReveal>
-
-      {/* ══ 7. CAREERS ══ */}
-      <SectionReveal direction="up" delay={0.1}>
-      <section className="grid items-start px-14 py-14"
-  style={{ gridTemplateColumns: '1fr auto', gap: '2rem', background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.08)' }}>
-        <div>
-          <h2 className="font-playfair font-black text-[#1A1208] leading-[1.05] mb-5"
-            style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
-            We Build Careers,<br />
-<em className="grad-text not-italic">Not Just Shifts.</em>
-          </h2>
-          <p className="text-[0.86rem] leading-[1.85] font-light"
-            style={{ color: 'rgba(42,30,16,0.52)', maxWidth: 440 }}>
-            Join a team where growth is expected, people are valued, and excellence is the only standard.
-          </p>
-        </div>
-        <div className="flex flex-col items-end gap-3 pt-1 flex-shrink-0">
-          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
-            className="grad-bg text-white no-underline px-8 py-4 text-[0.6rem] tracking-[0.22em] uppercase font-semibold whitespace-nowrap transition-opacity hover:opacity-85">
-            Explore Opportunities
-          </a>
-          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
-            className="text-[0.5rem] tracking-[0.2em] uppercase no-underline transition-colors hover:text-[#E8650A]"
-            style={{ color: 'rgba(42,30,16,0.35)' }}>
-            Current Openings →
-          </a>
-        </div>
-      </section>
-      </SectionReveal>
-
       {/* ══ BRAND MODES ══ */}
 <SectionReveal direction="up" delay={0.1}>
 <section
@@ -633,6 +603,36 @@ export default function Home() {
   </div>
 </section>
 </SectionReveal>
+      <SectionReveal delay={0.1}></SectionReveal>
+      {/* ══ 7. CAREERS ══ */}
+      <SectionReveal direction="up" delay={0.1}>
+      <section className="grid items-start px-14 py-14"
+  style={{ gridTemplateColumns: '1fr auto', gap: '2rem', background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.08)' }}>
+        <div>
+          <h2 className="font-playfair font-black text-[#1A1208] leading-[1.05] mb-5"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
+            We Build Careers,<br />
+<em className="grad-text not-italic">Not Just Shifts.</em>
+          </h2>
+          <p className="text-[0.86rem] leading-[1.85] font-light"
+            style={{ color: 'rgba(42,30,16,0.52)', maxWidth: 440 }}>
+            Join a team where growth is expected, people are valued, and excellence is the only standard.
+          </p>
+        </div>
+        <div className="flex flex-col items-end gap-3 pt-1 flex-shrink-0">
+          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
+            className="grad-bg text-white no-underline px-8 py-4 text-[0.6rem] tracking-[0.22em] uppercase font-semibold whitespace-nowrap transition-opacity hover:opacity-85">
+            Explore Opportunities
+          </a>
+          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
+            className="text-[0.5rem] tracking-[0.2em] uppercase no-underline transition-colors hover:text-[#E8650A]"
+            style={{ color: 'rgba(42,30,16,0.35)' }}>
+            Current Openings →
+          </a>
+        </div>
+      </section>
+      </SectionReveal>
+
       <SectionReveal delay={0.1}>
       {/* ══ FOOTER ══ */}
       <Footer />
