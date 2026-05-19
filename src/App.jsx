@@ -31,14 +31,7 @@ export default function App() {
 
   return (
     <>
-      {!introDone && (
-        <IntroAnimation onComplete={() => setIntroDone(true)} />
-      )}
-      <div style={{
-        opacity: introDone ? 1 : 0,
-        transition: 'opacity 0.8s ease',
-        filter: introDone ? 'blur(0px)' : 'blur(8px)',
-      }}>
+      <div style={{ opacity: 1 }}>
         <BrowserRouter>
           <Navbar />
           <AnimatedRoutes />

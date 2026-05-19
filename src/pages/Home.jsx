@@ -146,19 +146,19 @@ const fieldPhotos = [
 ]
 const brandModes = [
   {
-    title: "DUNKIN'",
+    title: "",
     img: dunkinCardImg,
-    subtitle: 'Coffee • Donuts • Breakfast'
+    subtitle: ''
   },
   {
-    title: 'BASKIN ROBBINS',
+    title: '',
     img: baskinCardImg,
-    subtitle: 'Ice Cream • Cakes • Desserts'
+    subtitle: ''
   },
   {
-    title: 'SMOOTHIE KING',
+    title: '',
     img: smoothieCardImg,
-    subtitle: 'Smoothies • Fitness • Energy'
+    subtitle: ''
   }
 ]
 
