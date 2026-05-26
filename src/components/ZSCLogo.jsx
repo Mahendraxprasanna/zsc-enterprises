@@ -86,7 +86,7 @@ export default function ZSCLogo({ size = 40, dark = false }) {
         fontWeight: 500,
         letterSpacing: '0.35em',
         textTransform: 'uppercase',
-        color: dark ? 'rgba(250,247,242,0.6)' : 'rgba(42,30,16,0.5)',
+color: dark ? 'rgba(42,30,16,0.5)' : 'rgba(250,247,242,0.6)',
         lineHeight: 1,
         textIndent: '0.35em',
       }}>

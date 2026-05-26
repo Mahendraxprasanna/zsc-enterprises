@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import dunkinvideo   from '../assets/videos/dunkinad.mp4'
 import baskinvideo   from '../assets/videos/baskinad.mp4'
 import smoothievideo from '../assets/videos/smoothiead.mp4'
+import jimmyvideo from '../assets/videos/jimmyad.mp4'
 
 // ─────────────────────────────────────────────
 // BRAND DATA
@@ -56,54 +57,9 @@ const BRANDS = [
     icon: '☕',
     video: dunkinvideo,
   },
-
-  {
-    id: 'baskin',
-    index: 1,
-    name: 'Baskin Robbins',
-    tagline: 'Make It Memorable.',
-    label: 'Brand 02',
-    desc: "The world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience.",
-    stats: [{ n: '70+', l: 'Years' }, { n: '#1', l: 'Ice Cream' }, { n: '100+', l: 'Flavors' }],
-
-    // ── BASKIN ROBBINS — Signature pink #F05097 + Deep burgundy #402021 ──
-    bg: `linear-gradient(145deg,
-      #140508 0%,
-      #200a0d 25%,
-      #2a0d12 50%,
-      #1a0608 75%,
-      #0f0305 100%)`,
-    glow:     'rgba(240,80,151,0.50)',
-    glowAlt:  'rgba(64,32,33,0.80)',
-    accent:   '#F05097',
-    accentAlt:'#7A2830',
-    textPrimary: '#FFF5F8',
-    textMuted: 'rgba(255,220,230,0.55)',
-    gradText: 'linear-gradient(135deg, #F05097 0%, #7A2830 60%, #3D1012 100%)',
-    borderColor: 'rgba(240,80,151,0.22)',
-    statBg: 'rgba(122,40,48,0.15)',
-    particles: ['#F05097','#7A2830','#C4405A','#3D1012','#FFF5F8'],
-    shapes: [
-  { size: 800, x: 82, y: 8,   color: 'rgba(240,80,151,0.18)',  blur: 150 },
-  { size: 700, x: 8,  y: 72,  color: 'rgba(122,40,48,0.55)',   blur: 140 },
-  { size: 500, x: 50, y: 45,  color: 'rgba(61,16,18,0.70)',    blur: 100 },
-  { size: 350, x: 22, y: 18,  color: 'rgba(196,64,90,0.12)',   blur: 70  },
-  { size: 280, x: 65, y: 75,  color: 'rgba(122,40,48,0.40)',   blur: 80  },
-  ],
-    productLabel: 'Baskin Robbins Ice Cream Photo',
-    heroLabel:    'Baskin Robbins Store',
-    floatLabel:   'Ice Cream Scoops',
-    tags: ['Ice Cream', '100+ Flavors', 'Hard Serve', 'Co-Located', 'Premium'],
-    floatCardEst:   '1945',
-    floatCardTitle: 'Premium Flavors',
-    floatCardSub:   'Ice Cream Specialty',
-    icon: '🍦',
-    video: baskinvideo,
-  },
-
   {
     id: 'smoothie',
-    index: 2,
+    index: 1,
     name: 'Smoothie King',
     tagline: 'Reign Supreme.',
     label: 'Brand 03',
@@ -147,6 +103,90 @@ const BRANDS = [
     icon: '🥤',
     video: smoothievideo,
   },
+  {
+    id: 'baskin',
+    index: 2,
+    name: 'Baskin Robbins',
+    tagline: 'Make It Memorable.',
+    label: 'Brand 02',
+    desc: "The world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience.",
+    stats: [{ n: '70+', l: 'Years' }, { n: '#1', l: 'Ice Cream' }, { n: '100+', l: 'Flavors' }],
+
+    // ── BASKIN ROBBINS — Signature pink #F05097 + Deep burgundy #402021 ──
+    bg: `linear-gradient(145deg,
+      #140508 0%,
+      #200a0d 25%,
+      #2a0d12 50%,
+      #1a0608 75%,
+      #0f0305 100%)`,
+    glow:     'rgba(240,80,151,0.50)',
+    glowAlt:  'rgba(64,32,33,0.80)',
+    accent:   '#F05097',
+    accentAlt:'#7A2830',
+    textPrimary: '#FFF5F8',
+    textMuted: 'rgba(255,220,230,0.55)',
+    gradText: 'linear-gradient(135deg, #F05097 0%, #7A2830 60%, #3D1012 100%)',
+    borderColor: 'rgba(240,80,151,0.22)',
+    statBg: 'rgba(122,40,48,0.15)',
+    particles: ['#F05097','#7A2830','#C4405A','#3D1012','#FFF5F8'],
+    shapes: [
+  { size: 800, x: 82, y: 8,   color: 'rgba(240,80,151,0.18)',  blur: 150 },
+  { size: 700, x: 8,  y: 72,  color: 'rgba(122,40,48,0.55)',   blur: 140 },
+  { size: 500, x: 50, y: 45,  color: 'rgba(61,16,18,0.70)',    blur: 100 },
+  { size: 350, x: 22, y: 18,  color: 'rgba(196,64,90,0.12)',   blur: 70  },
+  { size: 280, x: 65, y: 75,  color: 'rgba(122,40,48,0.40)',   blur: 80  },
+  ],
+    productLabel: 'Baskin Robbins Ice Cream Photo',
+    heroLabel:    'Baskin Robbins Store',
+    floatLabel:   'Ice Cream Scoops',
+    tags: ['Ice Cream', '100+ Flavors', 'Hard Serve', 'Co-Located', 'Premium'],
+    floatCardEst:   '1945',
+    floatCardTitle: 'Premium Flavors',
+    floatCardSub:   'Ice Cream Specialty',
+    icon: '🍦',
+    video: baskinvideo,
+  },
+  {
+  id: 'jimmyjohns',
+  index: 3,
+  name: "Jimmy John's",
+  tagline: 'Freaky Fast. Freaky Fresh.',
+  label: 'Brand 04',
+  desc: "ZSC Enterprises brings the Jimmy John's experience to the Southeast — delivering gourmet sandwiches with the same uncompromising speed and freshness the brand is known for. Fresh-baked bread daily, hand-sliced meats, and sandwiches made to order every time.",
+  stats: [{ n: '1983', l: 'Founded' }, { n: 'SE', l: 'Region' }, { n: 'Fast', l: 'Delivery' }],
+
+  bg: `linear-gradient(145deg,
+    #0f0000 0%,
+    #1e0000 25%,
+    #180000 50%,
+    #1a0000 75%,
+    #0f0000 100%)`,
+  glow:     'rgba(196,18,48,0.50)',
+  glowAlt:  'rgba(139,0,0,0.35)',
+  accent:   '#C41230',
+  accentAlt:'#8B0000',
+  textPrimary: '#FFF5F5',
+  textMuted:   'rgba(255,245,245,0.52)',
+  gradText: 'linear-gradient(135deg, #C41230 0%, #FF4444 100%)',
+  borderColor: 'rgba(196,18,48,0.30)',
+  statBg:   'rgba(196,18,48,0.08)',
+  particles: ['#C41230','#FF4444','#8B0000','#FF6666','#FFF5F5'],
+  shapes: [
+    { size: 750, x: 78, y: 8,   color: 'rgba(196,18,48,0.20)',  blur: 140 },
+    { size: 600, x: 6,  y: 68,  color: 'rgba(139,0,0,0.16)',    blur: 120 },
+    { size: 420, x: 48, y: 48,  color: 'rgba(196,18,48,0.12)',  blur: 90  },
+    { size: 260, x: 25, y: 20,  color: 'rgba(139,0,0,0.08)',    blur: 60  },
+  ],
+  productLabel: "Jimmy John's Sandwich",
+  heroLabel:    "Jimmy John's Store",
+  floatLabel:   'Fresh Sandwich',
+  tags: ['Gourmet Subs', 'Fresh Bread', 'Catering', 'Fast Delivery', 'Southeast'],
+  floatCardEst:   '1983',
+  floatCardTitle: 'Freaky Fast',
+  floatCardSub:   'Gourmet Sandwiches',
+  icon: '🥖',
+  video: jimmyvideo,
+},
 ]
 
 // ─────────────────────────────────────────────
@@ -736,7 +776,10 @@ const slideVariants = {
 // MAIN BRANDS PAGE
 // ─────────────────────────────────────────────
 export default function Brands() {
-  const [current, setCurrent] = useState(0)
+  const params = new URLSearchParams(window.location.search)
+const initialBrand = params.get('brand')
+const initialIndex = initialBrand === 'baskin' ? 2 : initialBrand === 'smoothie' ? 1 : initialBrand === 'jimmyjohns' ? 3 : 0
+const [current, setCurrent] = useState(initialIndex)
   const [direction, setDirection] = useState(1) // 1 = right, -1 = left
   const [dragging, setDragging] = useState(false)
   const dragStart = useRef(null)
@@ -790,13 +833,13 @@ export default function Brands() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      style={{ paddingTop: 68 }}
+      style={{ paddingTop: 0 }}
     >
       {/* ── SLIDER CONTAINER ── */}
       <div
   className="relative overflow-hidden"
   style={{
-    height: 'calc(100vh - 68px)',
+    height: '100vh',
     userSelect: 'none',
 
     // ADD THESE

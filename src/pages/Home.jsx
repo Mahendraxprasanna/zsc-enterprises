@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import SectionReveal from '../components/SectionReveal'
 import heroBg from '../assets/images/dunkinbackground.webp'
 import donutsImg from '../assets/images/donuts.jpeg'
-import snacksImg from '../assets/images/snacks.webp'
-import stallImg from '../assets/images/stall.webp'
+import snacksImg from '../assets/images/snacks.jpeg'
+import stallImg from '../assets/images/stall.jpeg'
 import govKempImg from '../assets/images/govkemp.png'
 import ndcpBoardImg from '../assets/images/ndcpboard.png'
 import boardDirectorsImg from '../assets/images/boarddirectors.png'
@@ -14,7 +14,7 @@ import Footer from '../components/Footer'
 import dunkinCardImg from '../assets/images/dd.jpg'
 import baskinCardImg from '../assets/images/br.jpg'
 import smoothieCardImg from '../assets/images/sk.jpg'
-
+import jimmyCardImg from '../assets/images/jj.webp'
 function FieldGallery({ photos }) {
   const [active, setActive] = useState(null)
 
@@ -145,21 +145,10 @@ const fieldPhotos = [
   { img: peterbiltImg,      tag: 'Operations',     title: 'Peterbilt Tour',        alt: 'Peterbilt facility tour' },
 ]
 const brandModes = [
-  {
-    title: "",
-    img: dunkinCardImg,
-    subtitle: ''
-  },
-  {
-    title: '',
-    img: baskinCardImg,
-    subtitle: ''
-  },
-  {
-    title: '',
-    img: smoothieCardImg,
-    subtitle: ''
-  }
+  { title: '', img: dunkinCardImg,   subtitle: '', scale: 1,    link: '/brands' },
+  { title: '', img: baskinCardImg,   subtitle: '', scale: 1,    link: '/brands?brand=baskin' },
+  { title: '', img: smoothieCardImg, subtitle: '', scale: 1,    link: '/brands?brand=smoothie' },
+  { title: '', img: jimmyCardImg,    subtitle: '', scale: 2, link: '/brands?brand=jimmyjohns' },
 ]
 
 const fadeUp = {
@@ -192,7 +181,7 @@ export default function Home() {
           src={heroBg}
           alt="Dunkin store interior"
           className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ filter: 'brightness(0.28) saturate(0.5) sepia(0.4)' }}
+          style={{ filter: 'brightness(1) saturate(1) sepia(.1)' }}
         />
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(to right, rgba(18,8,3,0.97) 0%, rgba(18,8,3,0.75) 45%, rgba(18,8,3,0.15) 100%)' }}
@@ -213,7 +202,14 @@ export default function Home() {
             variants={fadeUp} initial="hidden" animate="show" custom={1}
           >
             Building Brands.<br />
-            <em className="grad-text italic">Inspiring People.</em>
+            <em style={{
+  fontStyle: 'italic',
+  background: 'linear-gradient(90deg, #E8650A 0%, #D4186C 100%)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  display: 'inline-block',
+}}>Inspiring People.</em>
           </motion.h1>
 
           <motion.p
@@ -283,7 +279,7 @@ export default function Home() {
     left: 0;
     right: 0;
     height: 0%;
-    background: linear-gradient(135deg, #E8650A, #D4186C);
+    background: linear-gradient(180deg, #E8650A, #D4186C);
     transition: height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: 0;
   }
@@ -351,7 +347,7 @@ export default function Home() {
         <div className="relative overflow-hidden" style={{ minHeight: 360 }}>
           <img src={donutsImg} alt="Dunkin donuts and coffee"
             className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.88)' }} />
+            style={{ filter: 'brightness(1) saturate(0.9) contrast(1.1)' }} />
         </div>
         <motion.div className="px-14 py-16 flex flex-col justify-center"
           style={{ background: '#F3EDE3' }}
@@ -407,9 +403,9 @@ export default function Home() {
     <div className="relative overflow-hidden" style={{ minHeight: 480 }}>
       <img src={snacksImg} alt="Fresh pastries and donuts"
         className="w-full h-full object-cover object-center"
-        style={{ filter: 'brightness(0.6) saturate(0.8)' }} />
+       style={{ filter: 'brightness(0.85) saturate(1.1) contrast(1.05)' }} />
       <div className="absolute top-6 left-6 font-playfair font-black"
-        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}>01</div>
+        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}></div>
       <div className="absolute bottom-0 left-0 right-0 h-[3px] grad-bg" />
     </div>
     <div className="px-14 py-16 flex flex-col justify-center"
@@ -479,9 +475,9 @@ export default function Home() {
     <div className="relative overflow-hidden" style={{ minHeight: 480 }}>
       <img src={stallImg} alt="Cold brew nitro taps"
         className="w-full h-full object-cover object-center"
-        style={{ filter: 'brightness(0.6) saturate(0.8)' }} />
+        style={{ filter: 'brightness(0.85) saturate(1.1) contrast(1.05)' }} />
       <div className="absolute top-6 right-6 font-playfair font-black"
-        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}>02</div>
+        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}></div>
       <div className="absolute bottom-0 left-0 right-0 h-[3px] grad-bg" />
     </div>
   </div>
@@ -537,14 +533,16 @@ export default function Home() {
   <div
     className="grid gap-6 mx-auto"
     style={{
-      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateColumns: 'repeat(4, 1fr)',
       maxWidth: 1150
     }}
   >
     {brandModes.map((brand, i) => (
       <motion.div
-        key={brand.title}
-        whileHover={{ y: -8, scale: 1.02 }}
+  key={i}
+  whileHover={{ y: -8, scale: 1.02 }}
+  onClick={() => window.location.href = brand.link}
+  style={{ cursor: 'pointer' }}
         transition={{ duration: 0.25 }}
         className="relative overflow-hidden cursor-pointer group"
         style={{
@@ -565,6 +563,7 @@ export default function Home() {
     style={{
       objectFit: 'contain',
       objectPosition: 'center',
+      transform: `scale(${brand.scale || 1})`,
     }}
   />
 </div>
