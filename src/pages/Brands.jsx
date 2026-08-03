@@ -16,7 +16,7 @@ const BRANDS = [
     index: 0,
     name: "Dunkin'",
     tagline: "America Runs on Dunkin'.",
-    label: 'Brand 01',
+    label: '',
     desc: "ZSC Enterprises operates 50+ Dunkin' locations across the Atlanta metro — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
     stats: [{ n: '50+', l: 'Locations' }, { n: '2007', l: 'Since' }, { n: 'ATL', l: 'Market' }],
 
@@ -62,7 +62,7 @@ const BRANDS = [
     index: 1,
     name: 'Smoothie King',
     tagline: 'Reign Supreme.',
-    label: 'Brand 03',
+    label: '',
     desc: "Purpose-driven blends made with real fruit and wholesome ingredients — helping Atlanta guests fuel their active lifestyle. ZSC brings the Smoothie King mission to life every single day.",
     stats: [{ n: '1,000+', l: 'US Locations' }, { n: 'Real', l: 'Fruit Only' }, { n: 'ATL', l: 'Market' }],
 
@@ -108,7 +108,7 @@ const BRANDS = [
     index: 2,
     name: 'Baskin Robbins',
     tagline: 'Make It Memorable.',
-    label: 'Brand 02',
+    label: '',
     desc: "The world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience.",
     stats: [{ n: '70+', l: 'Years' }, { n: '#1', l: 'Ice Cream' }, { n: '100+', l: 'Flavors' }],
 
@@ -151,7 +151,7 @@ const BRANDS = [
   index: 3,
   name: "Jimmy John's",
   tagline: 'Freaky Fast. Freaky Fresh.',
-  label: 'Brand 04',
+  label: '',
   desc: "ZSC Enterprises brings the Jimmy John's experience to the Southeast — delivering gourmet sandwiches with the same uncompromising speed and freshness the brand is known for. Fresh-baked bread daily, hand-sliced meats, and sandwiches made to order every time.",
   stats: [{ n: '1983', l: 'Founded' }, { n: 'SE', l: 'Region' }, { n: 'Fast', l: 'Delivery' }],
 

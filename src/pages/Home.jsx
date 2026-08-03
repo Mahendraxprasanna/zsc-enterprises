@@ -1,642 +1,509 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import SectionReveal from '../components/SectionReveal'
-import heroBg from '../assets/images/dunkinbackground.webp'
-import donutsImg from '../assets/images/donuts.jpeg'
-import snacksImg from '../assets/images/snacks.jpeg'
-import stallImg from '../assets/images/stall.jpeg'
-import govKempImg from '../assets/images/govkemp.png'
-import ndcpBoardImg from '../assets/images/ndcpboard.png'
-import boardDirectorsImg from '../assets/images/boarddirectors.png'
-import peterbiltImg from '../assets/images/peterbilt.png'
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
+import { Link, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
-import dunkinCardImg from '../assets/images/dd.jpg'
-import baskinCardImg from '../assets/images/br.jpg'
-import smoothieCardImg from '../assets/images/sk.jpg'
-import jimmyCardImg from '../assets/images/jj.webp'
-function FieldGallery({ photos }) {
-  const [active, setActive] = useState(null)
 
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (active === null) return
-      if (e.key === 'Escape') setActive(null)
-      if (e.key === 'ArrowRight') setActive((active + 1) % photos.length)
-      if (e.key === 'ArrowLeft') setActive((active - 1 + photos.length) % photos.length)
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [active, photos.length])
-
-  useEffect(() => {
-    document.body.style.overflow = active !== null ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [active])
-
+import heroBg      from '../assets/images/street.png'
+import dunkinVideo   from '../assets/videos/donutrotate.mp4'
+import baskinVideo   from '../assets/videos/baskinrotate.mp4'
+import smoothieVideo from '../assets/videos/smoothierotate.mp4'
+import jimmyVideo    from '../assets/videos/jimmyrotate.mp4'
+import teamImg from '../assets/images/team.jpg'
+// ─────────────────────────────────────────────────────────
+// CIRCULAR ORBIT TEXT
+// ─────────────────────────────────────────────────────────
+function CircularOrbit({ id, text, color, size = 480, duration = 22 }) {
+  const r = size / 2 - 24
+  const cx = size / 2
+  const cy = size / 2
+  const repeated = `${text} · ${text} · ${text} · `
   return (
-    <>
-      {/* GRID */}
-      <div className="grid px-12 pb-14 gap-4"
-        style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-        {photos.map((p, i) => (
-          <div key={p.title}
-            className="relative overflow-hidden group cursor-pointer"
-            style={{ border: '1px solid rgba(250,247,242,0.08)', borderRadius: 2 }}
-            onClick={() => setActive(i)}
-          >
-            <img src={p.img} alt={p.alt}
-              className="w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              style={{ height: 280, objectFit: 'contain', objectPosition: 'center top', display: 'block' }} />
-            <div style={{ background: '#1C0F08', padding: '12px 14px 16px', borderTop: '2px solid #E8650A' }}>
-              <div className="text-[0.44rem] tracking-[0.26em] uppercase font-semibold mb-1"
-                style={{ color: '#E8650A' }}>{p.tag}</div>
-              <div className="font-playfair font-bold text-[#FAF7F2] leading-[1.2]"
-                style={{ fontSize: '1rem' }}>{p.title}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* LIGHTBOX */}
-      {active !== null && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
-          style={{ background: 'rgba(10,5,2,0.96)' }}
-          onClick={() => setActive(null)}
-        >
-          {/* Prev */}
-          <button
-            className="absolute left-6 z-10 flex items-center justify-center transition-all duration-200"
-            style={{
-              width: 52, height: 52,
-              background: '#E8650A',
-              border: 'none', cursor: 'pointer', color: '#fff',
-              fontSize: '1.2rem', fontWeight: 700,
-            }}
-            onClick={(e) => { e.stopPropagation(); setActive((active - 1 + photos.length) % photos.length) }}
-          >
-            ←
-          </button>
-
-          {/* Image */}
-          <div
-            className="relative"
-            style={{ maxWidth: '72vw', maxHeight: '85vh' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={photos[active].img}
-              alt={photos[active].alt}
-              style={{
-                maxWidth: '72vw',
-                maxHeight: '78vh',
-                objectFit: 'contain',
-                display: 'block',
-              }}
-            />
-            <div className="text-center mt-4"
-              style={{ color: 'rgba(250,247,242,0.65)', fontSize: '0.82rem', letterSpacing: '0.04em' }}>
-              {photos[active].title} &nbsp;·&nbsp; {photos[active].tag}
-            </div>
-          </div>
-
-          {/* Next */}
-          <button
-            className="absolute right-6 z-10 flex items-center justify-center transition-all duration-200"
-            style={{
-              width: 52, height: 52,
-              background: '#E8650A',
-              border: 'none', cursor: 'pointer', color: '#fff',
-              fontSize: '1.2rem', fontWeight: 700,
-            }}
-            onClick={(e) => { e.stopPropagation(); setActive((active + 1) % photos.length) }}
-          >
-            →
-          </button>
-
-          {/* Close hint */}
-          <div className="absolute top-6 right-8 text-[0.5rem] tracking-[0.2em] uppercase"
-            style={{ color: 'rgba(250,247,242,0.3)', cursor: 'pointer' }}
-            onClick={() => setActive(null)}>
-            ESC to close
-          </div>
-        </div>
-      )}
-    </>
+    <motion.svg
+      viewBox={`0 0 ${size} ${size}`}
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 4 }}
+      animate={{ rotate: -360 }}
+      transition={{ duration, repeat: Infinity, ease: 'linear' }}
+    >
+      <defs>
+        <path id={`c-${id}`} d={`M${cx},${cy} m-${r},0 a${r},${r} 0 1,1 ${r*2},0 a${r},${r} 0 1,1-${r*2},0`} />
+      </defs>
+      <text fontSize="11.5" fontFamily="'Jost',sans-serif" fontWeight="800" letterSpacing="5" fill={color} opacity="0.85">
+        <textPath href={`#c-${id}`} startOffset="0%">{repeated}</textPath>
+      </text>
+    </motion.svg>
   )
 }
-const tickerItems = [
-  "ZSC Enterprises","Dunkin'","Baskin Robbins","Smoothie King",
-  "Atlanta, Georgia","Est. 2016","45+ Locations","Jimmy Johns","Multi Brand","Multi State"
-]
 
-const stats = [
-  { n: '45', sup: '+', label: "Dunkin' Locations Operated" },
-  { n: '4',  sup: '',  label: 'World-Class Brands' },
-  { n: '3',sup: 'M', label: 'Georgia, Alabama & Florida-Multi State Operated' },
-  { n: '25', sup: '+', label: 'Years of QSR Excellence' },
-]
+// ─────────────────────────────────────────────────────────
+// BRAND SECTION — sticky scroll reveal
+// ─────────────────────────────────────────────────────────
+function BrandSection({ id, orbitText, orbitColor, orbitDuration, image, video, imageAlt, eyebrow, accentColor, heading, headingLine2, headingGradient, body, ctaLabel, ctaLink, ctaBg, ctaText='#fff', ctaBorder, bg, textColor, subtleColor, flip=false, videoCrop={ top:0, right:0, bottom:0, left:0 }, videoScale=1, videoShape='circle' }) {
+  const ref = useRef(null)
+const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
+  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 22 })
 
-const fieldPhotos = [
-  { img: govKempImg,        tag: 'CCB Opening',    title: 'With Gov. Kemp',        alt: 'Shams with Governor Kemp' },
-  { img: ndcpBoardImg,      tag: 'NDCP Board',     title: 'With Industry Leaders', alt: 'NDCP Board meeting' },
-  { img: boardDirectorsImg, tag: 'NDCP Directors', title: 'Board of Directors',    alt: 'Board of Directors' },
-  { img: peterbiltImg,      tag: 'Operations',     title: 'Peterbilt Tour',        alt: 'Peterbilt facility tour' },
-]
-const brandModes = [
-  { title: '', img: dunkinCardImg,   subtitle: '', scale: 1,    link: '/brands' },
-  { title: '', img: baskinCardImg,   subtitle: '', scale: 1,    link: '/brands?brand=baskin' },
-  { title: '', img: smoothieCardImg, subtitle: '', scale: 1,    link: '/brands?brand=smoothie' },
-  { title: '', img: jimmyCardImg,    subtitle: '', scale: 2, link: '/brands?brand=jimmyjohns' },
-]
+  const imgScale   = useTransform(progress, [0, 0.45, 1], [0.75, 1, 1.08])
+  const imgRotate  = useTransform(progress, [0, 1], [-6, 16])
+  const imgOpacity = useTransform(progress, [0, 0.15], [0.3, 1])
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }
-  })
+  const txtOpacity = useTransform(progress, [0.05, 0.3], [0, 1])
+  const txtX       = useTransform(progress, [0.05, 0.35], [flip ? -60 : 60, 0])
+  const txtBlur    = useTransform(progress, [0.05, 0.32], [12, 0])
+
+  const lineW      = useTransform(progress, [0.1, 0.38], [0, 42])
+  const ctaOpacity = useTransform(progress, [0.2, 0.45], [0, 1])
+  const ctaY       = useTransform(progress, [0.2, 0.45], [24, 0])
+
+  return (
+    <section ref={ref} style={{ height: '250vh', background: bg, position: 'relative' }}>
+      <div style={{
+        position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+      }}>
+
+        {/* ── IMAGE ── */}
+        <div style={{
+          order: flip ? 2 : 1,
+          position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: bg, overflow: 'hidden',
+        }}>
+          {/* Large ambient glow behind image */}
+          <div style={{
+            position: 'absolute', width: '70%', height: '70%', borderRadius: '50%',
+            background: `radial-gradient(circle, ${accentColor}28 0%, transparent 70%)`,
+            filter: 'blur(48px)', pointerEvents: 'none', zIndex: 1,
+          }} />
+
+          {/* Orbit container */}
+          <motion.div style={{
+            position: 'relative',
+            width: 'clamp(280px, 36vw, 460px)',
+            height: 'clamp(280px, 36vw, 460px)',
+            scale: imgScale,
+            rotate: imgRotate,
+            opacity: imgOpacity,
+          }}>
+            <div style={{
+  position: 'absolute',
+  top: videoShape === 'sub' ? '20%' : '5%',
+  left: videoShape === 'sub' ? '2%' : '5%',
+  width: videoShape === 'sub' ? '96%' : '90%',
+  height: videoShape === 'sub' ? '60%' : '90%',
+  zIndex: 3,
+  overflow: 'hidden',
+  borderRadius: videoShape === 'sub' ? '120px' : '50%',
+  clipPath: videoShape === 'sub' ? 'none' : 'circle(50% at 50% 50%)',
+}}>
+  {video ? (
+    <video
+      autoPlay muted loop playsInline
+      style={{
+        width: '100%', height: '100%',
+        objectFit: 'cover',
+        transform: `scale(${videoScale})`,
+        transformOrigin: 'center center',
+        filter: 'drop-shadow(0 20px 48px rgba(0,0,0,0.22))',
+      }}>
+      <source src={video} type="video/mp4" />
+    </video>
+  ) : (
+    <img src={image} alt={imageAlt} style={{
+      width: '100%', height: '100%',
+      objectFit: 'contain',
+      filter: 'drop-shadow(0 20px 48px rgba(0,0,0,0.22))',
+    }} />
+  )}
+</div>
+          </motion.div>
+        </div>
+
+        {/* ── TEXT ── */}
+        <motion.div style={{
+          order: flip ? 1 : 2,
+          background: bg,
+          display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          padding: 'clamp(3rem, 7vw, 9rem)',
+          opacity: txtOpacity,
+          x: txtX,
+          filter: txtBlur.get ? undefined : 'none',
+        }}>
+          {/* Eyebrow */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.6rem' }}>
+            <motion.div style={{ height: 1.5, background: accentColor, width: lineW, flexShrink: 0 }} />
+            <span style={{ fontSize: '0.99rem', letterSpacing: '0.38em', textTransform: 'uppercase', color: accentColor, fontWeight: 800, whiteSpace: 'nowrap' }}>
+              {eyebrow}
+            </span>
+          </div>
+
+          {/* Heading */}
+          <h2 className="font-playfair font-black" style={{
+            fontSize: 'clamp(2.6rem, 5vw, 5.2rem)',
+            lineHeight: 0.9, color: textColor,
+            marginBottom: '1.8rem', letterSpacing: '-0.03em',
+          }}>
+            {heading}<br />
+            <em style={{
+  fontStyle: 'italic', display: 'inline-block',
+  background: headingGradient,
+  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+  paddingRight: '0.05em',
+}}>{headingLine2}</em>
+          </h2>
+
+          {/* Thin divider */}
+          <div style={{ width: 48, height: 1, background: accentColor, opacity: 0.3, marginBottom: '2rem' }} />
+
+          {/* Body */}
+          <p style={{
+            fontSize: 'clamp(0.88rem, 1.1vw, 1rem)',
+            lineHeight: 2.1, color: subtleColor,
+            fontWeight: 300, maxWidth: 400, marginBottom: '3rem',
+          }}>{body}</p>
+
+          {/* CTA */}
+          <motion.div style={{ opacity: ctaOpacity, y: ctaY }}>
+            <Link to={ctaLink} style={{
+              display: 'inline-block',
+              background: ctaBg,
+              color: ctaText,
+              textDecoration: 'none',
+              padding: '0.85rem 2.6rem',
+              fontSize: '0.52rem',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              fontWeight: 700,
+              border: ctaBorder || 'none',
+              transition: 'opacity 0.25s, transform 0.25s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.8'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}>
+              {ctaLabel}
+            </Link>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
 }
 
+// ─────────────────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────────────────
 export default function Home() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-    >
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => { setTimeout(() => setLoaded(true), 100) }, [])
 
-      {/* ══ 1. HERO ══ */}
-      <section
-        className="relative flex items-center overflow-hidden"
-        style={{
-  minHeight: '100vh',
-  paddingTop: '120px',
-  paddingBottom: '40px'
-}}
-      >
-        <img
-          src={heroBg}
-          alt="Dunkin store interior"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ filter: 'brightness(1) saturate(1) sepia(.1)' }}
-        />
-        <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(to right, rgba(18,8,3,0.97) 0%, rgba(18,8,3,0.75) 45%, rgba(18,8,3,0.15) 100%)' }}
-        />
-        <div className="relative z-10 px-16 max-w-[620px]">
-          <motion.div
-            className="flex items-center gap-3 mb-6"
-            style={{ fontSize: '0.48rem', letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.38)' }}
-            variants={fadeUp} initial="hidden" animate="show" custom={0}
-          >
-            <span style={{ display: 'block', width: 20, height: 1, background: '#E8650A', flexShrink: 0 }} />
-            Atlanta, Georgia &nbsp;·&nbsp; Est. 2016 &nbsp;·&nbsp; Franchise Group
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+
+      {/* ══════════════════════════════════════
+          1. HERO
+      ══════════════════════════════════════ */}
+      <section style={{ position: 'relative', height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+        {/* BG image */}
+        <motion.img src={heroBg} alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(1) saturate(1) sepia(0.4)' }}
+          initial={{ scale: 1.08 }} animate={{ scale: 1 }}
+          transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }} />
+
+        {/* Gradient overlays */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(4,2,0,0.15) 0%, rgba(4,2,0,0.82) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center 40%, rgba(232,101,10,0.12) 0%, transparent 60%)' }} />
+
+        {/* Grain overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, opacity: 0.04,
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          pointerEvents: 'none',
+        }} />
+
+        {/* Content */}
+        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 2rem', maxWidth: 900 }}>
+
+          {/* Eyebrow */}
+          <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: '2.4rem' }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.3 }}>
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, transparent, #E8650A)' }} />
+            <span style={{ fontSize: '0.43rem', letterSpacing: '0.42em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.4)', fontWeight: 500 }}>
+              Atlanta · Est. 2016 · Franchise Group
+            </span>
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, #D4186C, transparent)' }} />
           </motion.div>
 
-          <motion.h1
-            className="font-playfair font-black text-[#F3EDE3] leading-[0.95] mb-6"
-            style={{ fontSize: 'clamp(4rem, 8.5vw, 7.5rem)' }}
-            variants={fadeUp} initial="hidden" animate="show" custom={1}
-          >
-            Building Brands.<br />
-            <em style={{
-  fontStyle: 'italic',
-  background: 'linear-gradient(90deg, #E8650A 0%, #D4186C 100%)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-  display: 'inline-block',
-}}>Inspiring People.</em>
-          </motion.h1>
+          {/* Main headline */}
+          <div style={{ overflow: 'hidden', marginBottom: '0.3rem' }}>
+            <motion.h1 className="font-playfair font-black"
+              style={{ fontSize: 'clamp(4.5rem, 11vw, 11rem)', lineHeight: 0.84, color: '#FAF7F2', letterSpacing: '-0.03em' }}
+              initial={{ y: 140, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+              ZSC
+            </motion.h1>
+          </div>
+          <div style={{ overflow: 'hidden', marginBottom: '3rem' }}>
+  <motion.h1 className="font-playfair font-black"
+    style={{
+      fontSize: 'clamp(4.5rem, 11vw, 11rem)', lineHeight: 0.95,
+      paddingBottom: '0.1em',
+                letterSpacing: '-0.03em', fontStyle: 'italic',
+                background: 'linear-gradient(90deg, #E8650A 0%, #D4186C 100%)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text', display: 'inline-block',
+              }}
+              initial={{ y: 140, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.52, ease: [0.16, 1, 0.3, 1] }}>
+              Enterprises
+            </motion.h1>
+          </div>
 
-          <motion.p
-            className="text-[0.88rem] leading-[1.85] font-light mb-8"
-            style={{ color: 'rgba(250,247,242,0.5)' }}
-            variants={fadeUp} initial="hidden" animate="show" custom={2}
-          >
-            ZSC Enterprises is one of Atlanta's fastest-growing franchise groups —
-            operating Dunkin', Baskin Robbins, and Smoothie King with an
-            uncompromising standard of excellence.
+          <motion.p style={{ fontSize: 'clamp(1rem, 1.4vw, 1.15rem)', lineHeight: 1.9, color: 'rgba(250,247,242,0.44)', fontWeight: 300, maxWidth: 520, margin: '0 auto 4rem' }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.75 }}>
+            Building memorable experiences, one cup, one scoop, one smile at a time.
           </motion.p>
 
-          <motion.div className="flex gap-4"
-            variants={fadeUp} initial="hidden" animate="show" custom={3}>
-            <Link to="/leadership"
-              className="grad-bg text-white no-underline px-8 py-3 text-[0.6rem] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85">
-              Meet Our Leader
+          <motion.div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.92 }}>
+            <Link to="/brands" style={{
+              background: 'linear-gradient(135deg, #E8650A, #D4186C)',
+              color: '#fff', textDecoration: 'none',
+              padding: '1.05rem 3.2rem',
+              fontSize: '0.56rem', letterSpacing: '0.26em', textTransform: 'uppercase', fontWeight: 700,
+              boxShadow: '0 16px 48px rgba(232,101,10,0.42)',
+              transition: 'transform 0.25s, box-shadow 0.25s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 22px 56px rgba(232,101,10,0.52)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(232,101,10,0.42)' }}>
+              Explore Our Brands
             </Link>
-            <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
-              className="no-underline px-8 py-3 text-[0.6rem] tracking-[0.2em] uppercase font-medium text-[#F3EDE3] transition-all duration-200"
-              style={{ border: '1px solid rgba(250,247,242,0.28)' }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = '#E8650A'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(250,247,242,0.28)'}
-            >
-              Join Our Team
-            </a>
+            <Link to="/leadership" style={{
+              color: 'rgba(250,247,242,0.5)', textDecoration: 'none',
+              padding: '1.05rem 2.6rem',
+              fontSize: '0.56rem', letterSpacing: '0.26em', textTransform: 'uppercase', fontWeight: 400,
+              border: '1px solid rgba(250,247,242,0.18)',
+              transition: 'all 0.3s ease',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#E8650A'; e.currentTarget.style.color = '#FAF7F2' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(250,247,242,0.18)'; e.currentTarget.style.color = 'rgba(250,247,242,0.5)' }}>
+              Our Story
+            </Link>
           </motion.div>
         </div>
 
-        <div className="absolute bottom-10 right-16 z-10 flex flex-col items-center gap-2">
-          <div className="w-[1px] h-10"
-            style={{ background: 'linear-gradient(to bottom, transparent, rgba(250,247,242,0.3))' }} />
-          <span className="text-[0.42rem] tracking-[0.3em] uppercase text-[rgba(250,247,242,0.22)]"
-            style={{ writingMode: 'vertical-rl' }}>Scroll</span>
-        </div>
-      </section>
-
-      {/* ══ 2. TICKER ══ */}
-      <div className="overflow-hidden py-[13px]"
-        style={{ background: '#1A1208', borderTop: '0.5px solid rgba(250,247,242,0.05)' }}>
-        <div className="flex whitespace-nowrap"
-          style={{ animation: 'ticker 30s linear infinite', width: 'max-content' }}>
-          {[...tickerItems, ...tickerItems].map((item, i) => (
-            <span key={i} className="inline-flex items-center">
-              <span className="text-[0.52rem] tracking-[0.26em] uppercase font-medium px-5"
-                style={{ color: 'rgba(250,247,242,0.4)' }}>{item}</span>
-              <span className="w-[3px] h-[3px] rounded-full flex-shrink-0"
-                style={{ background: '#E8650A' }} />
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ══ 3. NUMBERS ══ */}
-      <SectionReveal>
-      <style>{`
-  .stat-block {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background 0.4s ease;
-  }
-  .stat-block::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 0%;
-    background: linear-gradient(180deg, #E8650A, #D4186C);
-    transition: height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 0;
-  }
-  .stat-block:hover::before {
-    height: 100%;
-  }
-  .stat-block:hover .stat-n {
-    background: #F3EDE3;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-block:hover .stat-l {
-    color: rgba(250,247,242,0.6) !important;
-  }
-  .stat-block .stat-inner {
-    position: relative;
-    z-index: 1;
-  }
-  .stat-n {
-    font-family: 'Playfair Display', serif;
-    font-weight: 900;
-    background: linear-gradient(135deg, #E8650A, #D4186C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    font-size: 2.8rem;
-    transition: all 0.3s ease;
-  }
-`}
-    </style>
-
-<div className="grid"
-  style={{ gridTemplateColumns: 'repeat(4, 1fr)', background: '#F3EDE3', borderBottom: '0.5px solid rgba(42,30,16,0.1)' }}>
-  {stats.map((s, i) => (
-    <motion.div
-      key={s.label}
-      className="stat-block px-8 py-7"
-      style={{ borderRight: i < 3 ? '0.5px solid rgba(42,30,16,0.1)' : 'none' }}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: i * 0.08 }}
-    >
-      <div className="stat-inner">
-        <div className="stat-n">
-          {s.n}<sup style={{ fontSize: '1.2rem', verticalAlign: 'super' }}>{s.sup}</sup>
-        </div>
-        <div className="stat-l text-[0.48rem] tracking-[0.22em] uppercase font-medium"
-          style={{ color: 'rgba(42,30,16,0.38)' }}>
-          {s.label}
-        </div>
-      </div>
-    </motion.div>
-  ))}
-</div>
-</SectionReveal>
-
-      {/* ══ 4. ABOUT SPLIT ══ */}
-      <SectionReveal direction="up" delay={0.1}>
-      <section className="grid"
-        style={{ gridTemplateColumns: '1fr 1fr', borderTop: '0.5px solid rgba(42,30,16,0.1)' }}>
-        <div className="relative overflow-hidden" style={{ minHeight: 360 }}>
-          <img src={donutsImg} alt="Dunkin donuts and coffee"
-            className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(1) saturate(0.9) contrast(1.1)' }} />
-        </div>
-        <motion.div className="px-14 py-16 flex flex-col justify-center"
-          style={{ background: '#F3EDE3' }}
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}>
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-5 h-[1px]" style={{ background: '#E8650A' }} />
-            <span className="text-[0.5rem] tracking-[0.28em] uppercase text-[#E8650A] font-medium">About Us</span>
-          </div>
-          <h2 className="font-playfair font-black leading-[1.1] text-[#1A1208] mb-5"
-            style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}>
-            A Different Kind of<br />
-<em className="grad-text not-italic">Franchise Group.</em>
-          </h2>
-          <p className="text-[0.86rem] leading-[1.9] font-light mb-8"
-            style={{ color: 'rgba(42,30,16,0.6)' }}>
-            ZSC Enterprises is one of Atlanta's fastest-growing franchise groups, built on
-            a culture of excellence, people development, and community impact. We operate
-            with an uncompromising standard — because our guests deserve nothing less.
-          </p>
-          <div className="flex items-start gap-3 pt-6"
-            style={{ borderTop: '0.5px solid rgba(42,30,16,0.1)' }}>
-            <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center grad-bg text-white text-xs">📍</div>
-            <div>
-              <div className="text-[0.44rem] tracking-[0.22em] uppercase mb-1"
-                style={{ color: 'rgba(42,30,16,0.35)' }}>Headquarters</div>
-              <div className="text-[0.82rem] leading-[1.6]"
-                style={{ color: 'rgba(42,30,16,0.7)' }}>
-                3200 Windy Hill Rd SE<br />Atlanta, GA 30339
-              </div>
-            </div>
-          </div>
+        {/* Scroll cue */}
+        <motion.div style={{ position: 'absolute', bottom: 44, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, zIndex: 10 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}>
+          <motion.div style={{ width: 1, height: 56, background: 'linear-gradient(to bottom, transparent, rgba(232,101,10,0.75))' }}
+            animate={{ scaleY: [0.2, 1, 0.2], opacity: [0.2, 1, 0.2] }}
+            transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }} />
         </motion.div>
       </section>
-      </SectionReveal>
 
-      {/* ══ 5. STORE PHOTO GRID ══ */}
-      <SectionReveal direction="up" delay={0.1}>
-      <section style={{ background: '#1A1208' }}>
-  <div className="px-16 py-16 text-center">
-    <h2 className="font-playfair font-black text-[#F3EDE3] leading-[1.1]"
-      style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
-      The Experience We Deliver.<br />
-      <em className="grad-text">Every Single Day.</em>
-    </h2>
-  </div>
-
-  {/* Row 01 */}
-  <div className="grid"
-    style={{ gridTemplateColumns: '1fr 1fr', borderTop: '0.5px solid rgba(250,247,242,0.06)' }}>
-    <div className="relative overflow-hidden" style={{ minHeight: 480 }}>
-      <img src={snacksImg} alt="Fresh pastries and donuts"
-        className="w-full h-full object-cover object-center"
-       style={{ filter: 'brightness(0.85) saturate(1.1) contrast(1.05)' }} />
-      <div className="absolute top-6 left-6 font-playfair font-black"
-        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}></div>
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] grad-bg" />
-    </div>
-    <div className="px-14 py-16 flex flex-col justify-center"
-      style={{ background: '#F3EDE3' }}>
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-5 h-[1px]" style={{ background: '#E8650A' }} />
-        <span className="text-[0.48rem] tracking-[0.28em] uppercase font-medium text-[#E8650A]">
-          Our Dunkin' Experience
-        </span>
+      {/* ══════════════════════════════════════
+          2. TICKER
+      ══════════════════════════════════════ */}
+      <div style={{ overflow: 'hidden', background: '#0a0602', borderTop: '0.5px solid rgba(250,247,242,0.06)', borderBottom: '0.5px solid rgba(250,247,242,0.06)', padding: '16px 0' }}>
+        <motion.div style={{ display: 'flex', whiteSpace: 'nowrap', width: 'max-content' }}
+          animate={{ x: ['0%', '-50%'] }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}>
+          {[...Array(2)].flatMap((_, ri) =>
+            ["ZSC Enterprises","Dunkin'","Baskin Robbins","Smoothie King","Jimmy John's","Atlanta, Georgia","Est. 2016","45+ Locations","NDCP Chairman","Coffee Cafe Bakery"].map((item, i) => (
+              <span key={`${ri}-${i}`} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.46rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.26)', padding: '0 2.4rem', fontWeight: 500 }}>{item}</span>
+                <span style={{ width: 3, height: 3, borderRadius: '50%', background: '#E8650A', opacity: 0.4, flexShrink: 0 }} />
+              </span>
+            ))
+          )}
+        </motion.div>
       </div>
-      <h3 className="font-playfair font-black text-[#1A1208] leading-[1.1] mb-5"
-  style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)' }}>
-  Modern. Vibrant.<br />
-  <em className="grad-text not-italic">Always Fresh.</em>
-      </h3>
-      <p className="text-[0.86rem] leading-[1.9] font-light mb-8"
-        style={{ color: 'rgba(42,30,16,0.65)' }}>
-        Our Dunkin' locations are designed for the modern guest — bright, energetic
-        spaces featuring cold brew on tap, premium espresso, and the full Dunkin' menu
-        delivered with the warmth and speed our guests expect every time they walk
-        through our doors.
-      </p>
-      <div className="flex gap-2 flex-wrap">
-        {['Coffee','Espresso','Donuts','Breakfast','Pastries'].map(t => (
-          <span key={t}
-            className="text-[0.44rem] tracking-[0.16em] uppercase px-3 py-[5px] font-semibold"
-            style={{ border: '1px solid rgba(232,101,10,0.35)', color: '#E8650A', background: 'rgba(232,101,10,0.05)' }}>
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  </div>
 
-  {/* Row 02 flipped */}
-  <div className="grid"
-    style={{ gridTemplateColumns: '1fr 1fr', borderTop: '0.5px solid rgba(42,30,16,0.08)' }}>
-    <div className="px-14 py-16 flex flex-col justify-center"
-      style={{ background: '#F3EDE3' }}>
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-5 h-[1px]" style={{ background: '#E8650A' }} />
-        <span className="text-[0.48rem] tracking-[0.28em] uppercase font-medium text-[#E8650A]">
-          Signature Beverages
-        </span>
-      </div>
-      <h3 className="font-playfair font-black text-[#1A1208] leading-[1.1] mb-5"
-  style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)' }}>
-  Cold Brew, Nitro<br />
-  <em className="grad-text not-italic">&amp; Beyond.</em>
-      </h3>
-      <p className="text-[0.86rem] leading-[1.9] font-light mb-8"
-        style={{ color: 'rgba(42,30,16,0.65)' }}>
-        From nitro cold brew on tap to seasonal signature beverages — our Dunkin'
-        locations are built to satisfy every craving, every time of day. Seven taps.
-        Endless possibilities. Always on.
-      </p>
-      <div className="flex gap-2 flex-wrap">
-        {['Nitro','Cold Brew','Iced Tea','Sweet Tea','Refreshers'].map(t => (
-          <span key={t}
-            className="text-[0.44rem] tracking-[0.16em] uppercase px-3 py-[5px] font-semibold"
-            style={{ border: '1px solid rgba(232,101,10,0.35)', color: '#E8650A', background: 'rgba(232,101,10,0.05)' }}>
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-    <div className="relative overflow-hidden" style={{ minHeight: 480 }}>
-      <img src={stallImg} alt="Cold brew nitro taps"
-        className="w-full h-full object-cover object-center"
-        style={{ filter: 'brightness(0.85) saturate(1.1) contrast(1.05)' }} />
-      <div className="absolute top-6 right-6 font-playfair font-black"
-        style={{ fontSize: '5rem', color: 'rgba(232,101,10,0.18)', lineHeight: 1 }}></div>
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] grad-bg" />
-    </div>
-  </div>
-      </section>
-      </SectionReveal>
-      {/* ══ 6. MISSION ══ */}
-<SectionReveal delay={0.15}>
-<section className="px-32 py-28 text-center"
-  style={{ background: '#1C0F08', borderTop: '0.5px solid rgba(250,247,242,0.06)' }}>
-  <div className="w-[1px] h-12 mx-auto mb-10" style={{ background: 'linear-gradient(to bottom, transparent, #D4186C)' }} />
-  <blockquote className="font-playfair font-normal italic leading-[1.65] mx-auto"
-    style={{ fontSize: 'clamp(1.5rem, 3vw, 2.4rem)', maxWidth: 820, color: 'rgba(250,247,242,0.88)' }}>
-    "To inspire our team to become the{' '}
-    <strong className="not-italic font-black grad-text">best part of the day</strong>
-    {' '}for our guests through our various brands."
-  </blockquote>
-  <p className="mt-10 text-[0.48rem] tracking-[0.32em] uppercase"
-    style={{ color: 'rgba(250,247,242,0.22)' }}>
-    ZSC Enterprises &nbsp;·&nbsp; Mission Statement &nbsp;·&nbsp; Atlanta, Georgia
-  </p>
-</section>  
-</SectionReveal>
-      {/* ══ BRAND MODES ══ */}
-<SectionReveal direction="up" delay={0.1}>
-<section
-  className="relative px-12 py-16 overflow-hidden"
-  style={{
-  background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)'
-  }}
->
-  <div className="text-center mb-10">
-    <div style={{ textAlign: 'center', marginBottom: 8 }}>
-  <h2 className="font-playfair font-black" style={{
-    fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-    background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    lineHeight: 1.0,
-    marginBottom: 8,
-  }}>
-    Our Brands
-  </h2>
-  <div style={{
-    fontSize: '0.52rem', letterSpacing: '0.3em', textTransform: 'uppercase',
-    color: 'rgba(255,255,255,0.55)', fontWeight: 500,
-  }}>
-    Four Brands. One Standard of Excellence.
-  </div>
-</div>
-  </div>
+      {/* ══════════════════════════════════════
+          3. DUNKIN'
+      ══════════════════════════════════════ */}
+      <BrandSection
+        id="dunkin"
+        orbitText="DUNKIN' · COFFEE · DONUTS · ESPRESSO"
+        orbitColor="#FF671F"
+        orbitDuration={22}
+        video={dunkinVideo}
+        videoCrop={{ top: 5, right: 8, bottom: 5, left: 8 }}
+        videoScale={1.1} 
+        eyebrow=" Dunkin'"
+        accentColor="#FF671F"
+        heading="Fresh. Fast."
+        headingLine2="Every Time."
+        headingGradient="linear-gradient(135deg, #E8650A, #D4186C)"
+        body="From fresh-glazed donuts to bold espresso and cold brew on tap — ZSC Enterprises operates 45+ Dunkin' locations across Atlanta, delivering the full Dunkin' experience with speed, warmth, and consistency every single day."
+        ctaLabel="Explore Dunkin&apos;"
+        ctaLink="/brands"
+        ctaBg="transparent"
+        ctaText="#FF671F"
+        ctaBorder="1.5px solid #FF671F"
+        bg="#FFF8F2"
+        textColor="#1A0E06"
+        subtleColor="rgba(26,14,6,0.52)"
+        flip={false}
+      />
 
-  <div
-    className="grid gap-6 mx-auto"
-    style={{
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      maxWidth: 1150
-    }}
-  >
-    {brandModes.map((brand, i) => (
-      <motion.div
-  key={i}
-  whileHover={{ y: -8, scale: 1.02 }}
-  onClick={() => window.location.href = brand.link}
-  style={{ cursor: 'pointer' }}
-        transition={{ duration: 0.25 }}
-        className="relative overflow-hidden cursor-pointer group"
-        style={{
-          border: '4px solid rgba(255,255,255,0.25)',
-          background: '#111',
-          minHeight: 320,
-          boxShadow: '0 10px 40px rgba(0,0,0,0.25)'
-        }}
-      >
-        <div
-  className="absolute inset-0 flex items-center justify-center p-6"
-  style={{ background: '#ffffff' }}
->
-  <img
-    src={brand.img}
-    alt={brand.title}
-    className="w-full h-full transition-transform duration-500 group-hover:scale-105"
-    style={{
-      objectFit: 'contain',
-      objectPosition: 'center',
-      transform: `scale(${brand.scale || 1})`,
-    }}
-  />
-</div>
+      {/* ══════════════════════════════════════
+          4. BASKIN ROBBINS
+      ══════════════════════════════════════ */}
+      <BrandSection
+        id="baskin"
+        orbitText="BASKIN ROBBINS · ICE CREAM · 100+ FLAVORS"
+        orbitColor="#F05097"
+        orbitDuration={26}
+        video={baskinVideo}
+videoCrop={{ top: 0, right: 0, bottom: 0, left: 0 }}
+videoScale={1}
+        eyebrow="Baskin Robbins"
+        accentColor="#F05097"
+        heading="More Flavors."
+        headingLine2="More Smiles."
+        headingGradient="linear-gradient(135deg, #F05097, #D4186C)"
+        body="The world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience."
+        ctaLabel="Explore Baskin Robbins"
+        ctaLink="/brands?brand=baskin"
+        ctaBg="transparent"
+        ctaText="#F05097"
+        ctaBorder="1.5px solid #F05097"
+        bg="#FFF5F8"
+        textColor="#2A0A18"
+        subtleColor="rgba(42,10,24,0.5)"
+        flip={true}
+      />
 
-        {/* OVERLAY */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.1) 45%)'
-          }}
-        />
+      {/* ══════════════════════════════════════
+          5. SMOOTHIE KING
+      ══════════════════════════════════════ */}
+      <BrandSection
+        id="smoothie"
+        orbitText="SMOOTHIE KING · REAL FRUIT · WELLNESS · PURPOSE"
+        orbitColor="#E31B23"
+        orbitDuration={24}
+        video={smoothieVideo}
+videoCrop={{ top: 0, right: 0, bottom: 0, left: 0 }}
+videoScale={1}
+        eyebrow="Smoothie King"
+        accentColor="#E31B23"
+        heading="Smoothies With"
+        headingLine2="Purpose."
+        headingGradient="linear-gradient(135deg, #E31B23, #B5121B)"
+        body="Purpose-driven blends made with real fruit and wholesome ingredients — helping Atlanta guests fuel their active lifestyle. ZSC brings the Smoothie King mission to life every single day."
+        ctaLabel="Explore Smoothie King"
+        ctaLink="/brands?brand=smoothie"
+        ctaBg="transparent"
+        ctaText="#E31B23"
+        ctaBorder="1.5px solid #E31B23"
+        bg="#FFF5F5"
+        textColor="#1A0808"
+        subtleColor="rgba(26,8,8,0.5)"
+        flip={false}
+      />
 
-        {/* CONTENT */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-          <h2
-            className="font-black leading-[0.9] uppercase"
-            style={{
-              fontSize: 'clamp(2.6rem, 4vw, 4.5rem)',
-              color: '#fff',
-              textShadow: '0 4px 12px rgba(0,0,0,0.45)'
+      {/* ══════════════════════════════════════
+          6. JIMMY JOHN'S
+      ══════════════════════════════════════ */}
+      <BrandSection
+        id="jimmy"
+        orbitText="JIMMY JOHN'S · FREAKY FAST · GOURMET SUBS"
+        orbitColor="#C41230"
+        orbitDuration={20}
+        video={jimmyVideo}
+videoShape="sub"
+videoScale={1}
+        eyebrow=" Jimmy John's"
+        accentColor="#C41230"
+        heading="Freaky Fast."
+        headingLine2="Seriously Good."
+        headingGradient="linear-gradient(135deg, #C41230, #8B0000)"
+        body="ZSC Enterprises brings the Jimmy John's experience to the Southeast — delivering gourmet sandwiches made with fresh-baked bread and hand-sliced meats, freaky fast."
+        ctaLabel="Explore Jimmy John's"
+        ctaLink="/brands?brand=jimmyjohns"
+        ctaBg="transparent"
+        ctaText="#C41230"
+        ctaBorder="1.5px solid #C41230"
+        bg="#FAFAF8"
+        textColor="#0A0A0A"
+        subtleColor="rgba(10,10,10,0.46)"
+        flip={true}
+      />
+
+      {/* ══════════════════════════════════════
+          7. FINAL CTA
+      ══════════════════════════════════════ */}
+      <section style={{
+  minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  background: '#0a0602', position: 'relative', overflow: 'hidden',
+  textAlign: 'center', padding: '10rem 3rem',
+}}>
+  <img src={teamImg} alt="" style={{
+    position: 'absolute', inset: 0, width: '100%', height: '100%',
+    objectFit: 'cover', objectPosition: 'center',
+    filter: 'brightness(0.22) saturate(0.5)',
+  }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(232,101,10,0.11) 0%, transparent 60%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 20%, rgba(212,24,108,0.08) 0%, transparent 52%)', pointerEvents: 'none' }} />
+
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 720 }}>
+          <motion.div style={{ width: 1, height: 72, background: 'linear-gradient(to bottom, transparent, #D4186C)', margin: '0 auto 4.5rem' }}
+            initial={{ scaleY: 0, originY: 0 }} whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }} transition={{ duration: 1 }} />
+
+          <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: '2rem' }}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, transparent, #E8650A)' }} />
+            <span style={{ fontSize: '0.43rem', letterSpacing: '0.38em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.28)', fontWeight: 500 }}>ZSC Enterprises · Atlanta, Georgia</span>
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, #D4186C, transparent)' }} />
+          </motion.div>
+
+          <motion.h2 className="font-playfair font-black"
+            style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5.8rem)', color: '#FAF7F2', lineHeight: 0.9, marginBottom: '2rem', letterSpacing: '-0.03em' }}
+            initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 1, delay: 0.1 }}>
+            Four Iconic Brands.<br />
+            <em style={{
+              fontStyle: 'italic', display: 'inline-block',
+              background: 'linear-gradient(90deg, #E8650A, #D4186C)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>One Trusted Partner.</em>
+          </motion.h2>
+
+          <motion.p style={{ fontSize: '1.05rem', lineHeight: 2.1, color: 'rgba(250,247,242,0.35)', fontWeight: 300, maxWidth: 480, margin: '0 auto 4rem' }}
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.25 }}>
+            Proudly serving communities with passion, quality, and care across Atlanta and beyond.
+          </motion.p>
+
+          <motion.div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center', flexWrap: 'wrap' }}
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.42 }}>
+            <Link to="/brands" style={{
+              background: 'linear-gradient(135deg, #E8650A, #D4186C)', color: '#fff', textDecoration: 'none',
+              padding: '1.1rem 3.2rem', fontSize: '0.56rem', letterSpacing: '0.26em', textTransform: 'uppercase', fontWeight: 700,
+              boxShadow: '0 14px 44px rgba(232,101,10,0.35)',
+              transition: 'transform 0.25s, box-shadow 0.25s',
             }}
-          >
-            {brand.title}
-          </h2>
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 20px 52px rgba(232,101,10,0.48)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 14px 44px rgba(232,101,10,0.35)' }}>
+              Learn More About Us
+            </Link>
+          </motion.div>
 
-          <div
-            className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] font-semibold"
-            style={{ color: 'rgba(255,255,255,0.72)' }}
-          >
-            {brand.subtitle}
-          </div>
-        </div>
-      </motion.div>
-    ))}
-  </div>
-</section>
-</SectionReveal>
-      <SectionReveal delay={0.1}></SectionReveal>
-      {/* ══ 7. CAREERS ══ */}
-      <SectionReveal direction="up" delay={0.1}>
-      <section className="grid items-start px-14 py-14"
-  style={{ gridTemplateColumns: '1fr auto', gap: '2rem', background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.08)' }}>
-        <div>
-          <h2 className="font-playfair font-black text-[#1A1208] leading-[1.05] mb-5"
-            style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
-            We Build Careers,<br />
-<em className="grad-text not-italic">Not Just Shifts.</em>
-          </h2>
-          <p className="text-[0.86rem] leading-[1.85] font-light"
-            style={{ color: 'rgba(42,30,16,0.52)', maxWidth: 440 }}>
-            Join a team where growth is expected, people are valued, and excellence is the only standard.
-          </p>
-        </div>
-        <div className="flex flex-col items-end gap-3 pt-1 flex-shrink-0">
-          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
-            className="grad-bg text-white no-underline px-8 py-4 text-[0.6rem] tracking-[0.22em] uppercase font-semibold whitespace-nowrap transition-opacity hover:opacity-85">
-            Explore Opportunities
-          </a>
-          <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
-            className="text-[0.5rem] tracking-[0.2em] uppercase no-underline transition-colors hover:text-[#E8650A]"
-            style={{ color: 'rgba(42,30,16,0.35)' }}>
-            Current Openings →
-          </a>
+          {/* Brand names row */}
+          <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.8rem', marginTop: '5rem', flexWrap: 'wrap' }}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }} transition={{ duration: 1, delay: 0.6 }}>
+            {[["Dunkin'", "#FF671F"], ["Baskin Robbins", "#F05097"], ["Smoothie King", "#E31B23"], ["Jimmy John's", "#C41230"]].map(([name, color], i) => (
+              <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: '1.8rem' }}>
+                <span style={{ fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.2)', fontWeight: 500 }}>{name}</span>
+                {i < 3 && <span style={{ width: 3, height: 3, borderRadius: '50%', background: color, opacity: 0.5 }} />}
+              </span>
+            ))}
+          </motion.div>
         </div>
       </section>
-      </SectionReveal>
 
-      <SectionReveal delay={0.1}>
-      {/* ══ FOOTER ══ */}
       <Footer />
-      </SectionReveal>
-
     </motion.div>
   )
 }
