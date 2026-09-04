@@ -17,8 +17,8 @@ const BRANDS = [
     name: "Dunkin'",
     tagline: "America Runs on Dunkin'.",
     label: '',
-    desc: "ZSC Enterprises operates 50+ Dunkin' locations across the Atlanta metro — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
-    stats: [{ n: '50+', l: 'Locations' }, { n: '2007', l: 'Since' }, { n: 'ATL', l: 'Market' }],
+    desc: "ZSC Enterprises operates 50+ Dunkin' locations across Georgia and Alabama — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
+    stats: [{ n: 'American', l: 'Staple' }, { n: '50+', l: 'Locations' }, { n: 'SouthEast', l: 'Markets' }],
 
     // ── DUNKIN' — Hot pink #E11383 + Bright orange #F5821F ──────────
     bg: `linear-gradient(145deg,
@@ -64,7 +64,7 @@ const BRANDS = [
     tagline: 'Reign Supreme.',
     label: '',
     desc: "Purpose-driven blends made with real fruit and wholesome ingredients — helping Atlanta guests fuel their active lifestyle. ZSC brings the Smoothie King mission to life every single day.",
-    stats: [{ n: '1,000+', l: 'US Locations' }, { n: 'Real', l: 'Fruit Only' }, { n: 'ATL', l: 'Market' }],
+    stats: [{ n: '5+', l: 'US Locations' }, { n: 'Real', l: 'Fruit Only' }, { n: 'Freshly', l: 'Blended' }],
 
     // ── SMOOTHIE KING — Bold red #E31B23 + Deep crimson #B5121B ──────
     bg: `linear-gradient(145deg,
@@ -109,8 +109,8 @@ const BRANDS = [
     name: 'Baskin Robbins',
     tagline: 'Make It Memorable.',
     label: '',
-    desc: "The world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience.",
-    stats: [{ n: '70+', l: 'Years' }, { n: '#1', l: 'Ice Cream' }, { n: '100+', l: 'Flavors' }],
+    desc: "ZSC bring you the world's largest ice cream specialty chain — seven decades of premium hard-serve ice cream and iconic flavors. Co-located with our Dunkin' stores for the ultimate treat experience.",
+    stats: [{ n: '10+', l: 'Locations' }, { n: '#1', l: 'Ice Cream' }, { n: '100+', l: 'Flavors' }],
 
     // ── BASKIN ROBBINS — Signature pink #F05097 + Deep burgundy #402021 ──
     bg: `linear-gradient(145deg,
@@ -152,8 +152,8 @@ const BRANDS = [
   name: "Jimmy John's",
   tagline: 'Freaky Fast. Freaky Fresh.',
   label: '',
-  desc: "ZSC Enterprises brings the Jimmy John's experience to the Southeast — delivering gourmet sandwiches with the same uncompromising speed and freshness the brand is known for. Fresh-baked bread daily, hand-sliced meats, and sandwiches made to order every time.",
-  stats: [{ n: '1983', l: 'Founded' }, { n: 'SE', l: 'Region' }, { n: 'Fast', l: 'Delivery' }],
+  desc: "ZSC Enterprises brings the Jimmy John's experience to the our Guests — delivering gourmet sandwiches with the same uncompromising speed and freshness the brand is known for. Fresh-baked bread daily, hand-sliced meats, and sandwiches made to order every time.",
+  stats: [{ n: 'Gourmet', l: 'Sandwiches' }, { n: 'Jimmy.', l: 'It Up' }, { n: 'Freaky', l: 'Fast' }],
 
   bg: `linear-gradient(145deg,
     #0f0000 0%,

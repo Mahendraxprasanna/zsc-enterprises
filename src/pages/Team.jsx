@@ -8,7 +8,7 @@ import markPhoto      from '../assets/images/meet our team/mark.webp'
 import rakibPhoto     from '../assets/images/meet our team/rakib.webp'
 import arslanPhoto    from '../assets/images/meet our team/arslan.webp'
 import hemPhoto       from '../assets/images/meet our team/hema.webp'
-import blakePhoto     from '../assets/images/meet our team/blake.webp'
+import sydneyPhoto     from '../assets/images/meet our team/sydney.jpeg'
 import rajPhoto       from '../assets/images/meet our team/raj.webp'
 import michellePhoto  from '../assets/images/meet our team/michelle.webp'
 import elidaPhoto     from '../assets/images/meet our team/elida.webp'
@@ -28,7 +28,13 @@ const TEAM = [
     name: 'Shams Charania',
     title: 'Managing Partner',
     photo: shamsPhoto,
-    bio: "Shams' QSR journey started when his parents immigrated to Atlanta, Georgia in 1999. At 14 years old and still in high school, he went to work at a Popeyes in Gainesville, GA on the weekends. Slowly but surely, Shams learned every aspect of store operations and was soon named Manager of that franchise, running the restaurant on weekends in the owner's absence. After graduating from Georgia State University with an accounting degree and completing an internship at PricewaterhouseCoopers, Shams walked away from corporate America. In 2007, he acquired his first three Dunkin' locations and never looked back.",
+    bio: "Shams’ QSR journey started when his parents immigrated to Atlanta, Georgia in the year 1999. At 14 years old and still in high school, he went to work at a Popeyes in Gainesville, GA on the weekends. Slowly but surely, Shams learned every aspect of store operations and was soon named Manager of that franchise, running the restaurant on weekends in the owner’s absence.In 2003, while attending Georgia State University in downtown Atlanta, Shams got an opportunity to work as an Assistant Manager at a Dunkin’ Donuts in Chamblee, Georgia. With his own brother being the Manager of the store, the situation worked out well for him and together the two brothers not only increased sales but were able to impress Dunkin’ corporate with their expertise in operating clean, high-quality and efficient restaurants.In 2007, after graduating from Georgia State University with an accounting degree and having completed an internship at PriceWaterhouseCoopers (PwC), Shams knew corporate America was just not his cup of coffee. So, after months of considering his next venture, Shams finally got an opportunity to acquire 3 Dunkin’ Donuts restaurants together with his brother and one of the owners of the Popeyes that he used to work at during high school.Fast forward 13 years and Shams still does not regret his decision to not pursue accounting as a career. “I enjoy every aspect of the restaurant business and as the Managing Partner of the organization. I work on organizational strategy, finding new opportunities, overseeing construction and development, and making sure that qualified individuals in the organization have access to increased opportunities to succeed, opportunities like the one I was fortunate to obtain back in 2007. After all, we are in the PEOPLE business, and the continuous development of the PEOPLE in our organization is a hallmark of our operation.Shams also received a Master of Business Administration degree from Georgia Tech in 2011 and serves as the Chairman of the Board of National DCP, a three+ billion-dollar supply chain co-op procuring for and delivering goods and services to over 10,000 Dunkin’ restaurants. Shams has been a past member of the Dunkin Brand Advisory Council and has held various franchisee leadership positions within the brand." ,
+  },
+  {
+    name: 'Hemalatha Arunachalam',
+    title: 'Accounting & Finance Officer, CPA',
+    photo: hemPhoto,
+    bio: "Hemalatha was born and raised in India, where her passion for commerce, business, and finance laid the foundation for an impressive academic and professional journey. She earned her Bachelor's, Master's, and Doctorate in Commerce while balancing family life and developing a keen interest in how financial systems drive business success. She brings deep expertise in accounting, financial reporting, and compliance to ZSC Enterprises.",
   },
   {
     name: 'Mark Seibert',
@@ -49,15 +55,9 @@ const TEAM = [
     bio: "Arslan exemplifies ZSC's culture of recognizing and promoting talent. Starting as a crew member at 17 in 2010, he rose to Director of Operations in under 10 years. Having held every restaurant position, he knows what it takes to run a successful QSR network. A mentor to many, Arslan is known for turning around restaurants and building strong, motivated teams.",
   },
   {
-    name: 'Hemalatha Arunachalam',
-    title: 'Accounting & Finance Officer, CPA',
-    photo: hemPhoto,
-    bio: "Hemalatha was born and raised in India, where her passion for commerce, business, and finance laid the foundation for an impressive academic and professional journey. She earned her Bachelor's, Master's, and Doctorate in Commerce while balancing family life and developing a keen interest in how financial systems drive business success. She brings deep expertise in accounting, financial reporting, and compliance to ZSC Enterprises.",
-  },
-  {
-    name: 'Blake Lairsey',
+    name: 'Sydney Reese',
     title: 'Marketing & Communications Director',
-    photo: blakePhoto,
+    photo: sydneyPhoto,
     bio: null,
   },
   {
@@ -577,7 +577,7 @@ export default function Team() {
     viewport={{ once: true }} transition={{ duration: 0.7 }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
       <div style={{ width: 20, height: 1, background: 'rgba(255,255,255,0.5)' }} />
-      <span style={{ fontSize: '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>ZSC Enterprises</span>
+      <span style={{ fontSize: '1rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>ZSC Enterprises</span>
     </div>
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', color: '#fff', lineHeight: 1.05 }}>
       The People Who<br />
@@ -589,10 +589,10 @@ export default function Team() {
     initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
     viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
     <p style={{ fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '2rem' }}>
-      18 operators, leaders, and builders running 45+ locations across Atlanta. Every one of them shows up every single day with an uncompromising standard of excellence.
+      Every one of them shows up every single day with an uncompromising standard of excellence.
     </p>
     <div style={{ display: 'flex', gap: '3rem' }}>
-      {[{ n: '18', l: 'Team Members' }, { n: '45+', l: 'Locations' }, { n: '3', l: 'Brands' }].map(s => (
+      {[{ n: 'Highly Skilled', l: 'Members' }, { n: '45+', l: 'Locations' }, { n: '4', l: 'Brands' }].map(s => (
         <div key={s.l}>
           <div className="font-playfair font-black" style={{
             fontSize: '2rem', lineHeight: 1, marginBottom: 4,

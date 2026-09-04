@@ -203,8 +203,8 @@ export default function Leadership() {
 
       {/* ══════════════════════════════════════
           3. INTRO — Photo + Name + Roles
-      ══════════════════════════════════════ */}
-      <section style={{ background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.1)' }}>
+      ══════════════════════════════════════ }
+      <section zstyle={{ background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.1)' }}>
         <Reveal>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '4rem', padding: '4rem 5rem', background: '#F3EDE3' }}>
             <motion.div style={{ flexShrink: 0, position: 'relative' }}
@@ -255,31 +255,8 @@ export default function Leadership() {
           </div>
         </Reveal>
       </section>
+      */}
 
-      {/* ══════════════════════════════════════
-          2. STATS STRIP — with hover fill effect
-      ══════════════════════════════════════ */}
-      <Reveal>
-        <style>{`
-          .ldr-stat { position: relative; overflow: hidden; cursor: pointer; transition: background 0.4s ease; }
-          .ldr-stat::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0%; background: linear-gradient(135deg, #E8650A, #D4186C); transition: height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 0; }
-          .ldr-stat:hover::before { height: 100%; }
-          .ldr-stat:hover .ldr-n { background: #F3EDE3; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-          .ldr-stat:hover .ldr-l { color: rgba(250,247,242,0.6) !important; }
-          .ldr-stat .ldr-inner { position: relative; z-index: 1; }
-          .ldr-n { font-family: 'Playfair Display', serif; font-weight: 900; background: linear-gradient(135deg, #E8650A, #D4186C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.5rem; font-size: 2.8rem; transition: all 0.3s ease; }
-        `}</style>
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', background: '#F3EDE3', borderBottom: '0.5px solid rgba(42,30,16,0.1)' }}>
-          {STATS.map((s, i) => (
-            <div key={s.l} className="ldr-stat" style={{ padding: '2.5rem 2.5rem', borderRight: i < 3 ? '0.5px solid rgba(42,30,16,0.1)' : 'none' }}>
-              <div className="ldr-inner">
-                <div className="ldr-n">{s.n}</div>
-                <div className="ldr-l" style={{ fontSize: '0.5rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.38)', fontWeight: 500 }}>{s.l}</div>
-              </div>
-            </div>
-          ))}
-        </section>
-      </Reveal>
 
 {/* ══════════════════════════════════════
     5. BIO + KEY ACCOMPLISHMENTS
@@ -298,6 +275,11 @@ export default function Leadership() {
       <div style={{ width: 20, height: 1, background: '#E8650A' }} />
       <span style={{ fontSize: '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>Biography</span>
     </div>
+    <div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20, WebkitTextFillColor: 'initial' }}>
+                <motion.span style={{ fontSize: 'clamp(1.8rem,4.5vw,1.8rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>Shams Charania</motion.span>
+              </div>
 
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.8rem, 4.5vw, 4.2rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
       From Crew Member<br />
@@ -311,7 +293,7 @@ export default function Leadership() {
       viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.25 }} />
 
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '1.6rem' }}>
-      Shams Charania's story begins in 1999 — a 14-year-old who moved to Atlanta and started working weekends at a Popeyes in Gainesville, GA. Within months he was managing the restaurant on weekends in the owner's absence.
+      Shams Charania's story begins in 1999 — a 14-year-old who moved to Atlanta and started working weekends at a fast food joint in Gainesville, GA. Within months he was managing the restaurant on weekends in the owner's absence.
     </p>
 
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '2.2rem' }}>
@@ -346,33 +328,37 @@ export default function Leadership() {
   </motion.div>
 
 </section>
-     {/* ══════════════════════════════════════
-          7. CLOSING QUOTE
+      {/* ══════════════════════════════════════
+          2. STATS STRIP — with hover fill effect
       ══════════════════════════════════════ */}
       <Reveal>
-        <section style={{ padding: '7rem 4rem', textAlign: 'center', background: 'linear-gradient(145deg, #1A0E05 0%, #0D0800 50%, #1A0E05 100%)', borderTop: '0.5px solid rgba(250,247,242,0.06)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(232,101,10,0.09) 0%, transparent 65%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 20%, rgba(212,24,108,0.07) 0%, transparent 55%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ width: 1, height: 54, background: 'linear-gradient(to bottom, transparent, #D4186C)', margin: '0 auto 2.5rem' }} />
-            <blockquote className="font-playfair italic mx-auto" style={{ fontSize: 'clamp(1.3rem,2.7vw,2.2rem)', color: 'rgba(250,247,242,0.90)', lineHeight: 1.7, maxWidth: 820, marginBottom: '1.8rem' }}>
-              "If you want to walk fast, walk alone. But if you want to walk far, walk together."
-            </blockquote>
-            <cite style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.35)', fontStyle: 'normal' }}>
-              — Ratan Tata &nbsp;·&nbsp; A quote Shams lives by
-            </cite>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '3rem', flexWrap: 'wrap' }}>
-              <Link to="/team" style={{ background: 'linear-gradient(135deg,#E8650A,#D4186C)', color: '#fff', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 600, boxShadow: '0 10px 30px rgba(232,101,10,0.25)' }}>Meet The Full Team</Link>
-              <Link to="/contact" style={{ background: 'transparent', color: 'rgba(250,247,242,0.6)', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, border: '0.5px solid rgba(250,247,242,0.2)' }}>Get in Touch</Link>
+        <style>{`
+          .ldr-stat { position: relative; overflow: hidden; cursor: pointer; transition: background 0.4s ease; }
+          .ldr-stat::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0%; background: linear-gradient(135deg, #E8650A, #D4186C); transition: height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 0; }
+          .ldr-stat:hover::before { height: 100%; }
+          .ldr-stat:hover .ldr-n { background: #F3EDE3; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+          .ldr-stat:hover .ldr-l { color: rgba(250,247,242,0.6) !important; }
+          .ldr-stat .ldr-inner { position: relative; z-index: 1; }
+          .ldr-n { font-family: 'Playfair Display', serif; font-weight: 900; background: linear-gradient(135deg, #E8650A, #D4186C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.5rem; font-size: 2.8rem; transition: all 0.3s ease; }
+        `}</style>
+        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', background: '#F3EDE3' }}>
+          {STATS.map((s, i) => (
+            <div key={s.l} className="ldr-stat" style={{ padding: '2.5rem 2.5rem', borderRight: i < 3 ? '0.5px solid rgba(42,30,16,0.06)' : 'none' }}>
+              <div className="ldr-inner">
+                <div className="ldr-n">{s.n}</div>
+                <div className="ldr-l" style={{ fontSize: '0.5rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.38)', fontWeight: 500 }}>{s.l}</div>
+              </div>
             </div>
-          </div>
+          ))}
         </section>
       </Reveal>
+
+
 
       {/* ══════════════════════════════════════
           6. COFFEE CAFE BAKERY
       ══════════════════════════════════════ */}
-      <section style={{ background: '#F3EDE3', borderTop: '0.5px solid rgba(42,30,16,0.1)' }}>
+      <section style={{ background: '#F3EDE3' }}>
         <AnimatePresence>
           {ccbVideoOpen && ccbVideo && (
             <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.96)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
@@ -382,7 +368,7 @@ export default function Leadership() {
                 transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }} onClick={e => e.stopPropagation()}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.8rem 1.2rem', background: 'rgba(20,10,4,0.95)', border: '0.5px solid rgba(232,101,10,0.3)', borderBottom: 'none' }}>
                   <div>
-                    <div style={{ fontSize: '0.44rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 3, ...gradStyle }}>ZSC Enterprises · Coffee Cafe Bakery</div>
+                    <div style={{ fontSize: '0.88rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 3, ...gradStyle }}>ZSC Enterprises · Coffee Cafe Bakery</div>
                     <div className="font-playfair font-bold" style={{ fontSize: '0.95rem', color: '#FAF7F2' }}>CCB Grand Opening — Governor Brian P. Kemp</div>
                   </div>
                   <button onClick={() => setCcbVideoOpen(false)} style={{ background: 'none', border: '0.5px solid rgba(250,247,242,0.2)', color: 'rgba(250,247,242,0.7)', width: 36, height: 36, cursor: 'pointer', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
@@ -421,30 +407,30 @@ export default function Leadership() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderTop: '0.5px solid rgba(42,30,16,0.1)', minHeight: 500 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 500 }}>
             <div style={{ padding: '3rem 4rem', borderRight: '0.5px solid rgba(42,30,16,0.1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.6)', fontWeight: 300, marginBottom: '1.2rem' }}>
+                <p style={{ fontSize: '1rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.6)', fontWeight: 300, marginBottom: '1.2rem' }}>
                   Coffee Cafe Bakery is a state-of-the-art Dunkin' Centralized Manufacturing Location (CML) — one of fewer than 100 such facilities in the entire United States. A $10 million, 31,150 sq ft highly automated production facility in Fulton County, Atlanta, co-founded by Shams Charania through ZSC Enterprises.
                 </p>
-                <p style={{ fontSize: '0.88rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.5)', fontWeight: 300 }}>
+                <p style={{ fontSize: '1rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.5)', fontWeight: 300 }}>
                   Announced by Governor Brian P. Kemp at the grand opening — backed by the State of Georgia, City of Atlanta, and the Georgia Department of Economic Development. Located in a Federal Opportunity Zone in Fulton County.
                 </p>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 1, background: 'rgba(42,30,16,0.08)', marginTop: '2rem' }}>
-                {CCB_STATS.map(s => (
-                  <div key={s.l} style={{ padding: '1.2rem 1.5rem', background: '#F3EDE3' }}>
-                    <div className="font-playfair font-black leading-none mb-1" style={{ fontSize: '1.8rem', ...gradStyle }}>{s.n}</div>
-                    <div style={{ fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.38)', fontWeight: 500 }}>{s.l}</div>
-                  </div>
-                ))}
+  {CCB_STATS.map(s => (
+    <div key={s.l} style={{ padding: '1.2rem 1.5rem', background: '#F3EDE3' }}>
+      <div className="font-playfair font-black leading-none mb-1" style={{ fontSize: '1.8rem', ...gradStyle }}>{s.n}</div>
+      <div style={{ fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.38)', fontWeight: 500 }}>{s.l}</div>
+    </div>
+  ))}
               </div>
             </div>
             <div style={{ position: 'relative', overflow: 'hidden', minHeight: 500, cursor: ccbVideo ? 'pointer' : 'default' }}
               onClick={() => ccbVideo && setCcbVideoOpen(true)}>
               {ccbVideo ? (
                 <video ref={ccbBgVideoRef} autoPlay loop playsInline muted
-                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', filter: 'brightness(0.92) saturate(1.05)' }}>
+                  style={{ position: 'absolute', inset: 0, width: '120%', height: '120%', objectFit: 'cover', objectPosition: 'center', display: 'block', filter: 'brightness(0.92) saturate(1.05)' }}>
                   <source src={ccbVideo} type="video/mp4" />
                 </video>
               ) : (
@@ -461,11 +447,33 @@ export default function Leadership() {
         </Reveal>
       </section>
 
+                       {/* ══════════════════════════════════════
+          7. CLOSING QUOTE
+      ══════════════════════════════════════ */}
+      <Reveal>
+        <section style={{ padding: '7rem 4rem 4rem', textAlign: 'center', background: 'linear-gradient(145deg, #1A0E05 0%, #0D0800 50%, #1A0E05 100%)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(232,101,10,0.09) 0%, transparent 65%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 20%, rgba(212,24,108,0.07) 0%, transparent 55%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ width: 1, height: 54, background: 'linear-gradient(to bottom, transparent, #D4186C)', margin: '0 auto 2.5rem' }} />
+            <blockquote className="font-playfair italic mx-auto" style={{ fontSize: 'clamp(1.3rem,2.7vw,2.2rem)', color: 'rgba(250,247,242,0.90)', lineHeight: 1.7, maxWidth: 820, marginBottom: '1.8rem' }}>
+              "If you want to walk fast, walk alone. But if you want to walk far, walk together."
+            </blockquote>
+            <cite style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.35)', fontStyle: 'normal' }}>
+              — Ratan Tata &nbsp;·&nbsp; A quote Shams lives by
+            </cite>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '3rem', flexWrap: 'wrap' }}>
+              <Link to="/team" style={{ background: 'linear-gradient(135deg,#E8650A,#D4186C)', color: '#fff', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 600, boxShadow: '0 10px 30px rgba(232,101,10,0.25)' }}>Meet The Full Team</Link>
+              <Link to="/contact" style={{ background: 'transparent', color: 'rgba(250,247,242,0.6)', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, border: '0.5px solid rgba(250,247,242,0.2)' }}>Get in Touch</Link>
+            </div>
+          </div>
+        </section>
+      </Reveal>
  
       {/* ══════════════════════════════════════
           8. IN THE FIELD
       ══════════════════════════════════════ */}
-      <section style={{ background: '#1C0F08' }}>
+      <section style={{ background: '#1A0E05' }}>
         <Reveal>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '3.5rem 4rem 2.5rem' }}>
             <div style={{ height: 1, width: 60, background: '#E8650A' }} />
@@ -490,8 +498,6 @@ export default function Leadership() {
           ))}
         </div>
       </section>
-
-      <Footer />
 
       <AnimatePresence>
         <Lightbox photos={FIELD_PHOTOS} active={lightboxActive} onClose={() => setLightboxActive(null)} onNav={handleLightboxNav} />
