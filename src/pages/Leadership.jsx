@@ -276,7 +276,7 @@ export default function Leadership() {
       <span style={{ fontSize: '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>Biography</span>
     </div>
     <div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20, WebkitTextFillColor: 'initial' }}>
-                <motion.span style={{ fontSize: 'clamp(1.8rem,4.5vw,1.8rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}
+                <motion.span style={{ fontSize: 'clamp(3.2rem,4.5vw,3.2rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>Shams Charania</motion.span>
               </div>
@@ -284,7 +284,7 @@ export default function Leadership() {
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.8rem, 4.5vw, 4.2rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
       From Crew Member<br />
       <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
-        to National Chairman.
+        to Industry Leader
       </em>
     </h2>
 
@@ -293,12 +293,10 @@ export default function Leadership() {
       viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.25 }} />
 
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '1.6rem' }}>
-      Shams Charania's story begins in 1999 — a 14-year-old who moved to Atlanta and started working weekends at a fast food joint in Gainesville, GA. Within months he was managing the restaurant on weekends in the owner's absence.
-    </p>
+Shams Charania's story begins in 1999 — a 14-year-old who moved to Atlanta and started working weekends at a Popeyes in Gainesville, GA. Within months he was managing the restaurant on weekends in the owner's absence.    </p>
 
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '2.2rem' }}>
-      At Georgia State University, he worked alongside his brother at a Dunkin' — increasing sales and earning recognition from Dunkin' corporate. After graduating with an accounting degree and interning at PricewaterhouseCoopers, Shams walked away from corporate America and never looked back.
-    </p>
+While attending Georgia State University, Shams joined Dunkin’ in 2003 as an Assistant Manager. Together with his brother, he helped grow sales and earned recognition for operating clean, high-quality, and efficient restaurants.     </p>
 
     <blockquote style={{ padding: '1.6rem 1.8rem', borderLeft: '3px solid #E8650A', marginBottom: '1.8rem', background: 'rgba(232,101,10,0.06)' }}>
       <p className="font-playfair italic" style={{ fontSize: '1.1rem', lineHeight: 1.8, color: 'rgba(250,247,242,0.88)' }}>
@@ -308,10 +306,10 @@ export default function Leadership() {
         — Shams Charania
       </cite>
     </blockquote>
-
+    <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '2.2rem' }}>
+      After graduating with an accounting degree and completing an internship at PwC, Shams realized his passion was in the restaurant business. In 2007, he acquired three Dunkin’ restaurants with his brother and a former Popeyes owner—marking the beginning of his journey as a franchise owner and entrepreneur.</p>
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300 }}>
-      In 2007 he acquired his first three Dunkin' locations. Today he owns 45+ locations, leads ZSC Enterprises, chairs the NDCP Board, and co-founded the $10M Coffee Cafe Bakery — announced by Governor Brian P. Kemp, backed by the State of Georgia, City of Atlanta &amp; Georgia Dept. of Economic Development.
-    </p>
+      Today, Shams leads ZSC Enterprises as Managing Partner, focusing on organizational strategy, development, new opportunities, and most importantly, developing people within the organization. He holds an MBA from Georgia Tech and serves as Chairman of the Board of National DCP, a multi-billion-dollar supply chain cooperative serving more than 10,000 Dunkin’ restaurants. He has also held several leadership roles within the Dunkin’ brand.    </p>
   </motion.div>
 
   {/* RIGHT — Portrait */}
@@ -447,28 +445,24 @@ export default function Leadership() {
         </Reveal>
       </section>
 
-                       {/* ══════════════════════════════════════
-          7. CLOSING QUOTE
-      ══════════════════════════════════════ */}
       <Reveal>
-        <section style={{ padding: '7rem 4rem 4rem', textAlign: 'center', background: 'linear-gradient(145deg, #1A0E05 0%, #0D0800 50%, #1A0E05 100%)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(232,101,10,0.09) 0%, transparent 65%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 20%, rgba(212,24,108,0.07) 0%, transparent 55%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ width: 1, height: 54, background: 'linear-gradient(to bottom, transparent, #D4186C)', margin: '0 auto 2.5rem' }} />
-            <blockquote className="font-playfair italic mx-auto" style={{ fontSize: 'clamp(1.3rem,2.7vw,2.2rem)', color: 'rgba(250,247,242,0.90)', lineHeight: 1.7, maxWidth: 820, marginBottom: '1.8rem' }}>
-              "If you want to walk fast, walk alone. But if you want to walk far, walk together."
-            </blockquote>
-            <cite style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.35)', fontStyle: 'normal' }}>
-              — Ratan Tata &nbsp;·&nbsp; A quote Shams lives by
-            </cite>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '3rem', flexWrap: 'wrap' }}>
-              <Link to="/team" style={{ background: 'linear-gradient(135deg,#E8650A,#D4186C)', color: '#fff', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 600, boxShadow: '0 10px 30px rgba(232,101,10,0.25)' }}>Meet The Full Team</Link>
-              <Link to="/contact" style={{ background: 'transparent', color: 'rgba(250,247,242,0.6)', textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, border: '0.5px solid rgba(250,247,242,0.2)' }}>Get in Touch</Link>
-            </div>
-          </div>
-        </section>
-      </Reveal>
+  <section style={{ padding: '4rem 4rem', textAlign: 'center', background: 'linear-gradient(145deg, #1A0E05 0%, #0D0800 50%, #1A0E05 100%)', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(232,101,10,0.07) 0%, transparent 65%)', pointerEvents: 'none' }} />
+    <div style={{ position: 'relative', zIndex: 1, maxWidth: 700, margin: '0 auto' }}>
+      <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, transparent, #D4186C)', margin: '0 auto 1.8rem' }} />
+      <blockquote className="font-playfair italic" style={{ fontSize: 'clamp(1rem, 1.8vw, 1.5rem)', color: 'rgba(250,247,242,0.88)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
+        "If you want to walk fast, walk alone. But if you want to walk far, walk together."
+      </blockquote>
+      <cite style={{ fontSize: '0.44rem', letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.3)', fontStyle: 'normal' }}>
+        — Ratan Tata &nbsp;·&nbsp; A quote Shams lives by
+      </cite>
+      <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+        <Link to="/team" style={{ background: 'linear-gradient(135deg,#E8650A,#D4186C)', color: '#fff', textDecoration: 'none', padding: '0.75rem 2rem', fontSize: '0.52rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 600, boxShadow: '0 8px 24px rgba(232,101,10,0.22)' }}>Meet The Full Team</Link>
+        <Link to="/contact" style={{ background: 'transparent', color: 'rgba(250,247,242,0.5)', textDecoration: 'none', padding: '0.75rem 2rem', fontSize: '0.52rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, border: '0.5px solid rgba(250,247,242,0.18)' }}>Get in Touch</Link>
+      </div>
+    </div>
+  </section>
+</Reveal>
  
       {/* ══════════════════════════════════════
           8. IN THE FIELD
@@ -502,7 +496,7 @@ export default function Leadership() {
       <AnimatePresence>
         <Lightbox photos={FIELD_PHOTOS} active={lightboxActive} onClose={() => setLightboxActive(null)} onNav={handleLightboxNav} />
       </AnimatePresence>
-
+      <Footer />
     </motion.div>
   )
 }

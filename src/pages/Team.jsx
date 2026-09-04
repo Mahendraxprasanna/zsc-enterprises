@@ -4,22 +4,22 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 import shamsPhoto     from '../assets/images/meet our team/sams.webp'
-import markPhoto      from '../assets/images/meet our team/mark.webp'
+import markPhoto      from '../assets/images/meet our team/mark.png'
 import rakibPhoto     from '../assets/images/meet our team/rakib.webp'
 import arslanPhoto    from '../assets/images/meet our team/arslan.webp'
 import hemPhoto       from '../assets/images/meet our team/hema.webp'
 import sydneyPhoto     from '../assets/images/meet our team/sydney.jpeg'
-import rajPhoto       from '../assets/images/meet our team/raj.webp'
+import rajPhoto       from '../assets/images/meet our team/raj.png'
 import michellePhoto  from '../assets/images/meet our team/michelle.webp'
 import elidaPhoto     from '../assets/images/meet our team/elida.webp'
-import rajendraPhoto  from '../assets/images/meet our team/rajendra.webp'
+import rajendraPhoto  from '../assets/images/meet our team/rajendra.jpeg'
 import shahzadPhoto   from '../assets/images/meet our team/shahzad.webp'
 import ajenePhoto     from '../assets/images/meet our team/ajene.webp'
 import ambrinPhoto    from '../assets/images/meet our team/ambrin.webp'
 import sabitaPhoto    from '../assets/images/meet our team/sabita.webp'
 import shirleyPhoto   from '../assets/images/meet our team/shirley.webp'
 import bilalPhoto     from '../assets/images/meet our team/bilal.webp'
-import shaheryarPhoto from '../assets/images/meet our team/shah.webp'
+import shaheryarPhoto from '../assets/images/meet our team/shah.jpeg'
 import tahirPhoto     from '../assets/images/meet our team/tahir.webp'
 
 // ── TEAM DATA ─────────────────────────────────────────────
@@ -28,42 +28,48 @@ const TEAM = [
     name: 'Shams Charania',
     title: 'Managing Partner',
     photo: shamsPhoto,
-    bio: "Shams’ QSR journey started when his parents immigrated to Atlanta, Georgia in the year 1999. At 14 years old and still in high school, he went to work at a Popeyes in Gainesville, GA on the weekends. Slowly but surely, Shams learned every aspect of store operations and was soon named Manager of that franchise, running the restaurant on weekends in the owner’s absence.In 2003, while attending Georgia State University in downtown Atlanta, Shams got an opportunity to work as an Assistant Manager at a Dunkin’ Donuts in Chamblee, Georgia. With his own brother being the Manager of the store, the situation worked out well for him and together the two brothers not only increased sales but were able to impress Dunkin’ corporate with their expertise in operating clean, high-quality and efficient restaurants.In 2007, after graduating from Georgia State University with an accounting degree and having completed an internship at PriceWaterhouseCoopers (PwC), Shams knew corporate America was just not his cup of coffee. So, after months of considering his next venture, Shams finally got an opportunity to acquire 3 Dunkin’ Donuts restaurants together with his brother and one of the owners of the Popeyes that he used to work at during high school.Fast forward 13 years and Shams still does not regret his decision to not pursue accounting as a career. “I enjoy every aspect of the restaurant business and as the Managing Partner of the organization. I work on organizational strategy, finding new opportunities, overseeing construction and development, and making sure that qualified individuals in the organization have access to increased opportunities to succeed, opportunities like the one I was fortunate to obtain back in 2007. After all, we are in the PEOPLE business, and the continuous development of the PEOPLE in our organization is a hallmark of our operation.Shams also received a Master of Business Administration degree from Georgia Tech in 2011 and serves as the Chairman of the Board of National DCP, a three+ billion-dollar supply chain co-op procuring for and delivering goods and services to over 10,000 Dunkin’ restaurants. Shams has been a past member of the Dunkin Brand Advisory Council and has held various franchisee leadership positions within the brand." ,
+    bio: "Shams’ QSR journey started when his parents immigrated to Atlanta, Georgia in the year 1999. At 14 years old and still in high school, he went to work at a Popeyes in Gainesville, GA on the weekends. Slowly but surely, Shams learned every aspect of store operations and was soon named Manager of that franchise, running the restaurant on weekends in the owner’s absence.\n\nIn 2003, while attending Georgia State University in downtown Atlanta, Shams got an opportunity to work as an Assistant Manager at a Dunkin’ Donuts in Chamblee, Georgia. With his own brother being the Manager of the store, the situation worked out well for him and together the two brothers not only increased sales but were able to impress Dunkin’ corporate with their expertise in operating clean, high-quality and efficient restaurants.\n\nIn 2007, after graduating from Georgia State University with an accounting degree and having completed an internship at PriceWaterhouseCoopers (PwC), Shams knew corporate America was just not his cup of coffee. So, after months of considering his next venture, Shams finally got an opportunity to acquire 3 Dunkin’ Donuts restaurants together with his brother and one of the owners of the Popeyes that he used to work at during high school.\n\nFast forward 13 years and Shams still does not regret his decision to not pursue accounting as a career.I enjoy every aspect of the restaurant business and as the Managing Partner of the organization. I work on organizational strategy, finding new opportunities, overseeing construction and development, and making sure that qualified individuals in the organization have access to increased opportunities to succeed, opportunities like the one I was fortunate to obtain back in 2007. After all, we are in the PEOPLE business, and the continuous development of the PEOPLE in our organization is a hallmark of our operation.\n\nShams also received a Master of Business Administration degree from Georgia Tech in 2011 and serves as the Chairman of the Board of National DCP, a three+ billion-dollar supply chain co-op procuring for and delivering goods and services to over 10,000 Dunkin’ restaurants. Shams has been a past member of the Dunkin Brand Advisory Council and has held various franchisee leadership positions within the brand.n\n\If you want to walk fast, walk alone. But if you want to walk far, walk together.\n\n-Ratan Tata",
   },
   {
     name: 'Hemalatha Arunachalam',
     title: 'Accounting & Finance Officer, CPA',
     photo: hemPhoto,
-    bio: "Hemalatha was born and raised in India, where her passion for commerce, business, and finance laid the foundation for an impressive academic and professional journey. She earned her Bachelor's, Master's, and Doctorate in Commerce while balancing family life and developing a keen interest in how financial systems drive business success. She brings deep expertise in accounting, financial reporting, and compliance to ZSC Enterprises.",
+    bio: `Hemalatha was born and raised in India, where her passion for commerce, business, and finance laid the foundation for an impressive academic and professional journey. She earned her Bachelor’s, Master’s, and Doctorate in Commerce while balancing family life and developing a keen interest in how financial systems influence business outcomes. That passion led her to a career in academia, where she served as a professor of accounting and taxation.
+
+With over a decade of experience across finance, public accounting, academia, and research, Hemalatha has published extensively in respected journals such as IEEE and Elsevier.
+
+In 2024, she relocated to the United States and continued her educational journey with a Master’s in Accounting from Clark University. Since then, she has successfully passed all sections of the CPA exams and has transitioned into the fast-paced world of U.S. accounting and finance. She is also an active member of Beta Alpha Psi, a national honor organization for financial information students and professionals.
+
+Hemalatha is a firm believer in resilience, consistency, and lifelong learning as the cornerstones of both personal and professional success. She brings a global perspective, academic rigor, and practical insight to every opportunity she pursues.` 
   },
   {
     name: 'Mark Seibert',
     title: 'Senior Director of Operations',
     photo: markPhoto,
-    bio: "Mark began his restaurant career in Birmingham, Alabama in the early '80s while attending UAB. His passion for quality food, people development, and customer experience led him to roles as Owner-Operator of Ragtime Café, Joint Venture Partner with Panera Bread, and later into the QSR industry with Dunkin'. Mark brings decades of operational mastery and a people-first leadership philosophy to ZSC Enterprises.",
+    bio: "Mark began his restaurant career in Birmingham, Alabama, in the early '80s while attending UAB. His passion for quality food, people development, and customer experience led him to roles as Owner-Operator of Ragtime Café, Joint Venture Partner with Panera Bread, and later into the QSR industry with Dunkin' in 2011. He served as Director of Operations for a franchisee before joining Dunkin' as an Operations Manager in 2017. In 2021, Mark returned to the franchisee side as a partner with ZSC to grow the Dunkin' and Baskin vision in Alabama." 
   },
   {
     name: 'Rakib Hasan',
     title: 'Director of Operations',
     photo: rakibPhoto,
-    bio: "Rakib embodies ZSC's growth-from-within culture, starting as a crew member in 2011 after moving to the U.S. He previously served as Senior Executive, Business Assurance & HR at Telenor, a global telecom leader. With expertise in sales, operations, business development, and finance, he excels in driving results in diverse and fast-paced environments.",
+    bio: "Rakib embodies ZSC’s growth-from-within culture, starting as a crew member in 2011 after moving to the U.S. He previously served as Senior Executive, Business Assurance & HR at Telenor, a global telecom leader. With expertise in sales, operations, business development, and finance, he excels in driving results in diverse environments. Rakib holds an MBA and a Bachelor’s in Finance from Kennesaw State University and is an OSHA Certified Lead Auditor and ServSafe Certified Instructor & Proctor.",
   },
   {
     name: 'Arslan Khan',
     title: 'Director of Operations',
     photo: arslanPhoto,
-    bio: "Arslan exemplifies ZSC's culture of recognizing and promoting talent. Starting as a crew member at 17 in 2010, he rose to Director of Operations in under 10 years. Having held every restaurant position, he knows what it takes to run a successful QSR network. A mentor to many, Arslan is known for turning around restaurants and building strong, motivated teams.",
-  },
-  {
-    name: 'Sydney Reese',
-    title: 'Marketing & Communications Director',
-    photo: sydneyPhoto,
-    bio: null,
+    bio: "Arslan exemplifies ZSC’s culture of recognizing and promoting talent. Starting as a crew member in 2010 at 17, he rose to Director of Operations in under 10 years. Having held every restaurant position, he knows what it takes to run a successful QSR network. A mentor to many, Arslan is known for turning around restaurants and driving profitability. He continues to grow within the organization, believing in dreaming big and working hard.",
   },
   {
     name: 'Raj Dhanani',
     title: 'Partner — Development & Construction',
     photo: rajPhoto,
+    bio: null,
+  },
+  {
+    name: 'Sydney Reese',
+    title: 'Marketing & Communications Director',
+    photo: sydneyPhoto,
     bio: null,
   },
   {

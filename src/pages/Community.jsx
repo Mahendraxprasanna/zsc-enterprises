@@ -144,28 +144,24 @@ export default function Community() {
         </div>
 
         {/* Center text overlay */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', textAlign: 'center', padding: '0 2rem', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 20, display: 'flex', flexDirection: 'column', textAlign: 'center', padding: '0 2rem', pointerEvents: 'none', width: '100%' }}>
           <motion.div style={{ marginBottom: 22, fontSize: '0.78rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 800 }}
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             ZSC COMMUNITY
           </motion.div>
           <motion.h1 className="font-playfair font-black"
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
-            style={{ fontSize: 'clamp(4rem, 10vw, 9rem)', lineHeight: 0.88, marginBottom: '1.5rem', color: '#1A1208', textShadow: '0 4px 40px rgba(243,237,227,0.8)' }}>
+            style={{ fontSize: 'clamp(4rem, 10vw, 9rem)', lineHeight: 0.88, marginBottom: '1.5rem', color: '#1A1208' }}>
             WE SHOW UP<br />
-            <em style={{
-              fontStyle: 'italic', display: 'inline-block',
-              background: 'linear-gradient(90deg, #E8650A, #D4186C)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-            }}>FOR PEOPLE.</em>
+          <em style={{
+  fontStyle: 'italic',
+  background: 'linear-gradient(90deg, #E8650A, #D4186C)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  display: 'inline-block',
+}}>FOR PEOPLE.</em>          
           </motion.h1>
-        </div>
-
-        {/* Bottom caption */}
-        <div style={{ position: 'absolute', bottom: 32, left: 0, right: 0, textAlign: 'center', zIndex: 20, pointerEvents: 'none' }}>
-          <p style={{ fontSize: '1rem', lineHeight: 1.85, color: 'rgba(42,30,16,0.7)', fontWeight: 400, maxWidth: 680, margin: '0 auto', padding: '0 2rem' }}>
-            Through schools, local events, first responders, and charitable initiatives — we are proud to serve communities far beyond our storefronts.
-          </p>
         </div>
       </section>
 

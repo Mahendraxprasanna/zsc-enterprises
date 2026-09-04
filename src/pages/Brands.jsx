@@ -18,7 +18,7 @@ const BRANDS = [
     tagline: "America Runs on Dunkin'.",
     label: '',
     desc: "ZSC Enterprises operates 50+ Dunkin' locations across Georgia and Alabama — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
-    stats: [{ n: 'American', l: 'Staple' }, { n: '50+', l: 'Locations' }, { n: 'SouthEast', l: 'Markets' }],
+    stats: [{ n: '45+', l: 'Locations' }, { n: 'Crafted', l: 'Coffees' }, { n: '50+', l: 'Donut varities' }],
 
     // ── DUNKIN' — Hot pink #E11383 + Bright orange #F5821F ──────────
     bg: `linear-gradient(145deg,
@@ -452,7 +452,7 @@ function BrandSlide({ brand, isActive }) {
           >
             <div style={{ width: 24, height: 1, background: brand.accent }} />
             <span style={{
-              fontSize: '0.48rem', letterSpacing: '0.3em',
+              fontSize: '1rem', letterSpacing: '0.3em',
               textTransform: 'uppercase', color: brand.accent, fontWeight: 600,
             }}>
               {brand.label} &nbsp;·&nbsp; ZSC Enterprises
@@ -586,7 +586,7 @@ function BrandSlide({ brand, isActive }) {
                   : brand.gradText,
                 color: '#fff',
               }}>
-              Partner With Us
+              WORK WITH US 
             </Link>
             <Link to="/team"
               className="no-underline px-7 py-3 font-medium transition-all"
