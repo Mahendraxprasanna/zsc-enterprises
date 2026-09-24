@@ -595,7 +595,7 @@ export default function Team() {
     initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
     viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
     <p style={{ fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '2rem' }}>
-      Every one of them shows up every single day with an uncompromising standard of excellence.
+      Every one of our team members shows up every single day with an uncompromising standard of excellence.
     </p>
     <div style={{ display: 'flex', gap: '3rem' }}>
       {[{ n: 'Highly Skilled', l: 'Members' }, { n: '45+', l: 'Locations' }, { n: '4', l: 'Brands' }].map(s => (
@@ -642,18 +642,6 @@ export default function Team() {
         {/* ARLs */}
         <div>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-  <h2 className="font-playfair font-black" style={{
-    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-    lineHeight: 1,
-    background: 'linear-gradient(135deg, #E8650A, #D4186C)',
-    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-    marginBottom: 10,
-  }}>Above Restaurant Leaders</h2>
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-    <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, transparent, #E8650A)' }} />
-    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#D4186C' }} />
-    <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, #D4186C, transparent)' }} />
-  </div>
 </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
             {TEAM.slice(10).map((m, i) => (

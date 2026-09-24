@@ -64,7 +64,7 @@ const BRANDS = [
     tagline: 'Reign Supreme.',
     label: '',
     desc: "Purpose-driven blends made with real fruit and wholesome ingredients — helping Atlanta guests fuel their active lifestyle. ZSC brings the Smoothie King mission to life every single day.",
-    stats: [{ n: '5+', l: 'US Locations' }, { n: 'Real', l: 'Fruit Only' }, { n: 'Freshly', l: 'Blended' }],
+    stats: [{ n: '5+', l: 'Locations' }, { n: 'Real', l: 'Fruit Only' }, { n: 'Freshly', l: 'Blended' }],
 
     // ── SMOOTHIE KING — Bold red #E31B23 + Deep crimson #B5121B ──────
     bg: `linear-gradient(145deg,
@@ -153,7 +153,7 @@ const BRANDS = [
   tagline: 'Freaky Fast. Freaky Fresh.',
   label: '',
   desc: "ZSC Enterprises brings the Jimmy John's experience to the our Guests — delivering gourmet sandwiches with the same uncompromising speed and freshness the brand is known for. Fresh-baked bread daily, hand-sliced meats, and sandwiches made to order every time.",
-  stats: [{ n: 'Gourmet', l: 'Sandwiches' }, { n: 'Jimmy.', l: 'It Up' }, { n: 'Freaky', l: 'Fast' }],
+  stats: [{ n: 'Gourmet', l: 'Sandwiches' }, { n: 'Jimmy', l: 'It Up' }, { n: 'Freaky', l: 'Fast' }],
 
   bg: `linear-gradient(145deg,
     #0f0000 0%,

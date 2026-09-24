@@ -16,8 +16,8 @@ import shamsPortrait from '../assets/images/shamsport.png'
 const STATS = [
   { n: '25+',  l: 'Years QSR' },
   { n: '50+',  l: 'Locations' },
-  { n: '$10M', l: 'CCB Led' },
-  { n: '100+', l: 'Jobs Created' },
+  { n: '$30M', l: 'CCB Led' },
+  { n: '50+', l: 'Jobs Created' },
 ]
 
 const TIMELINE = [
@@ -25,7 +25,7 @@ const TIMELINE = [
   { year: '2007', title: "Acquired First 3 Dunkin' Locations",  sub: 'Chose franchising over corporate America after GSU & PwC internship.',                                             tag: 'Founder',   color: '#D4186C' },
   { year: '2011', title: 'MBA · Georgia Tech',                  sub: 'Master of Business Administration while growing his franchise portfolio.',                                          tag: 'Education', color: '#E8650A' },
   { year: '2016', title: 'Founded ZSC Enterprises',             sub: "Dunkin', Baskin Robbins & Smoothie King franchise group, Atlanta.",                                                 tag: 'Founder',   color: '#D4186C' },
-  { year: '2020', title: 'Co-Founded CCB · $10M State-Backed', sub: 'Announced by Governor Brian P. Kemp. 31,150 sq ft in Federal Opportunity Zone, Fulton County. Creates 70+ jobs.', tag: 'Industry',  color: '#E8650A' },
+  { year: '2020', title: 'Co-Founded CCB · $10M State-Backed', sub: 'Announced by Governor Brian P. Kemp. 31,150 sq ft in Federal Opportunity Zone, Fulton County. Creates 50+ jobs.', tag: 'Industry',  color: '#E8650A' },
   { year: '—',    title: 'Chairman · NDCP Board',               sub: "Elected Chairman — highest office in the Dunkin' franchise system.",                                                tag: 'Chairman',  color: '#D4186C' },
 ]
 
@@ -37,9 +37,9 @@ const NDCP_STATS = [
 ]
 
 const CCB_STATS = [
-  { n: '$10M', l: 'Investment' },
+  { n: '$30M', l: 'Investment' },
   { n: '145+', l: 'Locations Served' },
-  { n: '70+',  l: 'Jobs Created' },
+  { n: '50+',  l: 'Jobs Created' },
   { n: '2020', l: 'Gov. Kemp Opening' },
 ]
 
@@ -276,11 +276,13 @@ export default function Leadership() {
       <span style={{ fontSize: '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>Biography</span>
     </div>
     <div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20, WebkitTextFillColor: 'initial' }}>
-                <motion.span style={{ fontSize: 'clamp(3.2rem,4.5vw,3.2rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}
+                <motion.span style={{ fontSize: 'clamp(2.8rem,4.5vw,4.2rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>Shams Charania</motion.span>
               </div>
-
+    <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(1.4rem, 4.5vw, 1.4rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
+      -Managing Director<br />
+    </h2>
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.8rem, 4.5vw, 4.2rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
       From Crew Member<br />
       <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
