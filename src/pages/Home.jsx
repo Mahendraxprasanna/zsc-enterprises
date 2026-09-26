@@ -237,7 +237,7 @@ export default function Home() {
       {/* ══ 1. HERO ══ */}
       <section style={{ position: 'relative', height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <motion.img src={heroBg} alt=""
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(1) saturate(1) sepia(0.4)' }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(1.25) saturate(1) sepia(.25)' }}
           initial={{ scale: 1.08 }} animate={{ scale: 1 }}
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(4,2,0,0.05) 0%, rgba(4,2,0,0.5) 100%)' }} />
@@ -312,7 +312,7 @@ export default function Home() {
         </motion.div>
       </div>
 {/* ══ 4. OUR STORY ══ */}
-<section style={{ background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', padding: '7rem 8rem', position: 'relative', overflow: 'hidden' }}>
+<section style={{ background: '#F3EDE3', padding: '7rem 8rem', position: 'relative', overflow: 'hidden' }}>
   <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.12) 0%, transparent 55%)', pointerEvents: 'none' }} />
   <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.15) 0%, transparent 55%)', pointerEvents: 'none' }} />
 
@@ -321,26 +321,26 @@ export default function Home() {
     <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: '2rem' }}
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.7 }}>
-      <div style={{ width: 32, height: 1, background: 'rgba(255,255,255,0.4)' }} />
-      <span style={{ fontSize: '0.46rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>Our Story</span>
-      <div style={{ width: 32, height: 1, background: 'rgba(255,255,255,0.4)' }} />
+      <div style={{ width: 32, height: 1, background: 'rgba(42,30,16,0.2)' }} />
+      <span style={{ fontSize: '0.46rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Our Story</span>
+      <div style={{ width: 32, height: 1, background: 'rgba(42,30,16,0.2)' }} />
     </motion.div>
 
     <motion.h2 className="font-playfair font-black"
-      style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 0.9, color: '#fff', letterSpacing: '-0.025em', marginBottom: '2.5rem' }}
+      style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 0.9, color: '#1A1208', letterSpacing: '-0.025em', marginBottom: '2.5rem' }}
       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.1 }}>
       One Vision.<br />
-      <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.75)' }}>Endless Opportunity.</em>
+      <em style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>Endless Opportunity.</em>
     </motion.h2>
 
-    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '1.5rem' }}
+    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(42,30,16,0.62)', fontWeight: 300, marginBottom: '1.5rem' }}
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
       From one vision in 2016 to a thriving multistate, multibrand franchise group, ZSC Enterprises has grown with a commitment to excellence, people, and opportunity.
     </motion.p>
 
-    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(255,255,255,0.85)', fontWeight: 300 }}
+    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(42,30,16,0.62)', fontWeight: 300 }}
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
       As franchisees of iconic brands such as Dunkin', Baskin-Robbins, Smoothie King, and Jimmy John's, we continue to expand our footprint while staying true to what matters most — our guests, our teams, and the communities we call home.
