@@ -160,7 +160,7 @@ export default function Community() {
   WebkitTextFillColor: 'transparent',
   backgroundClip: 'text',
   display: 'inline-block',
-}}>FOR PEOPLE.</em>          
+}}>FOR OUR PEOPLE.</em>          
           </motion.h1>
         </div>
       </section>
@@ -214,27 +214,6 @@ export default function Community() {
         bg="#F3EDE3"
         onImageClick={setLightboxImg}
       />
-
-      {/* ══ IMPACT STATS ══ */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '9rem 5rem', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', color: '#fff' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem', position: 'relative', zIndex: 5 }}>
-          {[
-            { n: '400+', l: 'Refreshers Served' },
-            { n: '$9K',  l: 'Donated to Operation Lunchbox' },
-            { n: '100+', l: 'Families Supported' },
-          ].map((s, i) => (
-            <motion.div key={i}
-              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.15 }}
-              style={{ padding: '3rem', borderRadius: 32, background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(18px)', border: '1px solid rgba(255,255,255,0.25)', textAlign: 'center' }}>
-              <div className="font-playfair font-black" style={{ fontSize: '5rem', lineHeight: 1, marginBottom: 14 }}>{s.n}</div>
-              <div style={{ fontSize: '0.72rem', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.92 }}>{s.l}</div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
 {/* ══ FINAL GRID + CTA ══ */}
 <section style={{ position: 'relative', padding: '0 3rem 6rem', overflow: 'hidden', background: '#F3EDE3' }}>
   <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: 'rgba(232,101,10,0.06)', filter: 'blur(100px)', top: '10%', left: '10%', pointerEvents: 'none' }} />

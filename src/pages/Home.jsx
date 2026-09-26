@@ -15,7 +15,7 @@ import dunkinImg   from '../assets/images/dd.jpg'
 import baskinImg   from '../assets/images/br.jpg'
 import smoothieImg from '../assets/images/sk.jpg'
 import jimmyImg    from '../assets/images/jj.webp'
-
+import teamserve from '../assets/images/serve.png'
 // ─────────────────────────────────────────────────────────
 // BRANDS DATA — mirrors Brands.jsx style
 // ─────────────────────────────────────────────────────────
@@ -331,7 +331,7 @@ export default function Home() {
       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.1 }}>
       One Vision.<br />
-      <em style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>Endless Opportunity.</em>
+      <em style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block',paddingBottom: '0.15em' }}>Endless Opportunity.</em>
     </motion.h2>
 
     <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(42,30,16,0.62)', fontWeight: 300, marginBottom: '1.5rem' }}
@@ -345,9 +345,36 @@ export default function Home() {
       viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
       As franchisees of iconic brands such as Dunkin', Baskin-Robbins, Smoothie King, and Jimmy John's, we continue to expand our footprint while staying true to what matters most — our guests, our teams, and the communities we call home.
     </motion.p>
-
   </div>
 </section>
+{/* ══ MISSION ══ */}
+      <section style={{ position: 'relative', padding: '3rem 4rem', overflow: 'hidden', textAlign: 'center', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
+        <motion.p
+          initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.7 }}
+          style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', marginBottom: '0.6rem', position: 'relative', zIndex: 5 }}>
+          Our Mission
+        </motion.p>
+        <motion.p className="font-playfair italic"
+          initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
+          style={{ fontSize: 'clamp(1rem, 1.6vw, 1.3rem)', lineHeight: 1.75, color: '#fff', position: 'relative', zIndex: 5, maxWidth: 780, margin: '0 auto' }}>
+          "To inspire our team to become the best part of the day for our guests through our various brands."
+        </motion.p>
+        <motion.p style={{ marginTop: '0.8rem', fontSize: '0.42rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', position: 'relative', zIndex: 5 }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
+          ZSC Enterprises · Atlanta, Georgia
+        </motion.p>
+      </section>
+
+{/* ══ IMAGE STRIP ══ */}
+<div style={{ height: 500, overflow: 'hidden' }}>
+  <motion.img src={teamserve} alt="ZSC"
+    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+    whileHover={{ scale: 1.05 }} transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }} />
+</div>
       {/* ══ 3. BRAND ACCORDION ══ */}
       <BrandAccordion />
       <Footer />

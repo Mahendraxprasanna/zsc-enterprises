@@ -17,7 +17,7 @@ const BRANDS = [
     name: "Dunkin'",
     tagline: "America Runs on Dunkin'.",
     label: '',
-    desc: "ZSC Enterprises operates 50+ Dunkin' locations across Georgia and Alabama — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
+    desc: "ZSC Enterprises operates 45+ Dunkin' locations across Georgia and Alabama — freshly brewed coffee, premium espresso, donuts, and breakfast delivered with speed and consistency every single day.",
     stats: [{ n: '45+', l: 'Locations' }, { n: 'Crafted', l: 'Coffees' }, { n: '50+', l: 'Donut varities' }],
 
     // ── DUNKIN' — Hot pink #E11383 + Bright orange #F5821F ──────────
