@@ -83,6 +83,27 @@ export default function Footer() {
               </div>
             </div>
             <div>
+  <div style={{ fontSize: '0.38rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.22)', marginBottom: 10 }}>Follow Us</div>
+  <div style={{ display: 'flex', gap: 10 }}>
+    <a href="https://www.facebook.com/zscenterprises2025" target="_blank" rel="noreferrer"
+      style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(250,247,242,0.06)', border: '0.5px solid rgba(250,247,242,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', transition: 'all 0.25s ease' }}
+      onMouseEnter={e => { e.currentTarget.style.background = '#E8650A'; e.currentTarget.style.borderColor = '#E8650A' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(250,247,242,0.06)'; e.currentTarget.style.borderColor = 'rgba(250,247,242,0.12)' }}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(250,247,242,0.7)">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/company/zsc-enterprises/" target="_blank" rel="noreferrer"
+      style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(250,247,242,0.06)', border: '0.5px solid rgba(250,247,242,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', transition: 'all 0.25s ease' }}
+      onMouseEnter={e => { e.currentTarget.style.background = '#E8650A'; e.currentTarget.style.borderColor = '#E8650A' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(250,247,242,0.06)'; e.currentTarget.style.borderColor = 'rgba(250,247,242,0.12)' }}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(250,247,242,0.7)">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+  </div>
+</div>
+            <div>
               <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
                 style={{ display: 'inline-block', marginTop: 4, fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#E8650A', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(232,101,10,0.3)', paddingBottom: 2 }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = '#E8650A'}
@@ -91,6 +112,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
+          
         </div>
       </div>
 

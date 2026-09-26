@@ -142,29 +142,17 @@ onClick={() => window.location.href = brand.link}
                 margin: '0 4px',
               }}
             >
-              {/* Thumbnail image — shown when not hovered */}
-<img src={brand.thumb} alt={brand.name} style={{
-  position: 'absolute', inset: 0,
-  width: '100%', height: '100%',
-  objectFit: 'cover',
-  filter: `brightness(${isActive ? 0.7 : 0.45}) saturate(0.85)`,
-  transition: 'opacity 0.5s ease',
-  opacity: isActive ? 0 : 1,
-  zIndex: 1,
-}} />
 
-{/* Video — plays on hover */}
 <video
   muted loop playsInline
-  ref={el => { if (el) { isActive ? el.play() : el.pause() } }}
+ref={el => { if (el) { isActive ? el.play() : el.pause() } }}
   style={{
     position: 'absolute', inset: 0,
     width: '100%', height: '100%',
     objectFit: 'cover',
-    filter: 'brightness(0.7) saturate(0.85)',
-    opacity: isActive ? 1 : 0,
-    transition: 'opacity 0.5s ease',
-    zIndex: 2,
+    filter: `brightness(${isActive ? 0.7 : 0.45}) saturate(0.85)`,
+    transition: 'filter 0.6s ease',
+    zIndex: 1,
   }}>
   <source src={brand.video} type="video/mp4" />
 </video>
@@ -179,25 +167,29 @@ onClick={() => window.location.href = brand.link}
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${brand.accent}, ${brand.accentAlt})`, opacity: isActive ? 1 : 0.3, transition: 'opacity 0.5s ease' }} />
 
               {/* COLLAPSED — vertical brand name */}
-              {!isActive && (
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <div style={{
-                    writingMode: 'vertical-rl',
-                    transform: 'rotate(180deg)',
-                    fontFamily: "'Playfair Display', serif",
-                    fontWeight: 900,
-                    fontSize: 'clamp(1rem, 1.8vw, 1.6rem)',
-                    color: 'rgba(250,247,242,0.7)',
-                    letterSpacing: '0.1em',
-                    textAlign: 'center',
-                  }}>
-                    {brand.name}
-                  </div>
-                </div>
-              )}
+              {/* COLLAPSED — vertical brand name */}
+{!isActive && (
+  <div style={{
+    position: 'absolute', inset: 0,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    zIndex: 20,
+  }}>
+    <div style={{
+      writingMode: 'vertical-rl',
+      transform: 'rotate(180deg)',
+      fontFamily: "'Jost', sans-serif",
+      fontWeight: 900,
+      fontSize: 'clamp(1.2rem, 2vw, 2rem)',
+      color: '#ffffff',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      textAlign: 'center',
+      textShadow: '0 2px 20px rgba(0,0,0,0.5)',
+    }}>
+      {brand.name}
+    </div>
+  </div>
+)}
 
 <AnimatePresence>
   {isActive && (
@@ -319,76 +311,43 @@ export default function Home() {
           )}
         </motion.div>
       </div>
-    {/* ══ 4. OUR STORY ══ */}
-<section style={{ position: 'relative', minHeight: '60vh', overflow: 'hidden' }}>
+{/* ══ 4. OUR STORY ══ */}
+<section style={{ background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', padding: '7rem 8rem', position: 'relative', overflow: 'hidden' }}>
+  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.12) 0%, transparent 55%)', pointerEvents: 'none' }} />
+  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.15) 0%, transparent 55%)', pointerEvents: 'none' }} />
 
-  {/* Background image */}
-  <motion.img src={teamImg} alt="ZSC Team"
-    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(0.35) saturate(0.7)' }}
-    whileHover={{ scale: 1.04 }} transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }} />
+  <div style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
 
-  {/* Overlays */}
-  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(6,3,1,0.85) 0%, rgba(6,3,1,0.4) 60%, rgba(6,3,1,0.1) 100%)' }} />
-  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #E8650A, #D4186C)' }} />
+    <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: '2rem' }}
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.7 }}>
+      <div style={{ width: 32, height: 1, background: 'rgba(255,255,255,0.4)' }} />
+      <span style={{ fontSize: '0.46rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>Our Story</span>
+      <div style={{ width: 32, height: 1, background: 'rgba(255,255,255,0.4)' }} />
+    </motion.div>
 
-  {/* Content */}
-  <motion.div style={{ position: 'relative', zIndex: 10, padding: '7rem 5.5rem', maxWidth: 680 }}
-    initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}>
-
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.6rem' }}>
-      <div style={{ width: 22, height: 1.5, background: '#E8650A' }} />
-      <span style={{ fontSize: '0.46rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Our Story</span>
-    </div>
-
-    <div className="font-playfair font-black" style={{ lineHeight: 1.0, marginBottom: 20 }}>
-      <motion.span style={{ fontSize: 'clamp(2.2rem,4.5vw,2.2rem)', fontStyle: 'italic', display: 'inline-block', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>ZSC Enterprises</motion.span>
-    </div>
-
-    <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)', lineHeight: 1.0, color: '#FAF7F2', marginBottom: '2rem', letterSpacing: '-0.02em' }}>
+    <motion.h2 className="font-playfair font-black"
+      style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 0.9, color: '#fff', letterSpacing: '-0.025em', marginBottom: '2.5rem' }}
+      initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.1 }}>
       One Vision.<br />
-      <em style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>Endless Opportunity.</em>
-    </h2>
+      <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.75)' }}>Endless Opportunity.</em>
+    </motion.h2>
 
-    <div style={{ width: 48, height: 1, background: 'linear-gradient(90deg, #E8650A, #D4186C)', marginBottom: '2rem', opacity: 0.4 }} />
+    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '1.5rem' }}
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
+      From one vision in 2016 to a thriving multistate, multibrand franchise group, ZSC Enterprises has grown with a commitment to excellence, people, and opportunity.
+    </motion.p>
 
-    <p style={{ fontSize: 'clamp(0.9rem, 1.1vw, 1rem)', lineHeight: 2.1, color: 'rgba(250,247,242,0.62)', fontWeight: 300, marginBottom: '2.5rem' }}>
-      From one vision in 2016 to a thriving multistate, multibrand franchise group, ZSC Enterprises has grown with a commitment to excellence, people, and opportunity. As franchisees of iconic brands such as Dunkin', Baskin-Robbins, Smoothie King, and Jimmy John's, we continue to expand our footprint while staying true to what matters most — our guests, our teams, and the communities we call home.
-    </p>
+    <motion.p style={{ fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)', lineHeight: 2.1, color: 'rgba(255,255,255,0.85)', fontWeight: 300 }}
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
+      As franchisees of iconic brands such as Dunkin', Baskin-Robbins, Smoothie King, and Jimmy John's, we continue to expand our footprint while staying true to what matters most — our guests, our teams, and the communities we call home.
+    </motion.p>
 
-    <div style={{ display: 'flex', gap: '2.5rem' }}>
-      {[['50+', 'Locations'], ['4', 'Brands'], ['3', 'States']].map(([n, l]) => (
-        <div key={l}>
-          <div className="font-playfair font-black" style={{ fontSize: '2rem', lineHeight: 1, marginBottom: 4, background: 'linear-gradient(135deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{n}</div>
-          <div style={{ fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.38)', fontWeight: 500 }}>{l}</div>
-        </div>
-      ))}
-    </div>
-  </motion.div>
+  </div>
 </section>
-            {/* ══ MISSION ══ */}
-      <section style={{ position: 'relative', padding: '3rem 4rem', overflow: 'hidden', textAlign: 'center', background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
-        <motion.p
-          initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7 }}
-          style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', marginBottom: '0.6rem', position: 'relative', zIndex: 5 }}>
-          Our Mission
-        </motion.p>
-        <motion.p className="font-playfair italic"
-          initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
-          style={{ fontSize: 'clamp(1rem, 1.6vw, 1.3rem)', lineHeight: 1.75, color: '#fff', position: 'relative', zIndex: 5, maxWidth: 780, margin: '0 auto' }}>
-          "To inspire our team to become the best part of the day for our guests through our various brands."
-        </motion.p>
-        <motion.p style={{ marginTop: '0.8rem', fontSize: '0.42rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', position: 'relative', zIndex: 5 }}
-          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-          ZSC Enterprises · Atlanta, Georgia
-        </motion.p>
-      </section>
       {/* ══ 3. BRAND ACCORDION ══ */}
       <BrandAccordion />
       <Footer />

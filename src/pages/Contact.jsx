@@ -27,16 +27,16 @@ export default function Contact() {
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '55vh', paddingTop: 72 }}>
 
         {/* LEFT */}
-        <div style={{ background: '#F3EDE3', padding: '6rem 5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+       <div style={{ background: '#1A0E06', padding: '6rem 5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.8rem' }}>
             <div style={{ width: 22, height: 1, background: '#E8650A' }} />
             <span style={{ fontSize: '0.44rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Careers & Contact</span>
           </div>
-          <h1 className="font-playfair font-black" style={{ fontSize: 'clamp(3rem, 5vw, 5.5rem)', lineHeight: 0.9, color: '#1A1208', letterSpacing: '-0.025em', marginBottom: '2rem' }}>
-            Your Career Journey<br />
-            <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>Starts Here.</em>
-          </h1>
-          <p style={{ fontSize: '1rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.6)', fontWeight: 300, maxWidth: 420 }}>
+          <h1 className="font-playfair font-black" style={{ fontSize: 'clamp(3rem, 5vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em', marginBottom: '2rem' }}>
+  <span style={{ color: '#FAF7F2' }}>Your Career Journey</span><br />
+  <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>Starts Here.</em>
+</h1>
+          <p style={{ fontSize: '1rem', lineHeight: 1.9, color: 'rgba(250,247,242,0.55)', fontWeight: 300, maxWidth: 420 }}>
             At ZSC Enterprises, we believe that our people are the foundation of our success — delivering exceptional guest service and leadership across our QSR franchises nationwide.
           </p>
         </div>
@@ -44,8 +44,8 @@ export default function Contact() {
         {/* RIGHT — image */}
         <div style={{ position: 'relative', overflow: 'hidden' }}>
           <img src={teamImg} alt="ZSC Team"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(0.82) saturate(0.9)', display: 'block' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #F3EDE3 0%, transparent 18%)' }} />
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(1) saturate(1)', display: 'block' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #1A0E06 0%, transparent 18%)' }} />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #E8650A, #D4186C)' }} />
         </div>
       </section>
@@ -76,7 +76,7 @@ export default function Contact() {
               "Your career journey in the QSR industry starts here with ZSC Enterprises."
             </p>
 
-            <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
+            <a href="https://app.higherme.com/brands/65d78e9e803a9?page=1" target="_blank" rel="noreferrer"
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 background: '#fff', color: '#E8650A', textDecoration: 'none',

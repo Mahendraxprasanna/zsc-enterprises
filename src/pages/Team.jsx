@@ -21,6 +21,7 @@ import shirleyPhoto   from '../assets/images/meet our team/shirley.webp'
 import bilalPhoto     from '../assets/images/meet our team/bilal.webp'
 import shaheryarPhoto from '../assets/images/meet our team/shah.jpeg'
 import tahirPhoto     from '../assets/images/meet our team/tahir.webp'
+import karanPhoto from '../assets/images/meet our team/karan.png'
 
 // ── TEAM DATA ─────────────────────────────────────────────
 const TEAM = [
@@ -31,8 +32,8 @@ const TEAM = [
     bio: "Shams’ QSR journey started when his parents immigrated to Atlanta, Georgia in the year 1999. At 14 years old and still in high school, he went to work at a Popeyes in Gainesville, GA on the weekends. Slowly but surely, Shams learned every aspect of store operations and was soon named Manager of that franchise, running the restaurant on weekends in the owner’s absence.\n\nIn 2003, while attending Georgia State University in downtown Atlanta, Shams got an opportunity to work as an Assistant Manager at a Dunkin’ Donuts in Chamblee, Georgia. With his own brother being the Manager of the store, the situation worked out well for him and together the two brothers not only increased sales but were able to impress Dunkin’ corporate with their expertise in operating clean, high-quality and efficient restaurants.\n\nIn 2007, after graduating from Georgia State University with an accounting degree and having completed an internship at PriceWaterhouseCoopers (PwC), Shams knew corporate America was just not his cup of coffee. So, after months of considering his next venture, Shams finally got an opportunity to acquire 3 Dunkin’ Donuts restaurants together with his brother and one of the owners of the Popeyes that he used to work at during high school.\n\nFast forward 13 years and Shams still does not regret his decision to not pursue accounting as a career.I enjoy every aspect of the restaurant business and as the Managing Partner of the organization. I work on organizational strategy, finding new opportunities, overseeing construction and development, and making sure that qualified individuals in the organization have access to increased opportunities to succeed, opportunities like the one I was fortunate to obtain back in 2007. After all, we are in the PEOPLE business, and the continuous development of the PEOPLE in our organization is a hallmark of our operation.\n\nShams also received a Master of Business Administration degree from Georgia Tech in 2011 and serves as the Chairman of the Board of National DCP, a three+ billion-dollar supply chain co-op procuring for and delivering goods and services to over 10,000 Dunkin’ restaurants. Shams has been a past member of the Dunkin Brand Advisory Council and has held various franchisee leadership positions within the brand.n\n\If you want to walk fast, walk alone. But if you want to walk far, walk together.\n\n-Ratan Tata",
   },
   {
-    name: 'Hemalatha Arunachalam',
-    title: 'Accounting & Finance Officer, CPA',
+    name: 'Hemalatha Arunachalam CPA',
+    title: 'Accounting & Finance Officer',
     photo: hemPhoto,
     bio: `Hemalatha was born and raised in India, where her passion for commerce, business, and finance laid the foundation for an impressive academic and professional journey. She earned her Bachelor’s, Master’s, and Doctorate in Commerce while balancing family life and developing a keen interest in how financial systems influence business outcomes. That passion led her to a career in academia, where she served as a professor of accounting and taxation.
 
@@ -60,6 +61,12 @@ Hemalatha is a firm believer in resilience, consistency, and lifelong learning a
     photo: arslanPhoto,
     bio: "Arslan exemplifies ZSC’s culture of recognizing and promoting talent. Starting as a crew member in 2010 at 17, he rose to Director of Operations in under 10 years. Having held every restaurant position, he knows what it takes to run a successful QSR network. A mentor to many, Arslan is known for turning around restaurants and driving profitability. He continues to grow within the organization, believing in dreaming big and working hard.",
   },
+{
+  name: 'Karan Chawala',
+  title: 'Director of Training & NSO',
+  photo: karanPhoto,
+  bio: "Karan Chawala is an experienced restaurant operations and training leader with a strong focus on developing people, building high-performing teams, and delivering exceptional guest experiences.\n\nWith over a decade of experience in the franchise restaurant industry, Karan has progressed through various operational and leadership roles, including multi-unit operations across several U.S. states.\n\nHis expertise includes operations management, leadership development, team training, new store openings, sales growth, guest experience, and operational excellence. He is passionate about developing future leaders through hands-on training, coaching, accountability, and continuous improvement.\n\nKaran’s leadership philosophy is simple: Develop people. Build strong teams. Deliver excellence. Grow the business."
+},
   {
     name: 'Raj Dhanani',
     title: 'Partner — Development & Construction',
@@ -91,15 +98,9 @@ Hemalatha is a firm believer in resilience, consistency, and lifelong learning a
     bio: null,
   },
   {
-    name: 'Shahzad Ajanee',
+    name: 'Bilal Khan',
     title: 'Above Restaurant Leader',
-    photo: shahzadPhoto,
-    bio: null,
-  },
-  {
-    name: 'Ajene Alleyne',
-    title: 'Above Restaurant Leader',
-    photo: ajenePhoto,
+    photo: bilalPhoto,
     bio: null,
   },
   {
@@ -109,9 +110,15 @@ Hemalatha is a firm believer in resilience, consistency, and lifelong learning a
     bio: null,
   },
   {
-    name: 'Sabita Gurung',
+    name: 'Shahzad Ajanee',
     title: 'Above Restaurant Leader',
-    photo: sabitaPhoto,
+    photo: shahzadPhoto,
+    bio: null,
+  },
+  {
+    name: 'Shaheryar Khan',
+    title: 'Above Restaurant Leader',
+    photo: shaheryarPhoto,
     bio: null,
   },
   {
@@ -120,16 +127,10 @@ Hemalatha is a firm believer in resilience, consistency, and lifelong learning a
     photo: shirleyPhoto,
     bio: null,
   },
-  {
-    name: 'Bilal Khan',
+    {
+    name: 'Sabita Gurung',
     title: 'Above Restaurant Leader',
-    photo: bilalPhoto,
-    bio: null,
-  },
-  {
-    name: 'Shaheryar Khan',
-    title: 'Above Restaurant Leader',
-    photo: shaheryarPhoto,
+    photo: sabitaPhoto,
     bio: null,
   },
   {
@@ -511,8 +512,8 @@ export default function Team() {
   const [selectedMember, setSelectedMember] = useState(null)
 
   const row1 = TEAM.slice(0, 9)
-  const row2 = TEAM.slice(4, 13)
-  const row3 = TEAM.slice(8, 17)
+  const row2 = TEAM.slice(0, 13)
+  const row3 = TEAM.slice(9, 18)
 
   return (
     <motion.div

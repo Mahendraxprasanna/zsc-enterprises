@@ -16,7 +16,7 @@ import shamsPortrait from '../assets/images/shamsport.png'
 const STATS = [
   { n: '25+',  l: 'Years QSR' },
   { n: '50+',  l: 'Locations' },
-  { n: '$30M', l: 'CCB Led' },
+  { n: '$15M', l: 'CCB Led' },
   { n: '50+', l: 'Jobs Created' },
 ]
 
@@ -37,7 +37,7 @@ const NDCP_STATS = [
 ]
 
 const CCB_STATS = [
-  { n: '$30M', l: 'Investment' },
+  { n: '$15M', l: 'Investment' },
   { n: '145+', l: 'Locations Served' },
   { n: '50+',  l: 'Jobs Created' },
   { n: '2020', l: 'Gov. Kemp Opening' },
@@ -281,7 +281,7 @@ export default function Leadership() {
                   viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>Shams Charania</motion.span>
               </div>
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(1.4rem, 4.5vw, 1.4rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
-      -Managing Director<br />
+      -Managing Partner<br />
     </h2>
     <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2.8rem, 4.5vw, 4.2rem)', color: '#FAF7F2', lineHeight: 1.02, marginBottom: 16 }}>
       From Crew Member<br />
@@ -311,7 +311,7 @@ While attending Georgia State University, Shams joined Dunkin’ in 2003 as an A
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300, marginBottom: '2.2rem' }}>
       After graduating with an accounting degree and completing an internship at PwC, Shams realized his passion was in the restaurant business. In 2007, he acquired three Dunkin’ restaurants with his brother and a former Popeyes owner—marking the beginning of his journey as a franchise owner and entrepreneur.</p>
     <p style={{ fontSize: '1.05rem', lineHeight: 2, color: 'rgba(250,247,242,0.65)', fontWeight: 300 }}>
-      Today, Shams leads ZSC Enterprises as Managing Partner, focusing on organizational strategy, development, new opportunities, and most importantly, developing people within the organization. He holds an MBA from Georgia Tech and serves as Chairman of the Board of National DCP, a multi-billion-dollar supply chain cooperative serving more than 10,000 Dunkin’ restaurants. He has also held several leadership roles within the Dunkin’ brand.    </p>
+      Today, Shams leads ZSC Enterprises as Managing Partner, focusing on organizational strategy, development, new opportunities, and most importantly, developing people within the organization. He holds an MBA from Georgia Tech and serves as Chairman of the Board of National DCP, a 3 billion dollar supply chain cooperative serving more than 10,000 Dunkin’ restaurants. He has also held several leadership roles within the Dunkin’ brand.    </p>
   </motion.div>
 
   {/* RIGHT — Portrait */}
