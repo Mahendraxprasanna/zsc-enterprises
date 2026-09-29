@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ZSCLogo from './ZSCLogo'
+import useIsMobile from '../hooks/useIsMobile'
 
 const NAV_LINKS = [
   { label: 'Home',       to: '/' },
@@ -18,6 +19,7 @@ export default function Navbar() {
   const lastScrollY = useRef(0)
   const hideTimer   = useRef(null)
   const location    = useLocation()
+  const isMobile    = useIsMobile()
 
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [location])
@@ -72,11 +74,11 @@ export default function Navbar() {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 9000,
-        height: 72,
+        height: isMobile ? 64 : 72,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 2.5rem',
+        padding: isMobile ? '0 1.25rem' : '0 2.5rem',
 background: atTop ? 'rgba(6,3,1,0.35)' : 'rgba(10, 5, 2, 0.55)',
 backdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
 WebkitBackdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
@@ -92,12 +94,12 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
 
         {/* ── LEFT — Logo ── */}
         <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
-        <ZSCLogo size={38} dark={atTop && location.pathname !== '/' && location.pathname !== '/brands'} />
+        <ZSCLogo size={isMobile ? 32 : 38} dark={atTop && location.pathname !== '/' && location.pathname !== '/brands'} />
         </Link>
 
-        {/* ── CENTER — Nav links (desktop) ── */}
+        {/* ── CENTER — Nav links (desktop only; phones use the hamburger menu) ── */}
         <div style={{
-          display: 'flex',
+          display: isMobile ? 'none' : 'flex',
           alignItems: 'center',
           gap: '0.25rem',
           position: 'absolute',
@@ -142,6 +144,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
         {/* ── RIGHT — Phone + hamburger ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
           <a href="tel:7702498082" style={{
+            display: isMobile ? 'none' : 'inline',
             fontSize: '0.46rem',
             letterSpacing: '0.14em',
            color: atTop && location.pathname !== '/' && location.pathname !== '/brands' ? 'rgba(42,30,16,0.45)' : 'rgba(250,247,242,0.45)',
@@ -161,18 +164,19 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              padding: '6px',
+              padding: isMobile ? '10px' : '6px',
               display: 'flex',
               flexDirection: 'column',
               gap: 5,
-              width: 28,
+              width: isMobile ? 44 : 28,
+              boxSizing: 'border-box',
             }}
             aria-label="Toggle menu"
           >
             {[0, 1, 2].map(i => (
               <span key={i} style={{
                 display: 'block',
-                height: 1,
+                height: isMobile ? 1.5 : 1,
                 borderRadius: 1,
                 background: menuOpen
   ? 'rgba(250,247,242,0.6)'
@@ -194,18 +198,31 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
         </div>
       </nav>
 
+{/* Brands page: desktop reveals the navbar on hover; phones reveal it with a tap on a thin top strip */}
 {location.pathname === '/brands' && !visible && (
-  <div
-    style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0,
-      height: 120,
-      zIndex: 9001,
-      cursor: 'default',
-    }}
-    onMouseEnter={() => setVisible(true)}
-    onMouseLeave={() => setVisible(false)}
-  />
+  isMobile ? (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        height: 28,
+        zIndex: 9001,
+      }}
+      onClick={() => setVisible(true)}
+    />
+  ) : (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        height: 120,
+        zIndex: 9001,
+        cursor: 'default',
+      }}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+    />
+  )
 )}
 
       {/* ── MOBILE / FULL MENU OVERLAY ── */}
@@ -220,7 +237,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '0.5rem',
+        gap: isMobile ? '0.9rem' : '0.5rem',
         pointerEvents: menuOpen ? 'all' : 'none',
         opacity: menuOpen ? 1 : 0,
         transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -234,7 +251,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
           <Link key={link.to} to={link.to}
             style={{
               textDecoration: 'none',
-              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              fontSize: isMobile ? 'clamp(1.8rem, 9vw, 2.4rem)' : 'clamp(2rem, 5vw, 3.5rem)',
               fontFamily: "'Playfair Display', Georgia, serif",
               fontWeight: 900,
               fontStyle: isActive(link.to) ? 'italic' : 'normal',
@@ -272,10 +289,10 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
 
         <a href="tel:7702498082" style={{
           marginTop: '2rem',
-          fontSize: '0.56rem',
+          fontSize: isMobile ? '0.8rem' : '0.56rem',
           letterSpacing: '0.26em',
           textTransform: 'uppercase',
-          color: 'rgba(250,247,242,0.25)',
+          color: isMobile ? 'rgba(250,247,242,0.45)' : 'rgba(250,247,242,0.25)',
           textDecoration: 'none',
           fontFamily: 'Jost, sans-serif',
           transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
