@@ -110,7 +110,7 @@ export default function Community() {
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }}
       exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
-      style={{ background: '#F3EDE3', overflow: 'hidden', paddingTop: isMobile ? 64 : 72 }}>
+      style={{ background: '#F3EDE3', overflow: 'hidden', paddingTop: isMobile ? 104 : 72 }}>
 
       {/* LIGHTBOX */}
       <AnimatePresence>
@@ -131,17 +131,15 @@ export default function Community() {
       </AnimatePresence>
 
       {/* ══ HERO ══ */}
-      <section style={isMobile
-        ? { position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#F3EDE3' }
-        : { position: 'relative', minHeight: '125vh', overflow: 'hidden', background: '#F3EDE3' }}>
+      {/* Text on top, the 8 photos underneath (PC and phone) */}
+      <section style={{ position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#F3EDE3' }}>
 
         {/* Subtle gradient glows — no emojis */}
         <div style={{ position: 'absolute', width: isMobile ? 320 : 600, height: isMobile ? 320 : 600, borderRadius: '50%', background: 'rgba(232,101,10,0.08)', filter: 'blur(120px)', top: '-10%', left: '-5%', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', width: isMobile ? 280 : 500, height: isMobile ? 280 : 500, borderRadius: '50%', background: 'rgba(212,24,108,0.07)', filter: 'blur(120px)', bottom: '-10%', right: '-5%', pointerEvents: 'none' }} />
 
-        {/* Collage — on phone the rows are wider than the screen so the photos bleed off the edges */}
-        {/* Phone: all 8 photos fit inside the screen as 2 rows of 4 */}
-        <div style={{ position: 'relative', zIndex: 5, padding: isMobile ? '0 0.9rem 3rem' : '7rem 2rem' }}>
+        {/* Collage — sits below the heading. Phone: all 8 photos fit as 2 rows of 4 */}
+        <div style={{ position: 'relative', zIndex: 5, padding: isMobile ? '0 0.9rem 3rem' : '1.5rem 2rem 7rem' }}>
           <div style={isMobile
             ? { display: 'flex', gap: 8, marginBottom: 12, transform: 'rotate(-2deg)' }
             : { display: 'flex', gap: 22, marginBottom: 24, transform: 'rotate(-2deg)' }}>
@@ -160,10 +158,13 @@ export default function Community() {
           </div>
         </div>
 
-        {/* Center text overlay — on phone it sits on a soft cream panel so it stays readable over the photos */}
-        <div style={isMobile
-          ? { position: 'relative', order: -1, zIndex: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '3rem 1.25rem 2.2rem', pointerEvents: 'none', width: '100%', boxSizing: 'border-box' }
-          : { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 20, display: 'flex', flexDirection: 'column', textAlign: 'center', padding: '0 2rem', pointerEvents: 'none', width: '100%', boxSizing: 'border-box' }}>
+        {/* Heading — placed ABOVE the photos (order: -1 moves it to the top of the column) */}
+        <div style={{
+          position: 'relative', order: -1, zIndex: 20,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+          padding: isMobile ? '3rem 1.25rem 2.2rem' : '6rem 2rem 2.5rem',
+          width: '100%', boxSizing: 'border-box',
+        }}>
           <div>
             <motion.div style={{ marginBottom: isMobile ? 12 : 22, fontSize: isMobile ? '0.62rem' : '0.78rem', letterSpacing: isMobile ? '0.28em' : '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 800 }}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>

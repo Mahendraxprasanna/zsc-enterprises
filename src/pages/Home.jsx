@@ -363,7 +363,7 @@ export default function Home() {
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.7 }}>
       <div style={{ width: 32, height: 1, background: 'rgba(42,30,16,0.2)' }} />
-      <span style={{ fontSize: isMobile ? '0.6rem' : '0.46rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Our Story</span>
+      <span style={{ fontSize: isMobile ? '0.6rem' : '0.7rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Our Story</span>
       <div style={{ width: 32, height: 1, background: 'rgba(42,30,16,0.2)' }} />
     </motion.div>
 

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import useIsMobile from '../hooks/useIsMobile'
@@ -352,9 +353,138 @@ function ProductPlaceholder({ label, accent, glow, size = 'lg' }) {
 }
 
 // ─────────────────────────────────────────────
+// VIDEO POPUP — opens from "Watch the Video"
+// Uses the browser's built-in player: play/pause, volume/mute, seek bar,
+// time, fullscreen and picture-in-picture all come with `controls`.
+// ─────────────────────────────────────────────
+function VideoPopup({ brand, open, onClose }) {
+  const isMobile = useIsMobile()
+  const videoRef = useRef(null)
+  const isBaskin = brand.id === 'baskin'
+  const grad = isBaskin ? 'linear-gradient(135deg, #F05097, #7A2830)' : brand.gradText
+
+  // Esc closes it, and the page behind it can't scroll while it's open
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [open, onClose])
+
+  // Start playing with sound as soon as it opens
+  useEffect(() => {
+    if (open && videoRef.current) {
+      videoRef.current.volume = 0.8
+      videoRef.current.play().catch(() => {}) // if the browser blocks it, the play button is right there
+    }
+  }, [open])
+
+  // Rendered into <body> so it always sits above the navbar and the slider
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: isMobile ? '1rem' : '2rem',
+            background: 'rgba(0,0,0,0.92)',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+          }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            style={{
+              width: isMobile ? '100%' : '85vw', maxWidth: 1100, position: 'relative',
+              background: '#0a0605',
+              border: `0.5px solid ${brand.borderColor}`,
+              boxShadow: `0 30px 90px rgba(0,0,0,0.6), 0 0 70px ${brand.glowAlt}`,
+            }}
+            initial={{ scale: 0.94, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.94, opacity: 0, y: 20 }}
+            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Brand accent line */}
+            <div style={{ height: 3, background: grad }} />
+
+            {/* Header */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+              padding: isMobile ? '0.8rem 0.9rem' : '0.9rem 1.3rem',
+            }}>
+              <div style={{ minWidth: 0 }}>
+                <div style={{
+                  fontSize: isMobile ? '0.55rem' : '0.44rem', letterSpacing: '0.24em', textTransform: 'uppercase',
+                  color: isBaskin ? '#F05097' : brand.accent, fontWeight: 600, marginBottom: 3,
+                }}>
+                  ZSC Enterprises · Brand Video
+                </div>
+                <div className="font-playfair font-bold" style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: brand.textPrimary }}>
+                  {brand.name}
+                </div>
+              </div>
+              <button onClick={onClose} aria-label="Close video" style={{
+                width: 40, height: 40, flexShrink: 0, cursor: 'pointer',
+                background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(250,247,242,0.2)',
+                color: 'rgba(250,247,242,0.8)', fontSize: '1rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                borderRadius: 0, WebkitAppearance: 'none',
+              }}>✕</button>
+            </div>
+
+            {/* Player — built-in controls: play/pause, volume, seek, fullscreen */}
+            <video
+              ref={videoRef}
+              key={brand.id}
+              controls
+              autoPlay
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              style={{
+                width: '100%', display: 'block', background: '#000',
+                maxHeight: isMobile ? 'calc(100dvh - 190px)' : 'calc(100vh - 200px)',
+              }}
+            >
+              <source src={brand.video} type="video/mp4" />
+            </video>
+
+            {/* Footer */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+              padding: isMobile ? '0.7rem 0.9rem' : '0.75rem 1.3rem',
+              borderTop: `0.5px solid ${brand.borderColor}`,
+            }}>
+              <span style={{ fontSize: isMobile ? '0.52rem' : '0.44rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.35)' }}>
+                {isMobile ? 'Tap outside to close' : 'Esc or click outside to close'}
+              </span>
+              <span className="font-playfair italic" style={{
+                fontSize: isMobile ? '0.8rem' : '0.85rem',
+                background: grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                paddingRight: '0.06em', whiteSpace: 'nowrap',
+              }}>
+                {brand.tagline}
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  )
+}
+
+// ─────────────────────────────────────────────
 // SINGLE BRAND SLIDE
 // ─────────────────────────────────────────────
-function BrandSlide({ brand, isActive }) {
+function BrandSlide({ brand, isActive, onWatch }) {
   const isMobile = useIsMobile()
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -607,8 +737,14 @@ function BrandSlide({ brand, isActive }) {
             animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.6, delay: 0.70 }}
           >
-            <Link to="/contact"
-              className={isMobile ? 'no-underline font-semibold' : 'no-underline px-7 py-3 font-semibold transition-opacity hover:opacity-85'}
+            {/* "Watch the Video" — opens the popup player (replaces the old "Work With Us" link) */}
+            <button
+              type="button"
+              onClick={onWatch}
+              // stop the slider from treating this click as the start of a swipe
+              onMouseDown={e => e.stopPropagation()}
+              onTouchStart={e => e.stopPropagation()}
+              className={isMobile ? 'font-semibold' : 'px-7 py-3 font-semibold transition-opacity hover:opacity-85'}
               style={{
                 fontSize: isMobile ? '0.6rem' : '0.58rem', letterSpacing: isMobile ? '0.14em' : '0.2em',
                 textTransform: 'uppercase',
@@ -616,10 +752,16 @@ function BrandSlide({ brand, isActive }) {
                   ? 'linear-gradient(135deg, #F05097, #7A2830)'
                   : brand.gradText,
                 color: '#fff',
-                ...(isMobile ? { flex: 1, textAlign: 'center', padding: '0.95rem 0.5rem' } : {}),
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                ...(isMobile ? { flex: 1, padding: '0.95rem 0.5rem', borderRadius: 0, WebkitAppearance: 'none' } : {}),
               }}>
-              WORK WITH US 
-            </Link>
+              <svg width="9" height="10" viewBox="0 0 9 10" aria-hidden="true">
+                <path d="M1 1l7 4-7 4z" fill="#fff" />
+              </svg>
+              Watch the Video
+            </button>
             <Link to="/team"
               className={isMobile ? 'no-underline font-medium' : 'no-underline px-7 py-3 font-medium transition-all'}
               style={{
@@ -867,8 +1009,12 @@ const initialIndex = initialBrand === 'baskin' ? 2 : initialBrand === 'smoothie'
 const [current, setCurrent] = useState(initialIndex)
   const [direction, setDirection] = useState(1) // 1 = right, -1 = left
   const [dragging, setDragging] = useState(false)
+  const [videoOpen, setVideoOpen] = useState(false) // popup player
   const dragStart = useRef(null)
   const isAnimating = useRef(false)
+
+  const openVideo  = useCallback(() => setVideoOpen(true), [])
+  const closeVideo = useCallback(() => setVideoOpen(false), [])
 
   const navigate = useCallback((dir) => {
     if (isAnimating.current) return
@@ -886,15 +1032,16 @@ const [current, setCurrent] = useState(initialIndex)
     setTimeout(() => { isAnimating.current = false }, 700)
   }, [current])
 
-  // Keyboard nav
+  // Keyboard nav (switched off while the video popup is open, so ← → only control the video)
   useEffect(() => {
     const onKey = (e) => {
+      if (videoOpen) return
       if (e.key === 'ArrowRight') navigate(1)
       if (e.key === 'ArrowLeft')  navigate(-1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [navigate])
+  }, [navigate, videoOpen])
 
   // Touch/drag
   const onDragStart = (e) => {
@@ -956,7 +1103,7 @@ const [current, setCurrent] = useState(initialIndex)
             animate="center"
             exit={direction > 0 ? 'exitToLeft' : 'exitToRight'}
           >
-            <BrandSlide brand={brand} isActive={true} />
+            <BrandSlide brand={brand} isActive={true} onWatch={openVideo} />
           </motion.div>
         </AnimatePresence>
 
@@ -1042,6 +1189,9 @@ const [current, setCurrent] = useState(initialIndex)
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         />
       </div>
+
+      {/* ── VIDEO POPUP (plays the current brand's video with sound + full controls) ── */}
+      <VideoPopup brand={brand} open={videoOpen} onClose={closeVideo} />
     </motion.div>
   )
 }
