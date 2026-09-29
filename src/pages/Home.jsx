@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
+import ZSCLogo from '../components/ZSCLogo'
 import useIsMobile from '../hooks/useIsMobile'
 
 import heroBg      from '../assets/images/street.png'
@@ -350,6 +351,13 @@ export default function Home() {
   <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.15) 0%, transparent 55%)', pointerEvents: 'none' }} />
 
   <div style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
+
+    {/* ZSC logo above the "Our Story" label — dark version for the light cream background */}
+    <motion.div style={{ display: 'flex', justifyContent: 'center', marginBottom: isMobile ? '1.2rem' : '1.6rem' }}
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.7 }}>
+      <ZSCLogo size={isMobile ? 52 : 68} dark />
+    </motion.div>
 
     <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: isMobile ? '1.4rem' : '2rem' }}
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}

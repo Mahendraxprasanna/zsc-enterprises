@@ -34,7 +34,7 @@ export default function Contact() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
       style={{ background: '#F3EDE3' }}>
       {/* ══ HEADER ══ */}
-      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : '55vh', paddingTop: isMobile ? 64 : 72 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : '55vh', paddingTop: isMobile ? 104 : 72 }}>
 
         {/* LEFT */}
        <div style={{ background: '#1A0E06', padding: isMobile ? '3rem 1.5rem 2.5rem' : '6rem 5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -46,9 +46,61 @@ export default function Contact() {
   <span style={{ color: '#FAF7F2' }}>We Don't Just Build Restaurants</span><br />
   <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', paddingRight: isMobile ? '0.06em' : undefined, marginTop: isMobile ? '0.2em' : undefined }}>We Build Careers</em>
 </h1>
-          <p style={{ fontSize: isMobile ? '0.98rem' : '1rem', lineHeight: isMobile ? 1.8 : 1.9, color: isMobile ? 'rgba(250,247,242,0.68)' : 'rgba(250,247,242,0.55)', fontWeight: 300, maxWidth: 420 }}>
-            At ZSC Enterprises, we believe that our people are the foundation of our success — delivering exceptional guest service and leadership across our QSR franchises nationwide and thats our official office located in Atlanta.
-          </p>
+          {/* ── "Our Corporate Office" pointer ──
+               PC: sits on the right side of the dark panel; a short line ends in an arrow at the photo
+               Phone: the photo is below, so an arrow points down */}
+          <div
+            style={{
+              display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 16,
+              justifyContent: isMobile ? undefined : 'flex-end', // PC: sit on the right side, next to the photo
+              marginRight: isMobile ? 0 : '-5rem',   // PC: let the arrow reach the photo edge
+              position: 'relative', zIndex: 2,
+            }}>
+
+            {/* Location pin */}
+            <div style={{
+              position: 'relative', flexShrink: 0,
+              width: isMobile ? 40 : 42, height: isMobile ? 40 : 42, borderRadius: '50%',
+              border: '1px solid rgba(232,101,10,0.45)', background: 'rgba(232,101,10,0.08)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E8650A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z" />
+                <circle cx="12" cy="9.5" r="2.5" />
+              </svg>
+            </div>
+
+            {/* Text */}
+            <div style={{ flexShrink: 0, textAlign: isMobile ? undefined : 'right' }}>
+              <div className="font-playfair" style={{ fontStyle: 'italic', fontWeight: 700, fontSize: isMobile ? '1.2rem' : '1.3rem', lineHeight: 1.1, color: '#FAF7F2' }}>
+                Our Corporate Office
+              </div>
+              <div style={{ marginTop: 5, fontSize: isMobile ? '0.56rem' : '0.44rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.45)', fontWeight: 500 }}>
+                Atlanta, Georgia
+              </div>
+            </div>
+
+            {isMobile ? (
+              /* PHONE — arrow pointing down to the photo below */
+              <div
+                style={{
+                  marginLeft: 'auto', width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+                  border: '0.5px solid rgba(250,247,242,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8650A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M6 13l6 6 6-6" />
+                </svg>
+              </div>
+            ) : (
+              /* PC — gradient line ending in an arrowhead at the photo */
+              <div style={{ flex: 'none', width: 90, position: 'relative', height: 1, marginLeft: 4, background: 'linear-gradient(90deg, rgba(232,101,10,0.15), rgba(232,101,10,0.7) 45%, #D4186C)' }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" style={{ position: 'absolute', right: -1, top: -5.5 }}>
+                  <path d="M2 1l5 5-5 5" fill="none" stroke="#D4186C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* RIGHT — image (below the text on phone) */}
