@@ -32,8 +32,8 @@ export default function Contact() {
             <span style={{ fontSize: '0.44rem', letterSpacing: '0.34em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 700 }}>Careers & Contact</span>
           </div>
           <h1 className="font-playfair font-black" style={{ fontSize: 'clamp(3rem, 5vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.025em', marginBottom: '2rem' }}>
-  <span style={{ color: '#FAF7F2' }}>WE DON'T JUST BUILD RESTAURANTS</span><br />
-  <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>WE BUILD CAREERS</em>
+  <span style={{ color: '#FAF7F2' }}>We Don't Just Build Restaurants</span><br />
+  <em style={{ fontStyle: 'italic', background: 'linear-gradient(90deg, #E8650A, #D4186C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>We Build Careers</em>
 </h1>
           <p style={{ fontSize: '1rem', lineHeight: 1.9, color: 'rgba(250,247,242,0.55)', fontWeight: 300, maxWidth: 420 }}>
             At ZSC Enterprises, we believe that our people are the foundation of our success — delivering exceptional guest service and leadership across our QSR franchises nationwide and thats our official office located in Atlanta.
@@ -183,14 +183,6 @@ export default function Contact() {
           </div>
         </div>
         </section>
-                  {/* ══ IMAGE STRIP ══ */}
-<div style={{ height: 420, overflow: 'hidden' }}>
-  <motion.img src={head} alt="ZSC"
-    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-    whileHover={{ scale: 1.03 }} transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }} />
-  </div>
-      
-
       <Footer />
     </motion.div>
   )

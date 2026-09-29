@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: 'Leadership', to: '/leadership' },
   { label: 'Team',       to: '/team' },
   { label: 'Community',  to: '/community' },
-  { label: 'Contact',    to: '/contact' },
+  { label: 'Career',    to: '/contact' },
 ]
 
 export default function Navbar() {
@@ -77,7 +77,6 @@ export default function Navbar() {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 2.5rem',
-        background: atTop ? 'rgba(0,0,0,0)' : 'rgba(10, 5, 2, 0.55)',
 background: atTop ? 'rgba(6,3,1,0.35)' : 'rgba(10, 5, 2, 0.55)',
 backdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
 WebkitBackdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
