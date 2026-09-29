@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
+import useIsMobile from '../hooks/useIsMobile'
 
 import shamsPhoto     from '../assets/images/meet our team/sams.webp'
 import markPhoto      from '../assets/images/meet our team/mark.png'
@@ -39,7 +40,8 @@ const TEAM = [
 
 With over a decade of experience across finance, public accounting, academia, and research, Hemalatha has published extensively in respected journals such as IEEE and Elsevier.
 
-In 2024, she relocated to the United States and continued her educational journey with a Master’s in Accounting from Clark University. Since then, she has successfully passed all sections of the CPA exams and has transitioned into the fast-paced world of U.S. accounting and finance. She is also an active member of Beta Alpha Psi, a national honor organization for financial information students and professionals.
+In 2024, She relocated to the United States, where she simultaneously pursued her Master’s in Accounting at Clark University while preparing for and completing all sections of the CPA exams. Through her dedication and perseverance, she successfully earned her Master’s degree and earned her CPA license, marking an important milestone in her journey into U.S. accounting and finance.
+. She is also an active member of Beta Alpha Psi, a national honor organization for financial information students and professionals.
 
 Hemalatha is a firm believer in resilience, consistency, and lifelong learning as the cornerstones of both personal and professional success. She brings a global perspective, academic rigor, and practical insight to every opportunity she pursues.` 
   },
@@ -147,11 +149,20 @@ function getInitials(name) {
 
 // ── MEMBER POPUP ──────────────────────────────────────────
 function MemberPopup({ member, onClose }) {
+  const isMobile = useIsMobile()
+
   useEffect(() => {
     if (member) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [member])
+
+  // Phone only: stop the page behind the popup from scrolling (iPhone & Android)
+  useEffect(() => {
+    if (!isMobile) return
+    document.body.style.overflow = member ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [member, isMobile])
 
   return (
     <AnimatePresence>
@@ -162,6 +173,7 @@ function MemberPopup({ member, onClose }) {
             display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
             background: 'rgba(0,0,0,0.6)',
             backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: isMobile ? 'blur(6px)' : undefined,
             padding: '0 0 0 0',
           }}
           initial={{ opacity: 0 }}
@@ -174,10 +186,15 @@ function MemberPopup({ member, onClose }) {
               width: '100%',
               maxWidth: '100vw',
               background: '#F3EDE3',
-              borderRadius: '0 0 24px 24px',
+              borderRadius: isMobile ? '0 0 20px 20px' : '0 0 24px 24px',
               overflow: 'hidden',
-              maxHeight: '85vh',
+              maxHeight: isMobile ? '90dvh' : '85vh',
               overflowY: 'auto',
+              // phone: keeps scrolling inside the popup and clears the iPhone notch
+              overscrollBehavior: isMobile ? 'contain' : undefined,
+              WebkitOverflowScrolling: isMobile ? 'touch' : undefined,
+              paddingTop: isMobile ? 'env(safe-area-inset-top, 0px)' : undefined,
+              position: isMobile ? 'relative' : undefined,
             }}
             initial={{ y: '-100%' }}
 animate={{ y: 0 }}
@@ -191,9 +208,19 @@ exit={{ y: '-100%' }}
                 {/* Top gradient accent */}
                 <div style={{ height: 4, background: 'linear-gradient(90deg, #E8650A, #D4186C)' }} />
 
-                <div style={{ display: 'grid', gridTemplateColumns: '380px 1fr', minHeight: 420 }}>
-                  {/* Left — photo */}
-                  <div style={{ position: 'relative', overflow: 'hidden', background: '#1A1208' }}>
+                {/* Phone only: close button pinned at the top, so you don't have to scroll to the end of a long bio */}
+                {isMobile && (
+                  <button onClick={onClose} aria-label="Close" style={{
+                    position: 'absolute', top: 'calc(14px + env(safe-area-inset-top, 0px))', right: 14, zIndex: 5,
+                    width: 40, height: 40, borderRadius: '50%', border: 'none',
+                    background: 'rgba(26,18,8,0.55)', color: '#fff', fontSize: '1rem',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                  }}>✕</button>
+                )}
+
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '380px 1fr', minHeight: isMobile ? 'auto' : 420 }}>
+                  {/* Left — photo (top on phone) */}
+                  <div style={{ position: 'relative', overflow: 'hidden', background: '#1A1208', height: isMobile ? 'min(95vw, 380px)' : undefined }}>
                     {member.photo ? (
                       <img src={member.photo} alt={member.name} style={{
                         width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top',
@@ -206,23 +233,25 @@ exit={{ y: '-100%' }}
                         </div>
                       </div>
                     )}
-                    {/* Gradient overlay on photo */}
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, #F3EDE3 100%)' }} />
+                    {/* Gradient overlay on photo — fades right on PC, fades down on phone */}
+                    <div style={{ position: 'absolute', inset: 0, background: isMobile ? 'linear-gradient(to bottom, transparent 65%, #F3EDE3 100%)' : 'linear-gradient(to right, transparent 60%, #F3EDE3 100%)' }} />
                   </div>
 
                   {/* Right — info */}
-                  <div style={{ padding: '3rem 3rem 3rem 2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ padding: isMobile ? '1.2rem 1.4rem 2rem' : '3rem 3rem 3rem 2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     {/* Eyebrow */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
                       <div style={{ width: 16, height: 1, background: '#E8650A' }} />
-                      <span style={{ fontSize: '0.46rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>ZSC Enterprises</span>
+                      <span style={{ fontSize: isMobile ? '0.58rem' : '0.46rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>ZSC Enterprises</span>
                     </div>
 
                     {/* Name */}
-                    <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 1.0, marginBottom: 6, color: '#1A1208' }}>
+                    <h2 className="font-playfair font-black" style={{ fontSize: isMobile ? 'clamp(1.9rem, 9vw, 2.4rem)' : 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 1.0, marginBottom: 6, color: '#1A1208' }}>
                       {member.name.split(' ')[0]}<br />
                       <em style={{
                         fontStyle: 'italic',
+                        display: isMobile ? 'inline-block' : undefined,
+                        paddingRight: isMobile ? '0.06em' : undefined,
                         background: 'linear-gradient(135deg, #E8650A, #D4186C)',
                         WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                       }}>{member.name.split(' ').slice(1).join(' ')}</em>
@@ -230,13 +259,14 @@ exit={{ y: '-100%' }}
 
                     {/* Title */}
                     <div style={{
-                      fontSize: '0.5rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 600,
-                      color: 'rgba(42,30,16,0.4)', marginBottom: '1.5rem',
-                      paddingBottom: '1.5rem', borderBottom: '0.5px solid rgba(42,30,16,0.1)',
+                      fontSize: isMobile ? '0.6rem' : '0.5rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 600,
+                      color: isMobile ? 'rgba(42,30,16,0.55)' : 'rgba(42,30,16,0.4)', marginBottom: isMobile ? '1.2rem' : '1.5rem',
+                      paddingBottom: isMobile ? '1.2rem' : '1.5rem', borderBottom: '0.5px solid rgba(42,30,16,0.1)',
+                      lineHeight: 1.6,
                     }}>{member.title}</div>
 
-                    {/* Bio */}
-                    <p style={{ fontSize: '0.88rem', lineHeight: 1.9, color: 'rgba(42,30,16,0.65)', fontWeight: 300, maxWidth: 540 }}>
+                    {/* Bio — on phone the paragraph breaks (\n\n) are shown so long bios are easier to read */}
+                    <p style={{ fontSize: isMobile ? '0.95rem' : '0.88rem', lineHeight: isMobile ? 1.8 : 1.9, color: isMobile ? 'rgba(42,30,16,0.75)' : 'rgba(42,30,16,0.65)', fontWeight: 300, maxWidth: 540, whiteSpace: isMobile ? 'pre-line' : undefined }}>
                       {member.bio}
                     </p>
                   </div>
@@ -246,9 +276,9 @@ exit={{ y: '-100%' }}
               /* ── SIMPLE POPUP for no-bio members ── */
               <div>
                 <div style={{ height: 4, background: 'linear-gradient(90deg, #E8650A, #D4186C)' }} />
-                <div style={{ padding: '2.5rem 3rem', display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                <div style={{ padding: isMobile ? '1.5rem 1.25rem' : '2.5rem 3rem', display: 'flex', alignItems: 'center', gap: isMobile ? '1rem' : '2rem' }}>
                   {/* Small photo */}
-                  <div style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#E8DDD0' }}>
+                  <div style={{ width: isMobile ? 72 : 90, height: isMobile ? 72 : 90, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#E8DDD0' }}>
                     {member.photo ? (
                       <img src={member.photo} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
                     ) : (
@@ -257,17 +287,18 @@ exit={{ y: '-100%' }}
                       </div>
                     )}
                   </div>
-                  <div>
-                    <h3 className="font-playfair font-black" style={{ fontSize: '1.8rem', color: '#1A1208', lineHeight: 1.1, marginBottom: 6 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <h3 className="font-playfair font-black" style={{ fontSize: isMobile ? '1.35rem' : '1.8rem', color: '#1A1208', lineHeight: 1.1, marginBottom: 6 }}>
                       {member.name}
                     </h3>
                     <div style={{
-                      fontSize: '0.48rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 600,
+                      fontSize: isMobile ? '0.58rem' : '0.48rem', letterSpacing: isMobile ? '0.16em' : '0.22em', textTransform: 'uppercase', fontWeight: 600,
+                      lineHeight: isMobile ? 1.5 : undefined,
                       background: 'linear-gradient(135deg, #E8650A, #D4186C)',
                       WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                     }}>{member.title}</div>
                   </div>
-                  <div style={{ marginLeft: 'auto' }}>
+                  <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
                     <button onClick={onClose} style={{
                       background: 'none', border: '0.5px solid rgba(42,30,16,0.2)',
                       width: 40, height: 40, cursor: 'pointer', fontSize: '1rem',
@@ -282,17 +313,17 @@ exit={{ y: '-100%' }}
             {/* Close bar for bio popups */}
             {member.bio && (
               <div style={{
-                padding: '1rem 3rem', background: 'rgba(42,30,16,0.03)',
+                padding: isMobile ? '1rem 1.4rem' : '1rem 3rem', background: 'rgba(42,30,16,0.03)',
                 borderTop: '0.5px solid rgba(42,30,16,0.08)',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               }}>
-                <span style={{ fontSize: '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.3)' }}>
-                  Click outside to close
+                <span style={{ fontSize: isMobile ? '0.56rem' : '0.44rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(42,30,16,0.3)' }}>
+                  {isMobile ? 'Tap outside to close' : 'Click outside to close'}
                 </span>
                 <button onClick={onClose} style={{
                   background: 'linear-gradient(135deg, #E8650A, #D4186C)',
-                  border: 'none', color: '#fff', padding: '0.5rem 1.5rem',
-                  fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase',
+                  border: 'none', color: '#fff', padding: isMobile ? '0.7rem 1.6rem' : '0.5rem 1.5rem',
+                  fontSize: isMobile ? '0.62rem' : '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase',
                   cursor: 'pointer', fontWeight: 600, borderRadius: 6,
                 }}>Close</button>
               </div>
@@ -307,19 +338,24 @@ exit={{ y: '-100%' }}
 // ── PORTRAIT CARD (marquee) ───────────────────────────────
 function PortraitCard({ member, halfCut = false, onClick }) {
   const [hovered, setHovered] = useState(false)
+  const isMobile = useIsMobile()
+
+  // Phone: smaller cards, and no hover (a tap would leave the card stuck in colour)
+  const w = isMobile ? (halfCut ? 120 : 140) : (halfCut ? 200 : 220)
+  const h = isMobile ? (halfCut ? 84 : 186)  : (halfCut ? 140 : 290)
 
   return (
     <motion.div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={isMobile ? undefined : () => setHovered(true)}
+      onMouseLeave={isMobile ? undefined : () => setHovered(false)}
       onClick={onClick}
-      whileHover={{ scale: 1.04, zIndex: 10 }}
+      whileHover={isMobile ? undefined : { scale: 1.04, zIndex: 10 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
         position: 'relative',
-        width: halfCut ? 200 : 220,
-        height: halfCut ? 140 : 290,
-        borderRadius: 20,
+        width: w,
+        height: h,
+        borderRadius: isMobile ? 14 : 20,
         overflow: 'hidden',
         flexShrink: 0,
         cursor: 'pointer',
@@ -392,11 +428,12 @@ function PortraitCard({ member, halfCut = false, onClick }) {
 
 // ── MARQUEE ROW ───────────────────────────────────────────
 function MarqueeRow({ members, direction = 1, speed = 40, halfCut = false, onCardClick }) {
+  const isMobile = useIsMobile()
   const items = [...members, ...members, ...members, ...members]
   return (
     <div style={{ overflow: 'hidden', width: '100%' }}>
       <motion.div
-        style={{ display: 'flex', gap: 12, width: 'max-content' }}
+        style={{ display: 'flex', gap: isMobile ? 8 : 12, width: 'max-content' }}
         animate={{ x: direction > 0 ? ['0%', '-25%'] : ['-25%', '0%'] }}
         transition={{ duration: speed, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
       >
@@ -418,25 +455,30 @@ function StaticCard({ member, index, onClick }) {
   const [hovered, setHovered] = useState(false)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-5% 0px' })
+  const isMobile = useIsMobile()
+
+  // Phone has no hover, so name + title are always visible there
+  const showInfo = isMobile || hovered
 
   return (
     <motion.div
       ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={isMobile ? undefined : () => setHovered(true)}
+      onMouseLeave={isMobile ? undefined : () => setHovered(false)}
       onClick={onClick}
       style={{
-        position: 'relative', borderRadius: 20, overflow: 'hidden',
+        position: 'relative', borderRadius: isMobile ? 14 : 20, overflow: 'hidden',
         aspectRatio: '3/4', background: '#E8DDD0', cursor: 'pointer',
       }}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.6, delay: isMobile ? (index % 2) * 0.06 : index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileHover={isMobile ? undefined : { scale: 1.03 }}
+      whileTap={isMobile ? { scale: 0.97 } : undefined}
     >
       {member.photo ? (
         <>
-          <img src={member.photo} alt={member.name} style={{
+          <img src={member.photo} alt={member.name} loading={isMobile ? 'lazy' : undefined} style={{
   position: 'absolute', inset: 0, width: '100%', height: '100%',
   objectFit: 'cover', objectPosition: 'center top',
   transition: 'transform 0.5s ease',
@@ -468,8 +510,10 @@ function StaticCard({ member, index, onClick }) {
       {/* Gradient overlay */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 2,
-        background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)',
-        opacity: hovered ? 1 : 0, transition: 'opacity 0.4s ease',
+        background: isMobile
+          ? 'linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.05) 45%, transparent 100%)'
+          : 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)',
+        opacity: showInfo ? 1 : 0, transition: 'opacity 0.4s ease',
       }} />
 
       {/* Top accent */}
@@ -482,24 +526,25 @@ function StaticCard({ member, index, onClick }) {
 
       {/* Name + title */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 4, padding: '1rem',
-        transform: hovered ? 'translateY(0)' : 'translateY(8px)',
-        opacity: hovered ? 1 : 0,
+        position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 4, padding: isMobile ? '0.75rem' : '1rem',
+        transform: showInfo ? 'translateY(0)' : 'translateY(8px)',
+        opacity: showInfo ? 1 : 0,
         transition: 'transform 0.35s ease, opacity 0.35s ease',
       }}>
         <div style={{
           fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700,
-          fontSize: '0.88rem', color: '#FAF7F2', lineHeight: 1.2, marginBottom: 4,
+          fontSize: isMobile ? '0.86rem' : '0.88rem', color: '#FAF7F2', lineHeight: 1.2, marginBottom: 4,
         }}>{member.name}</div>
         <div style={{
-          fontSize: '0.4rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500,
+          fontSize: isMobile ? '0.5rem' : '0.4rem', letterSpacing: isMobile ? '0.1em' : '0.14em', textTransform: 'uppercase', fontWeight: isMobile ? 600 : 500,
+          lineHeight: isMobile ? 1.45 : undefined,
           background: 'linear-gradient(135deg, #E8650A, #D4186C)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
         }}>{member.title}</div>
         {member.bio && (
           <div style={{
-            marginTop: 6, fontSize: '0.42rem', letterSpacing: '0.12em', textTransform: 'uppercase',
-            color: 'rgba(250,247,242,0.5)', fontWeight: 400,
+            marginTop: 6, fontSize: isMobile ? '0.5rem' : '0.42rem', letterSpacing: '0.12em', textTransform: 'uppercase',
+            color: isMobile ? 'rgba(250,247,242,0.7)' : 'rgba(250,247,242,0.5)', fontWeight: 400,
           }}>Tap to read more →</div>
         )}
       </div>
@@ -510,6 +555,7 @@ function StaticCard({ member, index, onClick }) {
 // ── MAIN PAGE ─────────────────────────────────────────────
 export default function Team() {
   const [selectedMember, setSelectedMember] = useState(null)
+  const isMobile = useIsMobile()
 
   const row1 = TEAM.slice(0, 9)
   const row2 = TEAM.slice(0, 13)
@@ -519,7 +565,7 @@ export default function Team() {
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }}
       exit={{ opacity: 0 }} transition={{ duration: 0.4 }}
-      style={{ paddingTop: 72, background: '#F3EDE3' }}
+      style={{ paddingTop: isMobile ? 64 : 72, background: '#F3EDE3', overflowX: isMobile ? 'hidden' : undefined }}
     >
 
       {/* Member popup */}
@@ -528,18 +574,26 @@ export default function Team() {
       {/* ══════════════════════════════════════
           HERO — marquee with gradient text overlay
       ══════════════════════════════════════ */}
-      <section style={{ position: 'relative', overflow: 'hidden', background: '#F3EDE3', paddingBottom: '3rem' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#F3EDE3', paddingBottom: isMobile ? '2rem' : '3rem' }}>
 
         {/* Half-cut top row */}
-        <div style={{ marginBottom: 12 }}>
+        <div style={{ marginBottom: isMobile ? 8 : 12 }}>
           <MarqueeRow members={row1} direction={1} speed={38} halfCut={true} onCardClick={setSelectedMember} />
         </div>
 
         {/* Full rows */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 8 : 12 }}>
           <MarqueeRow members={row2} direction={-1} speed={42} onCardClick={setSelectedMember} />
           <MarqueeRow members={row3} direction={1} speed={36} onCardClick={setSelectedMember} />
         </div>
+
+        {/* Phone only: soft cream wash behind the title so it reads clearly over the photos */}
+        {isMobile && (
+          <div style={{
+            position: 'absolute', inset: 0, zIndex: 15, pointerEvents: 'none',
+            background: 'radial-gradient(ellipse 75% 32% at center, rgba(243,237,227,0.9) 0%, rgba(243,237,227,0.55) 55%, transparent 100%)',
+          }} />
+        )}
 
         {/* Giant gradient text overlay */}
         <div style={{
@@ -550,12 +604,13 @@ export default function Team() {
           <motion.h1
             className="font-playfair font-black"
             style={{
-              fontSize: 'clamp(4rem, 10vw, 9rem)',
+              fontSize: isMobile ? 'clamp(2.8rem, 14vw, 4rem)' : 'clamp(4rem, 10vw, 9rem)',
               lineHeight: 0.88, letterSpacing: '-0.03em',
               background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               userSelect: 'none', textAlign: 'center',
               filter: 'drop-shadow(0 4px 24px rgba(232,101,10,0.18))',
+              paddingRight: isMobile ? '0.06em' : undefined,
             }}
             initial={{ opacity: 0, scale: 0.92, filter: 'blur(12px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'drop-shadow(0 4px 24px rgba(232,101,10,0.18))' }}
@@ -568,44 +623,44 @@ export default function Team() {
 
         {/* Bottom fade */}
         <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: 80,
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: isMobile ? 50 : 80,
           background: 'linear-gradient(to top, #F3EDE3, transparent)',
           zIndex: 10, pointerEvents: 'none',
         }} />
       </section>
 
 <section style={{
-  padding: '4rem 5rem',
-  display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center',
+  padding: isMobile ? '3rem 1.5rem' : '4rem 5rem',
+  display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '1.8rem' : '4rem', alignItems: 'center',
   background: 'linear-gradient(135deg, #E8650A 0%, #D4186C 100%)',
 }}>
   <motion.div
-    initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
+    initial={isMobile ? { opacity: 0, y: 24 } : { opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0, y: 0 }}
     viewport={{ once: true }} transition={{ duration: 0.7 }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
       <div style={{ width: 20, height: 1, background: 'rgba(255,255,255,0.5)' }} />
-      <span style={{ fontSize: '1rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>ZSC Enterprises</span>
+      <span style={{ fontSize: isMobile ? '0.7rem' : '1rem', letterSpacing: isMobile ? '0.26em' : '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>ZSC Enterprises</span>
     </div>
-    <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', color: '#fff', lineHeight: 1.05 }}>
+    <h2 className="font-playfair font-black" style={{ fontSize: isMobile ? 'clamp(1.9rem, 8.5vw, 2.4rem)' : 'clamp(2rem, 3.5vw, 3rem)', color: '#fff', lineHeight: 1.05 }}>
       The People Who<br />
       <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.75)' }}>Make It Happen.</em>
     </h2>
   </motion.div>
 
   <motion.div
-    initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
+    initial={isMobile ? { opacity: 0, y: 24 } : { opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0, y: 0 }}
     viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
-    <p style={{ fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: '2rem' }}>
+    <p style={{ fontSize: isMobile ? '0.98rem' : '0.9rem', lineHeight: isMobile ? 1.8 : 1.9, color: 'rgba(255,255,255,0.85)', fontWeight: 300, marginBottom: isMobile ? '1.6rem' : '2rem' }}>
       Every one of our team members shows up every single day with an uncompromising standard of excellence.
     </p>
-    <div style={{ display: 'flex', gap: '3rem' }}>
-      {[{ n: 'Highly Skilled', l: 'Members' }, { n: '45+', l: 'Locations' }, { n: '4', l: 'Brands' }].map(s => (
+    <div style={{ display: 'flex', gap: isMobile ? '1.2rem 1.8rem' : '3rem', flexWrap: isMobile ? 'wrap' : undefined }}>
+      {[{ n: 'Highly Skilled', l: 'Members' }, { n: '50+', l: 'Locations' }, { n: '4', l: 'Brands' }].map(s => (
         <div key={s.l}>
           <div className="font-playfair font-black" style={{
-            fontSize: '2rem', lineHeight: 1, marginBottom: 4,
+            fontSize: isMobile ? '1.5rem' : '2rem', lineHeight: 1, marginBottom: 4,
             color: '#fff',
           }}>{s.n}</div>
-          <div style={{ fontSize: '0.46rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>{s.l}</div>
+          <div style={{ fontSize: isMobile ? '0.58rem' : '0.46rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: isMobile ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.6)', fontWeight: 500 }}>{s.l}</div>
         </div>
       ))}
     </div>
@@ -614,15 +669,16 @@ export default function Team() {
 
       {/* ══════════════════════════════════════
           FULL TEAM GRID — fully coloured
+          PC: 5 across (unchanged) · Phone: 2 across, names always visible
       ══════════════════════════════════════ */}
-      <section style={{ padding: '5rem', background: '#F3EDE3' }}>
+      <section style={{ padding: isMobile ? '3rem 1rem' : '5rem', background: '#F3EDE3' }}>
 
         {/* Leadership */}
-        <div style={{ marginBottom: '3.5rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <div style={{ marginBottom: isMobile ? '0.6rem' : '3.5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: isMobile ? '1.8rem' : '2.5rem' }}>
   <h2 className="font-playfair font-black" style={{
-    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-    lineHeight: 1,
+    fontSize: isMobile ? 'clamp(1.8rem, 8vw, 2.3rem)' : 'clamp(2rem, 4vw, 3.5rem)',
+    lineHeight: isMobile ? 1.1 : 1,
     background: 'linear-gradient(135deg, #E8650A, #D4186C)',
     WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
     marginBottom: 10,
@@ -633,7 +689,7 @@ export default function Team() {
     <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, #D4186C, transparent)' }} />
   </div>
 </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)', gap: isMobile ? 10 : 16 }}>
             {TEAM.slice(0, 10).map((m, i) => (
               <StaticCard key={m.name} member={m} index={i} onClick={() => setSelectedMember(m)} />
             ))}
@@ -642,9 +698,9 @@ export default function Team() {
 
         {/* ARLs */}
         <div>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: isMobile ? 0 : '2.5rem' }}>
 </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)', gap: isMobile ? 10 : 16 }}>
             {TEAM.slice(10).map((m, i) => (
               <StaticCard key={m.name} member={m} index={i} onClick={() => setSelectedMember(m)} />
             ))}
@@ -656,47 +712,51 @@ export default function Team() {
           JOIN CTA
       ══════════════════════════════════════ */}
       <section style={{
-        padding: '7rem 5rem', background: '#1A1208',
-        display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '4rem',
+        padding: isMobile ? '4rem 1.5rem' : '7rem 5rem', background: '#1A1208',
+        display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr auto', alignItems: 'center', gap: isMobile ? '2rem' : '4rem',
         position: 'relative', overflow: 'hidden',
       }}>
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(232,101,10,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
 
         <motion.div style={{ position: 'relative', zIndex: 1 }}
-          initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
+          initial={isMobile ? { opacity: 0, y: 24 } : { opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
             <div style={{ width: 20, height: 1, background: '#E8650A' }} />
-            <span style={{ fontSize: '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>Join The Team</span>
+            <span style={{ fontSize: isMobile ? '0.6rem' : '0.5rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E8650A', fontWeight: 600 }}>Join The Team</span>
           </div>
-          <h2 className="font-playfair font-black" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#FAF7F2', lineHeight: 1.0, marginBottom: 12 }}>
+          <h2 className="font-playfair font-black" style={{ fontSize: isMobile ? 'clamp(1.9rem, 8.5vw, 2.4rem)' : 'clamp(2rem, 4vw, 3.5rem)', color: '#FAF7F2', lineHeight: isMobile ? 1.05 : 1.0, marginBottom: 12 }}>
             Ready to Build<br />
             <em style={{
               fontStyle: 'italic',
+              display: isMobile ? 'inline-block' : undefined,
+              paddingRight: isMobile ? '0.06em' : undefined,
               background: 'linear-gradient(135deg, #E8650A, #D4186C)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>Something Great?</em>
           </h2>
-          <p style={{ fontSize: '0.86rem', lineHeight: 1.85, color: 'rgba(250,247,242,0.45)', fontWeight: 300, maxWidth: 420 }}>
+          <p style={{ fontSize: isMobile ? '0.95rem' : '0.86rem', lineHeight: 1.85, color: isMobile ? 'rgba(250,247,242,0.6)' : 'rgba(250,247,242,0.45)', fontWeight: 300, maxWidth: 420 }}>
             We're always looking for driven people who share our values. Come grow with us.
           </p>
         </motion.div>
 
-        <motion.div style={{ display: 'flex', flexDirection: 'column', gap: 12, flexShrink: 0, position: 'relative', zIndex: 1 }}
-          initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
+        <motion.div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 16 : 12, flexShrink: 0, position: 'relative', zIndex: 1 }}
+          initial={isMobile ? { opacity: 0, y: 24 } : { opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
           <a href="https://app.higherme.com/brands/5ffdef1452b26" target="_blank" rel="noreferrer"
             style={{
               background: 'linear-gradient(135deg, #E8650A, #D4186C)', color: '#fff',
-              textDecoration: 'none', padding: '0.9rem 2.5rem', fontSize: '0.6rem',
+              textDecoration: 'none', padding: isMobile ? '1rem 1.5rem' : '0.9rem 2.5rem', fontSize: isMobile ? '0.66rem' : '0.6rem',
               letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 600,
               whiteSpace: 'nowrap', boxShadow: '0 10px 30px rgba(232,101,10,0.25)',
+              textAlign: isMobile ? 'center' : undefined,
             }}>
             Explore Opportunities
           </a>
           <Link to="/contact" style={{
-            textAlign: 'center', fontSize: '0.48rem', letterSpacing: '0.18em',
-            textTransform: 'uppercase', color: 'rgba(250,247,242,0.3)', textDecoration: 'none',
+            textAlign: 'center', fontSize: isMobile ? '0.6rem' : '0.48rem', letterSpacing: '0.18em',
+            textTransform: 'uppercase', color: isMobile ? 'rgba(250,247,242,0.55)' : 'rgba(250,247,242,0.3)', textDecoration: 'none',
+            padding: isMobile ? '0.4rem 0' : undefined,
           }}>
             Get in Touch →
           </Link>

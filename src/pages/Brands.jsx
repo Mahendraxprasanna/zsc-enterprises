@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import useIsMobile from '../hooks/useIsMobile'
 
 import dunkinvideo   from '../assets/videos/dunkinad.mp4'
 import baskinvideo   from '../assets/videos/baskinad.mp4'
@@ -191,10 +192,11 @@ const BRANDS = [
 
 // ─────────────────────────────────────────────
 // FLOATING PARTICLES
+// count: 40 on PC (unchanged), fewer on phone so it stays smooth
 // ─────────────────────────────────────────────
-function Particles({ colors, active }) {
+function Particles({ colors, active, count = 40 }) {
   const particles = useRef(
-    Array.from({ length: 40 }, (_, i) => ({
+    Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -239,34 +241,38 @@ function Particles({ colors, active }) {
 
 // ─────────────────────────────────────────────
 // AMBIENT BG SHAPES
+// scale < 1 on phone: smaller glows with less blur (big blurs are heavy on phones)
 // ─────────────────────────────────────────────
-function AmbientShapes({ shapes }) {
+function AmbientShapes({ shapes, scale = 1 }) {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
-      {shapes.map((s, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: s.size,
-            height: s.size,
-            left: `calc(${s.x}% - ${s.size / 2}px)`,
-            top: `calc(${s.y}% - ${s.size / 2}px)`,
-            background: `radial-gradient(circle at 40% 40%, ${s.color} 0%, transparent 70%)`,
-            filter: `blur(${s.blur}px)`,
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: i * 1.5,
-          }}
-        />
-      ))}
+      {shapes.map((s, i) => {
+        const size = s.size * scale
+        return (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: size,
+              height: size,
+              left: `calc(${s.x}% - ${size / 2}px)`,
+              top: `calc(${s.y}% - ${size / 2}px)`,
+              background: `radial-gradient(circle at 40% 40%, ${s.color} 0%, transparent 70%)`,
+              filter: `blur(${s.blur * scale}px)`,
+            }}
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: i * 1.5,
+            }}
+          />
+        )
+      })}
     </div>
   )
 }
@@ -275,13 +281,16 @@ function AmbientShapes({ shapes }) {
 // STAT CARD
 // ─────────────────────────────────────────────
 function StatCard({ n, l, accent, borderColor, statBg, delay }) {
+  const isMobile = useIsMobile()
   return (
     <motion.div
-      className="flex-1 px-5 py-4 flex flex-col"
+      className={isMobile ? 'flex-1 flex flex-col' : 'flex-1 px-5 py-4 flex flex-col'}
       style={{
         border: `0.5px solid ${borderColor}`,
         background: statBg,
         backdropFilter: 'blur(12px)',
+        padding: isMobile ? '10px 10px' : undefined,
+        minWidth: 0,
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -289,7 +298,7 @@ function StatCard({ n, l, accent, borderColor, statBg, delay }) {
     >
       <div className="font-playfair font-black leading-none mb-1"
         style={{
-          fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+          fontSize: isMobile ? '1.15rem' : 'clamp(1.4rem, 2.5vw, 2rem)',
           background: accent === '#F05097'
   ? 'linear-gradient(135deg, #F05097 0%, #C4405A 50%, #7A2830 100%)'
   : accent.includes('gradient') ? accent : `linear-gradient(135deg, ${accent}, ${accent}dd)`,
@@ -299,7 +308,7 @@ function StatCard({ n, l, accent, borderColor, statBg, delay }) {
         }}>
         {n}
       </div>
-      <div style={{ fontSize: '0.48rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(250,247,242,0.4)', fontWeight: 500 }}>
+      <div style={{ fontSize: isMobile ? '0.52rem' : '0.48rem', letterSpacing: isMobile ? '0.14em' : '0.22em', textTransform: 'uppercase', color: isMobile ? 'rgba(250,247,242,0.6)' : 'rgba(250,247,242,0.4)', fontWeight: 500 }}>
         {l}
       </div>
     </motion.div>
@@ -346,6 +355,7 @@ function ProductPlaceholder({ label, accent, glow, size = 'lg' }) {
 // SINGLE BRAND SLIDE
 // ─────────────────────────────────────────────
 function BrandSlide({ brand, isActive }) {
+  const isMobile = useIsMobile()
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [3, -3])
@@ -364,12 +374,14 @@ function BrandSlide({ brand, isActive }) {
     mouseY.set(0)
   }, [mouseX, mouseY])
 
+  const isBaskin = brand.id === 'baskin'
+
   return (
     <div
       className="relative w-full h-full overflow-hidden"
       style={{ background: brand.bg }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isMobile ? undefined : handleMouseMove}
+      onMouseLeave={isMobile ? undefined : handleMouseLeave}
     >
       {/* ── FULL BLEED BACKGROUND IMAGE ── */}
       {brand.video && (
@@ -396,14 +408,20 @@ function BrandSlide({ brand, isActive }) {
 )}
 
       {/* Ambient background shapes on top of image */}
-      <AmbientShapes shapes={brand.shapes} />
+      <AmbientShapes shapes={brand.shapes} scale={isMobile ? 0.5 : 1} />
 
       {/* Particles */}
-      <Particles colors={brand.particles} active={isActive} />
+      <Particles colors={brand.particles} active={isActive} count={isMobile ? 14 : 40} />
 
-      {/* Left-side gradient fade — so text is readable */}
+      {/* Text-readability fade — PC: dark on the left (unchanged) · Phone: dark at the bottom, where the text sits */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: `linear-gradient(to right,
+        background: isMobile
+          ? `linear-gradient(to top,
+              rgba(0,0,0,0.94) 0%,
+              rgba(0,0,0,0.82) 40%,
+              rgba(0,0,0,0.45) 70%,
+              rgba(0,0,0,0.30) 100%)`
+          : `linear-gradient(to right,
           rgba(0,0,0,0.96) 0%,
           rgba(0,0,0,0.85) 28%,
           rgba(0,0,0,0.45) 55%,
@@ -425,7 +443,9 @@ function BrandSlide({ brand, isActive }) {
 
       {/* Colored tint overlay matching brand */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: `radial-gradient(ellipse at 80% 50%, ${brand.glow} 0%, transparent 60%)`,
+        background: isMobile
+          ? `radial-gradient(ellipse at 50% 20%, ${brand.glow} 0%, transparent 60%)`
+          : `radial-gradient(ellipse at 80% 50%, ${brand.glow} 0%, transparent 60%)`,
         zIndex: 4,
       }} />
 
@@ -436,39 +456,46 @@ function BrandSlide({ brand, isActive }) {
         backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
       }} />
 
-      {/* ── CONTENT OVERLAY ── */}
+      {/* ── CONTENT OVERLAY ──
+          PC: vertically centred on the left (unchanged)
+          Phone: sits at the bottom, above the arrows/dots bar */}
       <div
-        className="absolute inset-0 flex items-center"
-        style={{ zIndex: 10, padding: '0 5vw' }}
+        className={isMobile ? 'absolute inset-0 flex items-end' : 'absolute inset-0 flex items-center'}
+        style={isMobile
+          ? { zIndex: 10, padding: '76px 1.25rem calc(86px + env(safe-area-inset-bottom, 0px))' }
+          : { zIndex: 10, padding: '0 5vw' }}
       >
         <div className="w-full max-w-[600px]">
 
           {/* Label */}
           <motion.div
-            className="flex items-center gap-3 mb-5"
+            className={isMobile ? 'flex items-center gap-3 mb-3' : 'flex items-center gap-3 mb-5'}
             initial={{ opacity: 0, x: -30 }}
             animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <div style={{ width: 24, height: 1, background: brand.accent }} />
+            <div style={{ width: isMobile ? 18 : 24, height: 1, background: brand.accent }} />
             <span style={{
-              fontSize: '1rem', letterSpacing: '0.3em',
+              fontSize: isMobile ? '0.62rem' : '1rem', letterSpacing: isMobile ? '0.24em' : '0.3em',
               textTransform: 'uppercase', color: brand.accent, fontWeight: 600,
             }}>
-              {brand.label} &nbsp;·&nbsp; ZSC Enterprises
+              {isMobile ? 'ZSC Enterprises' : <>{brand.label} &nbsp;·&nbsp; ZSC Enterprises</>}
             </span>
           </motion.div>
 
           {/* Brand name */}
           <motion.h1
-            className="font-playfair font-black leading-[0.9] mb-4"
+            className={isMobile ? 'font-playfair font-black mb-3' : 'font-playfair font-black leading-[0.9] mb-4'}
             style={{
-              fontSize: 'clamp(3.5rem, 7vw, 7rem)',
+              fontSize: isMobile ? 'clamp(2.3rem, 11vw, 3.2rem)' : 'clamp(3.5rem, 7vw, 7rem)',
+              lineHeight: isMobile ? 0.95 : undefined,
               color: brand.textPrimary,
-              textShadow: `0 0 120px ${brand.glow}, 0 0 40px ${brand.glow}`,
+              textShadow: isMobile ? `0 0 40px ${brand.glow}` : `0 0 120px ${brand.glow}, 0 0 40px ${brand.glow}`,
             }}
-            initial={{ opacity: 0, y: 50, filter: 'blur(16px)' }}
-            animate={isActive ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 50, filter: 'blur(16px)' }}
+            initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: 50, filter: 'blur(16px)' }}
+            animate={isActive
+              ? (isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' })
+              : (isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: 50, filter: 'blur(16px)' })}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {brand.name}
@@ -476,10 +503,12 @@ function BrandSlide({ brand, isActive }) {
 
           {/* Tagline */}
           <motion.div
-            className="font-playfair font-bold italic mb-5"
+            className={isMobile ? 'font-playfair font-bold italic mb-3' : 'font-playfair font-bold italic mb-5'}
             style={{
-              fontSize: 'clamp(1rem, 2.2vw, 1.7rem)',
-              background: brand.id === 'baskin'
+              fontSize: isMobile ? '1.1rem' : 'clamp(1rem, 2.2vw, 1.7rem)',
+              display: isMobile ? 'inline-block' : undefined,
+              paddingRight: isMobile ? '0.08em' : undefined,
+              background: isBaskin
                 ? 'linear-gradient(135deg, #F05097 0%, #C4405A 40%, #7A2830 100%)'
                 : brand.gradText,
               WebkitBackgroundClip: 'text',
@@ -496,8 +525,8 @@ function BrandSlide({ brand, isActive }) {
           {/* Accent line */}
           <motion.div
             style={{
-              width: 56, height: 2, marginBottom: 22,
-              background: brand.id === 'baskin'
+              width: isMobile ? 44 : 56, height: 2, marginBottom: isMobile ? 16 : 22,
+              background: isBaskin
                 ? 'linear-gradient(90deg, #F05097, #7A2830, #3D1012)'
                 : brand.gradText,
             }}
@@ -509,12 +538,12 @@ function BrandSlide({ brand, isActive }) {
           {/* Description */}
           <motion.p
             style={{
-              fontSize: 'clamp(0.78rem, 1.1vw, 0.9rem)',
-              lineHeight: 1.9,
-              color: brand.textMuted,
+              fontSize: isMobile ? '0.9rem' : 'clamp(0.78rem, 1.1vw, 0.9rem)',
+              lineHeight: isMobile ? 1.65 : 1.9,
+              color: isMobile ? 'rgba(255,248,245,0.75)' : brand.textMuted,
               fontWeight: 300,
               maxWidth: 520,
-              marginBottom: 28,
+              marginBottom: isMobile ? 20 : 28,
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -525,7 +554,7 @@ function BrandSlide({ brand, isActive }) {
 
           {/* Stats */}
           <motion.div
-            className="flex gap-0 mb-7"
+            className={isMobile ? 'flex gap-0 mb-5' : 'flex gap-0 mb-7'}
             style={{ maxWidth: 420 }}
             initial={{ opacity: 0, y: 20 }}
             animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -535,7 +564,7 @@ function BrandSlide({ brand, isActive }) {
               <StatCard
                 key={s.l}
                 n={s.n} l={s.l}
-                accent={brand.id === 'baskin' ? '#F05097' : brand.accent}
+                accent={isBaskin ? '#F05097' : brand.accent}
                 borderColor={brand.borderColor}
                 statBg={brand.statBg}
                 delay={0.55 + i * 0.08}
@@ -543,7 +572,8 @@ function BrandSlide({ brand, isActive }) {
             ))}
           </motion.div>
 
-          {/* Tags */}
+          {/* Tags — PC only (on a phone there isn't room, and the stats already cover it) */}
+          {!isMobile && (
           <motion.div
             className="flex flex-wrap gap-2 mb-8"
             initial={{ opacity: 0 }}
@@ -554,11 +584,11 @@ function BrandSlide({ brand, isActive }) {
               <span key={t} style={{
                 fontSize: '0.44rem', letterSpacing: '0.18em',
                 textTransform: 'uppercase', padding: '5px 12px',
-                border: brand.id === 'baskin'
+                border: isBaskin
                   ? '0.5px solid rgba(240,80,151,0.25)'
                   : `0.5px solid ${brand.accent}44`,
-                color: brand.id === 'baskin' ? '#C4405A' : `${brand.accent}cc`,
-                background: brand.id === 'baskin'
+                color: isBaskin ? '#C4405A' : `${brand.accent}cc`,
+                background: isBaskin
                   ? 'rgba(122,40,48,0.15)'
                   : `${brand.accent}0a`,
                 fontWeight: 500,
@@ -568,8 +598,9 @@ function BrandSlide({ brand, isActive }) {
               </span>
             ))}
           </motion.div>
+          )}
 
-          {/* CTAs */}
+          {/* CTAs — phone: two equal buttons that fit side by side */}
           <motion.div
             className="flex gap-3"
             initial={{ opacity: 0, y: 10 }}
@@ -577,32 +608,34 @@ function BrandSlide({ brand, isActive }) {
             transition={{ duration: 0.6, delay: 0.70 }}
           >
             <Link to="/contact"
-              className="no-underline px-7 py-3 font-semibold transition-opacity hover:opacity-85"
+              className={isMobile ? 'no-underline font-semibold' : 'no-underline px-7 py-3 font-semibold transition-opacity hover:opacity-85'}
               style={{
-                fontSize: '0.58rem', letterSpacing: '0.2em',
+                fontSize: isMobile ? '0.6rem' : '0.58rem', letterSpacing: isMobile ? '0.14em' : '0.2em',
                 textTransform: 'uppercase',
-                background: brand.id === 'baskin'
+                background: isBaskin
                   ? 'linear-gradient(135deg, #F05097, #7A2830)'
                   : brand.gradText,
                 color: '#fff',
+                ...(isMobile ? { flex: 1, textAlign: 'center', padding: '0.95rem 0.5rem' } : {}),
               }}>
               WORK WITH US 
             </Link>
             <Link to="/team"
-              className="no-underline px-7 py-3 font-medium transition-all"
+              className={isMobile ? 'no-underline font-medium' : 'no-underline px-7 py-3 font-medium transition-all'}
               style={{
-                fontSize: '0.58rem', letterSpacing: '0.2em',
+                fontSize: isMobile ? '0.6rem' : '0.58rem', letterSpacing: isMobile ? '0.14em' : '0.2em',
                 textTransform: 'uppercase',
                 border: `0.5px solid ${brand.borderColor}`,
-                color: brand.textMuted,
+                color: isMobile ? 'rgba(255,248,245,0.8)' : brand.textMuted,
                 backdropFilter: 'blur(8px)',
                 background: 'rgba(0,0,0,0.2)',
+                ...(isMobile ? { flex: 1, textAlign: 'center', padding: '0.95rem 0.5rem' } : {}),
               }}
-              onMouseEnter={e => {
+              onMouseEnter={isMobile ? undefined : e => {
                 e.currentTarget.style.borderColor = brand.accent
                 e.currentTarget.style.color = brand.accent
               }}
-              onMouseLeave={e => {
+              onMouseLeave={isMobile ? undefined : e => {
                 e.currentTarget.style.borderColor = brand.borderColor
                 e.currentTarget.style.color = brand.textMuted
               }}
@@ -613,7 +646,8 @@ function BrandSlide({ brand, isActive }) {
 
         </div>
 
-        {/* ── FLOATING RIGHT SIDE CARD ── */}
+        {/* ── FLOATING RIGHT SIDE CARD — PC only (it would cover the text on a phone) ── */}
+        {!isMobile && (
         <motion.div
           className="absolute right-[6vw] bottom-24 flex flex-col gap-2 p-5"
           style={{
@@ -635,7 +669,7 @@ function BrandSlide({ brand, isActive }) {
             <div style={{
               fontSize: '0.44rem', letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: brand.id === 'baskin' ? '#C4405A' : brand.accent,
+              color: isBaskin ? '#C4405A' : brand.accent,
               marginBottom: 4,
             }}>
               Est. {brand.floatCardEst}
@@ -652,7 +686,7 @@ function BrandSlide({ brand, isActive }) {
             </div>
             <div style={{
               height: 1,
-              background: brand.id === 'baskin'
+              background: isBaskin
                 ? 'linear-gradient(90deg, #F05097, #7A2830)'
                 : brand.gradText,
               marginBottom: 10,
@@ -663,7 +697,7 @@ function BrandSlide({ brand, isActive }) {
                   fontSize: '0.4rem', letterSpacing: '0.12em',
                   textTransform: 'uppercase', padding: '3px 8px',
                   border: `0.5px solid ${brand.borderColor}`,
-                  color: brand.id === 'baskin' ? '#F05097' : brand.accent,
+                  color: isBaskin ? '#F05097' : brand.accent,
                   background: 'rgba(0,0,0,0.3)',
                 }}>
                   {t}
@@ -672,6 +706,7 @@ function BrandSlide({ brand, isActive }) {
             </div>
           </motion.div>
         </motion.div>
+        )}
 
       </div>
     </div>
@@ -679,7 +714,7 @@ function BrandSlide({ brand, isActive }) {
 }
 
 // ─────────────────────────────────────────────
-// NAVIGATION DOTS
+// NAVIGATION DOTS (PC — vertical with names)
 // ─────────────────────────────────────────────
 function NavDots({ current, total, brands, onChange }) {
   return (
@@ -716,6 +751,45 @@ function NavDots({ current, total, brands, onChange }) {
           </motion.span>
         </button>
       ))}
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────
+// PHONE BOTTOM BAR — ← dots → (new, phone only)
+// ─────────────────────────────────────────────
+function MobileNavBar({ current, brands, brand, onPrev, onNext, onChange }) {
+  const arrowStyle = {
+    width: 44, height: 44, flexShrink: 0,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    background: 'rgba(10,5,2,0.6)',
+    backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+    border: `0.5px solid ${brand.borderColor}`,
+    color: brand.textPrimary, fontSize: '1rem', cursor: 'pointer', outline: 'none',
+  }
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, zIndex: 50,
+      bottom: 'calc(20px + env(safe-area-inset-bottom, 0px))',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 1.25rem',
+    }}>
+      <motion.button style={arrowStyle} whileTap={{ scale: 0.92, background: brand.accent }} onClick={onPrev} aria-label="Previous brand">←</motion.button>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        {brands.map((b, i) => (
+          <button key={b.id} onClick={() => onChange(i)} aria-label={b.name}
+            style={{ background: 'none', border: 'none', padding: '14px 6px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <motion.div
+              style={{ height: 3, borderRadius: 2, background: current === i ? b.accent : 'rgba(250,247,242,0.3)' }}
+              animate={{ width: current === i ? 26 : 8 }}
+              transition={{ duration: 0.3 }}
+            />
+          </button>
+        ))}
+      </div>
+
+      <motion.button style={arrowStyle} whileTap={{ scale: 0.92, background: brand.accent }} onClick={onNext} aria-label="Next brand">→</motion.button>
     </div>
   )
 }
@@ -772,10 +846,21 @@ const slideVariants = {
   },
 }
 
+// Phone version: same slide, without the full-screen blur
+// (blurring a full-screen video every frame makes phones stutter, especially iPhones)
+const slideVariantsMobile = Object.fromEntries(
+  Object.entries(slideVariants).map(([key, { filter, transition, ...rest }]) => {
+    if (!transition) return [key, rest]
+    const { filter: _f, ...t } = transition
+    return [key, { ...rest, transition: t }]
+  })
+)
+
 // ─────────────────────────────────────────────
 // MAIN BRANDS PAGE
 // ─────────────────────────────────────────────
 export default function Brands() {
+  const isMobile = useIsMobile()
   const params = new URLSearchParams(window.location.search)
 const initialBrand = params.get('brand')
 const initialIndex = initialBrand === 'baskin' ? 2 : initialBrand === 'smoothie' ? 1 : initialBrand === 'jimmyjohns' ? 3 : 0
@@ -826,6 +911,7 @@ const [current, setCurrent] = useState(initialIndex)
   }
 
   const brand = BRANDS[current]
+  const variants = isMobile ? slideVariantsMobile : slideVariants
 
   return (
     <motion.div
@@ -839,8 +925,13 @@ const [current, setCurrent] = useState(initialIndex)
       <div
   className="relative overflow-hidden"
   style={{
-    height: '100vh',
+    // phone: 100svh = the visible screen, so the bottom bar isn't hidden behind the browser toolbar
+    height: isMobile ? '100svh' : '100vh',
+    minHeight: isMobile ? 560 : undefined,
     userSelect: 'none',
+    WebkitUserSelect: isMobile ? 'none' : undefined,
+    // phone: horizontal swipes go to the slider, vertical ones still scroll the page
+    touchAction: isMobile ? 'pan-y' : undefined,
 
     // ADD THESE
     background: `
@@ -849,8 +940,8 @@ const [current, setCurrent] = useState(initialIndex)
       rgba(5,5,5,1) 100%)
     `,
   }}
-        onMouseDown={onDragStart}
-        onMouseUp={onDragEnd}
+        onMouseDown={isMobile ? undefined : onDragStart}
+        onMouseUp={isMobile ? undefined : onDragEnd}
         onTouchStart={onDragStart}
         onTouchEnd={onDragEnd}
       >
@@ -860,7 +951,7 @@ const [current, setCurrent] = useState(initialIndex)
             key={current}
             className="absolute inset-0"
             custom={direction}
-            variants={slideVariants}
+            variants={variants}
             initial={direction > 0 ? 'enterFromRight' : 'enterFromLeft'}
             animate="center"
             exit={direction > 0 ? 'exitToLeft' : 'exitToRight'}
@@ -869,6 +960,14 @@ const [current, setCurrent] = useState(initialIndex)
           </motion.div>
         </AnimatePresence>
 
+        {isMobile ? (
+          /* ── PHONE: arrows + dots together in one bottom bar ── */
+          <MobileNavBar
+            current={current} brands={BRANDS} brand={brand}
+            onPrev={() => navigate(-1)} onNext={() => navigate(1)} onChange={goTo}
+          />
+        ) : (
+          <>
         {/* ── LEFT ARROW ── */}
         <motion.button
           className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 flex items-center justify-center z-50"
@@ -926,6 +1025,8 @@ const [current, setCurrent] = useState(initialIndex)
             Brands
           </span>
         </div>
+          </>
+        )}
 
         {/* ── ANIMATED ACCENT LINE ── */}
         <motion.div

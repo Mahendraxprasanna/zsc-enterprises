@@ -12,17 +12,33 @@ const NAV_LINKS = [
   { label: 'Career',    to: '/contact' },
 ]
 
+// Phone navbar = 64px top bar + 40px page row = 104px total.
+// Pages use paddingTop 104 on phone so content starts below it.
+const MOBILE_TOP_BAR = 64
+const MOBILE_ROW     = 40
+
 export default function Navbar() {
   const [visible,   setVisible]   = useState(true)
   const [atTop,     setAtTop]     = useState(true)
   const [menuOpen,  setMenuOpen]  = useState(false)
   const lastScrollY = useRef(0)
   const hideTimer   = useRef(null)
+  const rowRef      = useRef(null)
   const location    = useLocation()
   const isMobile    = useIsMobile()
 
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [location])
+
+  // Phone: slide the page row so the current page is in view (matters on small phones where the row scrolls)
+  useEffect(() => {
+    if (!isMobile || !rowRef.current) return
+    const row = rowRef.current
+    const active = row.querySelector('[data-active="true"]')
+    if (active) {
+      row.scrollTo({ left: active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2, behavior: 'smooth' })
+    }
+  }, [location.pathname, isMobile])
 
   // Scroll detection
   useEffect(() => {
@@ -67,18 +83,46 @@ export default function Navbar() {
   const isActive = (to) =>
     to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
 
+  const lightPage = atTop && location.pathname !== '/' && location.pathname !== '/brands'
+
   return (
     <>
+      {/* Phone: hide the page row's scrollbar (it still swipes) */}
+      <style>{`.zsc-navrow::-webkit-scrollbar { display: none; }`}</style>
+
       {/* ── NAVBAR ── */}
-      <nav style={{
+      <nav style={isMobile ? {
+        // PHONE: two rows — [logo … phone] on top, all pages underneath
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 9000,
-        height: isMobile ? 64 : 72,
+        height: MOBILE_TOP_BAR + MOBILE_ROW,
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        gridTemplateRows: `${MOBILE_TOP_BAR}px ${MOBILE_ROW}px`,
+        gridTemplateAreas: '"logo right" "links links"',
+        alignItems: 'center',
+        padding: '0 1.25rem',
+        background: atTop ? 'rgba(6,3,1,0.35)' : 'rgba(10, 5, 2, 0.55)',
+        backdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
+        WebkitBackdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
+        borderBottom: '1px solid rgba(250,247,242,0.06)',
+        transform: visible ? 'translateY(0)' : 'translateY(-100%)',
+        transition: [
+          'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          'background 0.4s ease',
+          'backdrop-filter 0.4s ease',
+          'border-color 0.4s ease',
+        ].join(', '),
+      } : {
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 9000,
+        height: 72,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: isMobile ? '0 1.25rem' : '0 2.5rem',
+        padding: '0 2.5rem',
 background: atTop ? 'rgba(6,3,1,0.35)' : 'rgba(10, 5, 2, 0.55)',
 backdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
 WebkitBackdropFilter: atTop ? 'blur(12px)' : 'blur(28px)',
@@ -93,13 +137,32 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
       }}>
 
         {/* ── LEFT — Logo ── */}
-        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
-        <ZSCLogo size={isMobile ? 32 : 38} dark={atTop && location.pathname !== '/' && location.pathname !== '/brands'} />
+        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gridArea: isMobile ? 'logo' : undefined }}>
+        <ZSCLogo size={isMobile ? 32 : 38} dark={lightPage} />
         </Link>
 
-        {/* ── CENTER — Nav links (desktop only; phones use the hamburger menu) ── */}
-        <div style={{
-          display: isMobile ? 'none' : 'flex',
+        {/* ── CENTER — Nav links
+             PC: centred in the bar (unchanged)
+             Phone: second row, full width, swipeable if it doesn't fit ── */}
+        <div
+          ref={rowRef}
+          className={isMobile ? 'zsc-navrow' : undefined}
+          style={isMobile ? {
+            gridArea: 'links',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: MOBILE_ROW,
+            margin: '0 -1.25rem',          // run edge to edge
+            padding: '0 0.75rem',
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            position: 'relative',
+            borderTop: lightPage ? '0.5px solid rgba(42,30,16,0.1)' : '0.5px solid rgba(250,247,242,0.08)',
+          } : {
+          display: 'flex',
           alignItems: 'center',
           gap: '0.25rem',
           position: 'absolute',
@@ -107,32 +170,38 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
           transform: 'translateX(-50%)',
         }}>
           {NAV_LINKS.map(link => (
-            <Link key={link.to} to={link.to} style={{
+            <Link key={link.to} to={link.to}
+              data-active={isActive(link.to) ? 'true' : 'false'}
+              style={{
               textDecoration: 'none',
-              padding: '0.45rem 0.9rem',
-              fontSize: '0.46rem',
-              letterSpacing: '0.2em',
+              padding: isMobile ? '0.75rem 0.5rem' : '0.45rem 0.9rem',
+              fontSize: isMobile ? '0.58rem' : '0.46rem',
+              letterSpacing: isMobile ? '0.12em' : '0.2em',
               textTransform: 'uppercase',
-              fontWeight: 500,
+              fontWeight: isMobile ? 600 : 500,
               fontFamily: 'Jost, sans-serif',
+              whiteSpace: isMobile ? 'nowrap' : undefined,
+              flexShrink: isMobile ? 0 : undefined,
               color: isActive(link.to)
-  ? (atTop && location.pathname !== '/' && location.pathname !== '/brands' ? '#1A1208' : '#FAF7F2')
-  : (atTop && location.pathname !== '/' && location.pathname !== '/brands' ? 'rgba(42,30,16,0.5)' : 'rgba(250,247,242,0.45)'),
+  ? (lightPage ? '#1A1208' : '#FAF7F2')
+  : (lightPage
+      ? (isMobile ? 'rgba(42,30,16,0.6)' : 'rgba(42,30,16,0.5)')
+      : (isMobile ? 'rgba(250,247,242,0.6)' : 'rgba(250,247,242,0.45)')),
               position: 'relative',
               transition: 'color 0.25s ease',
             }}
-              onMouseEnter={e => { if (!isActive(link.to)) e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.85)' : 'rgba(250,247,242,0.85)' }}
-              onMouseLeave={e => { if (!isActive(link.to)) e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.5)' : 'rgba(250,247,242,0.45)' }}
+              onMouseEnter={isMobile ? undefined : e => { if (!isActive(link.to)) e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.85)' : 'rgba(250,247,242,0.85)' }}
+              onMouseLeave={isMobile ? undefined : e => { if (!isActive(link.to)) e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.5)' : 'rgba(250,247,242,0.45)' }}
             >
               {link.label}
               {isActive(link.to) && (
                 <span style={{
                   position: 'absolute',
-                  bottom: -2,
+                  bottom: isMobile ? 6 : -2,
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: 16,
-                  height: 1.5,
+                  width: isMobile ? 18 : 16,
+                  height: isMobile ? 2 : 1.5,
                   background: 'linear-gradient(90deg, #E8650A, #D4186C)',
                   borderRadius: 1,
                 }} />
@@ -141,46 +210,50 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
           ))}
         </div>
 
-        {/* ── RIGHT — Phone + hamburger ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
+        {/* ── RIGHT — Phone + hamburger (phone: tap-to-call number only, no hamburger) ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0, gridArea: isMobile ? 'right' : undefined, justifySelf: isMobile ? 'end' : undefined }}>
           <a href="tel:7702498082" style={{
-            display: isMobile ? 'none' : 'inline',
-            fontSize: '0.46rem',
+            display: 'inline',
+            fontSize: isMobile ? '0.62rem' : '0.46rem',
             letterSpacing: '0.14em',
-           color: atTop && location.pathname !== '/' && location.pathname !== '/brands' ? 'rgba(42,30,16,0.45)' : 'rgba(250,247,242,0.45)',
+            fontWeight: isMobile ? 500 : undefined,
+           color: lightPage
+             ? (isMobile ? 'rgba(42,30,16,0.65)' : 'rgba(42,30,16,0.45)')
+             : (isMobile ? 'rgba(250,247,242,0.7)' : 'rgba(250,247,242,0.45)'),
             textDecoration: 'none',
             fontFamily: 'Jost, sans-serif',
             transition: 'color 0.25s ease',
+            padding: isMobile ? '10px 0' : undefined,
           }}
-            onMouseEnter={e => e.currentTarget.style.color = '#E8650A'}
-            onMouseLeave={e => e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.45)' : 'rgba(250,247,242,0.45)'}
+            onMouseEnter={isMobile ? undefined : e => e.currentTarget.style.color = '#E8650A'}
+            onMouseLeave={isMobile ? undefined : e => e.currentTarget.style.color = atTop && location.pathname !== '/' ? 'rgba(42,30,16,0.45)' : 'rgba(250,247,242,0.45)'}
           >
             770-249-8082
           </a>
 
+          {!isMobile && (
           <button
             onClick={() => setMenuOpen(v => !v)}
             style={{
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              padding: isMobile ? '10px' : '6px',
+              padding: '6px',
               display: 'flex',
               flexDirection: 'column',
               gap: 5,
-              width: isMobile ? 44 : 28,
-              boxSizing: 'border-box',
+              width: 28,
             }}
             aria-label="Toggle menu"
           >
             {[0, 1, 2].map(i => (
               <span key={i} style={{
                 display: 'block',
-                height: isMobile ? 1.5 : 1,
+                height: 1,
                 borderRadius: 1,
                 background: menuOpen
   ? 'rgba(250,247,242,0.6)'
-  : atTop && location.pathname !== '/' && location.pathname !== '/brands'
+  : lightPage
     ? 'rgba(42,30,16,0.5)'
     : 'rgba(250,247,242,0.5)',
                 transition: 'all 0.35s ease',
@@ -195,6 +268,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
               }} />
             ))}
           </button>
+          )}
         </div>
       </nav>
 
@@ -225,7 +299,8 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
   )
 )}
 
-      {/* ── MOBILE / FULL MENU OVERLAY ── */}
+      {/* ── FULL MENU OVERLAY (PC hamburger only) ── */}
+      {!isMobile && (
       <div style={{
         position: 'fixed',
         inset: 0,
@@ -237,7 +312,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: isMobile ? '0.9rem' : '0.5rem',
+        gap: '0.5rem',
         pointerEvents: menuOpen ? 'all' : 'none',
         opacity: menuOpen ? 1 : 0,
         transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -251,7 +326,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
           <Link key={link.to} to={link.to}
             style={{
               textDecoration: 'none',
-              fontSize: isMobile ? 'clamp(1.8rem, 9vw, 2.4rem)' : 'clamp(2rem, 5vw, 3.5rem)',
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
               fontFamily: "'Playfair Display', Georgia, serif",
               fontWeight: 900,
               fontStyle: isActive(link.to) ? 'italic' : 'normal',
@@ -289,10 +364,10 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
 
         <a href="tel:7702498082" style={{
           marginTop: '2rem',
-          fontSize: isMobile ? '0.8rem' : '0.56rem',
+          fontSize: '0.56rem',
           letterSpacing: '0.26em',
           textTransform: 'uppercase',
-          color: isMobile ? 'rgba(250,247,242,0.45)' : 'rgba(250,247,242,0.25)',
+          color: 'rgba(250,247,242,0.25)',
           textDecoration: 'none',
           fontFamily: 'Jost, sans-serif',
           transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
@@ -302,6 +377,7 @@ borderBottom: atTop ? '1px solid rgba(250,247,242,0.06)' : '1px solid rgba(250,2
           770-249-8082
         </a>
       </div>
+      )}
     </>
   )
 }

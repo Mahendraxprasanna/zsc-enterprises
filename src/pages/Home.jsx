@@ -5,6 +5,7 @@ import Footer from '../components/Footer'
 import useIsMobile from '../hooks/useIsMobile'
 
 import heroBg      from '../assets/images/street.png'
+import heroBgMobile from '../assets/images/street-mobile.jpeg' // portrait image used on phones only
 import teamImg     from '../assets/images/team.jpeg'
 
 // Brand videos (for carousel background)
@@ -268,7 +269,7 @@ export default function Home() {
 
       {/* ══ 1. HERO ══ */}
       <section style={{ position: 'relative', height: isMobile ? '100svh' : '100vh', minHeight: isMobile ? 560 : undefined, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <motion.img src={heroBg} alt=""
+        <motion.img src={isMobile ? heroBgMobile : heroBg} alt=""
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'brightness(1.25) saturate(1) sepia(.25)' }}
           initial={{ scale: 1.08 }} animate={{ scale: 1 }}
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }} />
