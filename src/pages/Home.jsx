@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 import heroBg      from '../assets/images/street.png'
 import teamImg     from '../assets/images/team.jpeg'
-import teamserve   from '../assets/images/serve.jpg'
+import teamserve   from '../assets/images/serve.jpeg'
 import dunkinVideo   from '../assets/videos/dunkinad.mp4'
 import baskinVideo   from '../assets/videos/baskinad.mp4'
 import smoothieVideo from '../assets/videos/smoothiead.mp4'
